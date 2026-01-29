@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Router } from 'express';
 import { syncMaxKBData, getCategories } from '../services/maxkb.js';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 // 获取所有分类和助手
 router.get('/categories', async (req, res) => {
