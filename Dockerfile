@@ -18,8 +18,8 @@ COPY . .
 # 构建前端
 RUN pnpm run build
 
-# 编译后端 TypeScript 到 JavaScript
-RUN pnpm exec tsc --project tsconfig.json --outDir dist-server
+# 编译后端 TypeScript 到 JavaScript（使用 api 目录下的 tsconfig）
+RUN pnpm exec tsc --project api/tsconfig.json
 
 # 生产阶段
 FROM node:20-alpine AS production
