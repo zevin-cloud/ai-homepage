@@ -47,22 +47,24 @@ app.use(
 )
 
 /**
+ * 静态文件服务 - 前端构建产物
+ */
+app.use(express.static(path.join(__dirname, '../dist')))
+
+/**
+ * 前端路由处理 - 所有非 API 请求返回 index.html
+ */
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
+
+/**
  * 错误处理中间件
  */
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({
     success: false,
     error: 'Server internal error',
-  })
-})
-
-/**
- * 404 处理
- */
-app.use((req: Request, res: Response) => {
-  res.status(404).json({
-    success: false,
-    error: 'API not found',
   })
 })
 
