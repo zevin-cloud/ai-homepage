@@ -1,0 +1,369 @@
+[
+  {
+    "id": "019b064e-04bf-7c60-a980-7f14bde40e9d",
+    "name": "1210演示",
+    "agents": [
+      {
+        "id": "019b068f-a019-7ed2-aef2-bfd368a24dda",
+        "title": "工具调用",
+        "description": "",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/41a8e588a74e2ec2"
+      },
+      {
+        "id": "019b065b-1711-7662-94a4-7f31fcbc1da1",
+        "title": "周度工作记录-测试",
+        "description": "",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/ec83b0d763a541c2"
+      },
+      {
+        "id": "019b0651-0931-7673-b517-890744cbe479",
+        "title": "合同审核助手",
+        "description": "用于财务部审核一般采购合同使用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf08-3a31-72c0-999e-0316c5435c9c",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/4f632276626589d7"
+      },
+      {
+        "id": "019b0650-760e-71b1-9048-60f7cd5efe73",
+        "title": "合同审核-简单版",
+        "description": "使用文档提取节点，提取合同内容，然后使用AI直接审核合同",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf07-e8d3-7712-8b5e-55c89dc821a3",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/11dc1b7b4557d8a4"
+      },
+      {
+        "id": "019b064e-b07c-7730-8624-20d7c8c69b15",
+        "title": "MaxKB小能手",
+        "description": "MaxKB产品介绍与销售话术",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/f042d558ed63049c"
+      }
+    ]
+  },
+  {
+    "id": "0197ee49-a838-74c3-9a73-acc11e468c11",
+    "name": "业务系统 + AI",
+    "agents": [
+      {
+        "id": "019bde74-bc94-7220-94be-ae338ca2d5ce",
+        "title": "DataEase大屏AI分析助手",
+        "description": "接入的大屏是这个：https://south-de2.fit2cloud.cn/#/screen/index?dvId=1145421636858679296",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bde77-4e18-7ac3-83c0-c1716319e8a2",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/435e68d0764b4004"
+      },
+      {
+        "id": "019bbba3-e8aa-7810-96a3-e473dce96acb",
+        "title": "南区演示环境的CRM MCP服务调用",
+        "description": "",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bbc0a-4046-7631-820d-7ece7d8ab3bc",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/8a9207bb6e52f579"
+      },
+      {
+        "id": "019a7bc6-eaed-7222-9bef-c1ceece97f2e",
+        "title": "MaxKB+SQLBot：单次对话多次问数",
+        "description": "MaxKB 对接 SQLBot",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019a7bdc-2896-7391-bf1c-b9a1bd0ec4f6",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/7ddf30c2e1c026ff"
+      },
+      {
+        "id": "0198c1b5-01af-7293-a916-e294737e6727",
+        "title": "广以智慧助理",
+        "description": "输入教师名称，模拟课表系统查询课表信息",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/2232959c9f473714"
+      },
+      {
+        "id": "0198ada1-4095-7961-adc7-a0350a010776",
+        "title": "智能归档AI助手",
+        "description": "自动将上传文档归类至对应知识库目录",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabd-4ed7-7bb2-a710-47afd707ca1f",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/7da44af245d28ff2"
+      },
+      {
+        "id": "0198a7ab-100a-7ec3-9fbf-68618d824e59",
+        "title": "客户画像AI助手",
+        "description": "结合CRM数据，根据客户行为数据生成画像标签",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabd-a96c-71d0-86f5-603d3c1345e7",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/75902bdf2fe12770"
+      },
+      {
+        "id": "0198a668-a2e0-7dc2-98c3-8969e31f4c86",
+        "title": "智能医疗辅助AI助手",
+        "description": "用药提醒与禁忌提示\n根据处方内容提示潜在药物相互作用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabe-21e7-7ab2-a77a-bd1cdddd96e7",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/7b6da8d571ca6c99"
+      },
+      {
+        "id": "0198a264-8768-78a0-b90a-11b39bbf238e",
+        "title": "客户流失预测AI助手",
+        "description": "结合CRM数据建模，根据客户互动数据预测客户流失概率，采用传统统计模型：逻辑回归（Logistic Regression）方式输出概率，后续可根据需求替换为机器学习模型或者序列模型（客户行为时间序列）实现",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198caba-ea20-7422-9d27-5476cd0af40c",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/14a10785ebd616e6"
+      },
+      {
+        "id": "01989863-2c9f-7db1-8dce-103ac35e5224",
+        "title": "智能推荐AI助手",
+        "description": "根据用户行为推荐文章、课程、产品等。该demo主要是推荐商品为主，针对电商行业可使用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabd-edd0-7b52-86b7-a0a765ee9b6e",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/19f324dfd89672c7"
+      },
+      {
+        "id": "01987470-02a6-7b92-8149-ca206c819fe3",
+        "title": "风控预警助手",
+        "description": "识别潜在欺诈、违规交易\n基于交易数据判断风险\n输出“是否可疑”、“风险等级”、“原因说明”",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198caba-5c87-7e93-ba16-39dbd69d8717",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/3d2b5070df161ac7"
+      },
+      {
+        "id": "01987437-765b-7812-b96e-91205a6b726c",
+        "title": "政策模拟助手",
+        "description": "1、拟其对经济、社会、企业、个人的影响\n2、结合 LLM 与政策文本分析，生成结构化预测报告\n3、支持政府、智库、企业决策参考 ",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabf-6a94-72e2-9f85-14a4ff501790",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/cc570090a9fc5b79"
+      },
+      {
+        "id": "01987400-1026-7b63-b52d-cc707460beb9",
+        "title": "项目管理助手",
+        "description": "自动从项目管理系统获取数据，结合历史经验与 LLM 推理，返回进度预测与风险评估。",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabd-168b-77f1-827e-a25e4ebd24d4",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/b923f3f6fb26e3de"
+      },
+      {
+        "id": "01985584-0ee0-7f63-935d-62493403dd1e",
+        "title": "工艺优化",
+        "description": "根据历史数据推荐更优生产方案",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cac1-0d41-7b83-8bac-cb8e0025f105",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/657441fd2be9d708"
+      },
+      {
+        "id": "019840f9-247d-78f0-8c45-8e0ef894fda2",
+        "title": "舆情分析 - 子应用",
+        "description": "通过《批处理工具》调用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabf-aa4d-7963-9802-4d4b0b5b6f25",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/7032194d5068f8f4"
+      },
+      {
+        "id": "01983704-5eb6-7c81-b449-680bb8d27fb3",
+        "title": "舆情分析",
+        "description": "根据关键词从多数据源查询相关搜索结果并进行舆情分析；生成舆情报告",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cabe-f148-7261-a6f5-fbfdc08febb3",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/7f1080b0c5349bc9"
+      },
+      {
+        "id": "01981cb8-8cd8-7e33-872f-ca69e6ea6161",
+        "title": "智能语音填写报销单",
+        "description": "智能语音填报",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/5b13ba726e7b4740"
+      },
+      {
+        "id": "01981c74-309c-70b2-8052-7b3ebba0e218",
+        "title": "智能排班",
+        "description": "文档图形解析",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cac0-44e9-7f23-9025-874e32b8296d",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/969341fa9bd9613c"
+      }
+    ]
+  },
+  {
+    "id": "0197ee49-f563-73c2-9895-0f33e5893b85",
+    "name": "智能办公助手",
+    "agents": [
+      {
+        "id": "019c031c-1387-7a40-b8f0-9b070e6f98b1",
+        "title": "人力资源小助手",
+        "description": "飞致云集团的HRSSC小助手，回答用户关于人力资源政策及归属内部人力制度等相关问题",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/b36762fbee01ec56"
+      },
+      {
+        "id": "019bdf23-1d8a-7c32-b78d-4bd92fbf4c5e",
+        "title": "（脱敏，用于导出共享）软件授权合同审查小助手",
+        "description": "软件授权合同审查**只支持导出**，不支持运行",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/61b8e092b7daf453"
+      },
+      {
+        "id": "019bd95f-1428-7910-8420-2c36f16abe0b",
+        "title": "智能公文助手-可上传文件",
+        "description": "智能公文助手",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/9a139db43ab1464b"
+      },
+      {
+        "id": "019a4cd8-f97c-7902-95d1-47fd6d0860b0",
+        "title": "文章切分助手",
+        "description": "可以处理PDF、Word文档",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/29a70c0e9a2911c5"
+      },
+      {
+        "id": "019a3452-9890-70e2-ae66-bc3714c40698",
+        "title": "订单查询",
+        "description": "根据手机号查询订单消息",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf07-130e-7363-a743-134d32c92298",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/585aef45edcfb6db"
+      },
+      {
+        "id": "019a0604-6512-7442-a7c9-f8361f9b4641",
+        "title": "运动健康管理智能体",
+        "description": "根据用户的健康数据、运动习惯和目标，制定个性化的运动计划和健康管理方案。比如通过分析用户的体脂率、心率等数据，为其推荐合适的运动项目和强度。",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019a061a-62e0-7793-a62d-a5abed3daaec",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/d0dcf52a8fe96b94"
+      },
+      {
+        "id": "019a05ab-bc62-7993-a689-9b0ccf5596e1",
+        "title": "营销内容生成助手",
+        "description": "核心目标是利用AIGC（生成式人工智能）技术，自动化、个性化、高效地输出广告文案、短视频脚本、邮件营销内容等",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019a05bd-bd99-7d32-84b0-71ad0c39e60f",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/269f8df372a357e4"
+      },
+      {
+        "id": "019a04c8-913d-7181-aeff-43f83dc8f072",
+        "title": "文章生成助手",
+        "description": "面向企业研报分析，生成一份专业的研报，万字长文",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/e272965110ae38cf"
+      },
+      {
+        "id": "0199dc44-0963-7c83-851b-d073166f2f1e",
+        "title": "合同审核-简单版",
+        "description": "使用文档提取节点，提取合同内容，然后使用AI直接审核合同",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf09-2da6-7821-af4b-1f3d2d0ac895",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/e7e537c57c0374b6"
+      },
+      {
+        "id": "01990e5f-2ddf-75d1-b0f2-69203ffc5cda",
+        "title": "图片识别助手-数据提取",
+        "description": "解析或者提取图片内容",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/929eb18676f3b4b7"
+      },
+      {
+        "id": "019904ce-6d41-77e1-861b-6cc21551163c",
+        "title": "【企微】员工手册问答小助手",
+        "description": "主要是飞致云的员工手册问答，对接企业微信应用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019904d1-de8c-7402-a110-d2aaa3cb7ed5",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/430f32bf88ff177c"
+      },
+      {
+        "id": "0198a830-db55-7b53-ab58-2f2c3602bf72",
+        "title": "合同审核助手",
+        "description": "用于财务部审核一般采购合同使用",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf09-784f-72e0-b313-4740f3158deb",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/61ea345a69afa288"
+      },
+      {
+        "id": "01982c81-a669-7542-93a4-601c637c49ea",
+        "title": "审批意见自动生成助手",
+        "description": "自动根据申请内容生成审批意见草稿，结合 LLM（大语言模型） 和 审批模板 ，提升审批效率，减少人工输入。",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/dfb93e865ab1e4f4"
+      },
+      {
+        "id": "01982abc-02d0-7161-9c10-e8ee5d0a574e",
+        "title": "基于权限控制的问答",
+        "description": "不同岗位查看不同资料，财务只能看财务相关，IT只能看系统文档等",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/88b4ef0b70328691"
+      },
+      {
+        "id": "01981c78-ff08-7572-ac41-e25fa61abd88",
+        "title": "会议辅助",
+        "description": "根据会议记录自动生成摘要、行动项自动生成会议纪要。\n后续需要补充一个提取文件信息的节点，在会议纪要加入附件内容。\n注意： 该应用的清楚策略是7天，避免文件过多",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bdf06-3b7b-75d3-a5d8-803699c63e88",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/6beadf40cb3bb9bf"
+      },
+      {
+        "id": "01981c56-b2dc-7383-a816-07346c4c2601",
+        "title": "MaxKB小能手",
+        "description": "MaxKB产品介绍与销售话术",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/374a10b111dfb771"
+      },
+      {
+        "id": "01981c31-f85e-7402-acb8-0ab32e4ee517",
+        "title": "法律法规AI问答小助手",
+        "description": "用户可通过自然语言提问合规政策、风控流程、反洗钱规定、信息安全、隐私保护等内容，AI 助手自动检索上传的合规文档并返回结构化回答，支持企业内部员工、合规人员、风控团队快速获取政策依据。",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/d64d2574c85e75c7"
+      },
+      {
+        "id": "01981b81-3a1f-7db0-947a-72cc2c46031a",
+        "title": "SOP查询",
+        "description": "工艺流程与操作手册\n查询标准操作流程、设备使用方法",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/0d7e49d3ab2b08ad"
+      }
+    ]
+  },
+  {
+    "id": "0197ee4a-2d90-7581-bab7-c60e826c44bd",
+    "name": "智能客服",
+    "agents": [
+      {
+        "id": "019c0285-11d9-7c01-b53c-f886f6dd717d",
+        "title": "JumpServer知识库搜索内容返回",
+        "description": "用于JumpServer智能体的RAG检索子应用，只检索知识库，不关联任何AI模型",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019c0286-5646-7953-9567-e5405078d83b",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/459c88f6a3e61d4e"
+      },
+      {
+        "id": "019be457-0324-7201-aaaf-15560fa0c9b0",
+        "title": "订单自助查询小助手",
+        "description": "通过自然语言方式输入查询订单状态",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/19f620a9dc2e4fe8"
+      },
+      {
+        "id": "019b733a-c585-7433-916b-f865f3a02be2",
+        "title": "jumpserver智能小助手",
+        "description": "",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019b7354-0ba5-70d2-991d-b7209377ba5c",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/d081908c065d8a67"
+      },
+      {
+        "id": "019b26e6-373d-7933-b781-c5fc4750b073",
+        "title": "新智能客服",
+        "description": "1、以流的形式给出开头推荐问题，点击即可提问，丰富体验。\n2、RAG 智能客服（售前、售后），可拓展其他类别\n3、意图识别，自动识别售前售后问题类别\n4、猜你想问，在问题的最后自动基于提问给出两个提问建议\n5、人工客服固定在窗口下方，方便转人工\n6、点击联系我们，可一键拨打电话\n7、没有检索到知识时，返回没有相关信息，减少幻觉",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bc63e-7a23-73f0-ae17-e2754fcab51c",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/123b5c3bc4154d2e"
+      },
+      {
+        "id": "019a7bb9-8674-7630-a5f1-224e04379a1c",
+        "title": "校園心理安撫小助手",
+        "description": "校園心理安撫小助手",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/019bc63f-3632-7540-9ff6-9183686bfa75",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/6f15e75449eb679e"
+      },
+      {
+        "id": "0199ec00-7201-73b3-846a-648ef58c49c5",
+        "title": "新智能客服",
+        "description": "智能客服",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/4651b5c938d079be"
+      },
+      {
+        "id": "0199c817-e8df-7f50-a688-2360a7f5a78b",
+        "title": "学生错题分析小助手",
+        "description": "",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/3ef464ca1248603e"
+      },
+      {
+        "id": "0198dfdf-f542-7642-b369-6170b1265731",
+        "title": "物流订单自助查询",
+        "description": "物流订单自助查询",
+        "icon": "",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/72134a6633806ddb"
+      },
+      {
+        "id": "0198c1c4-2533-77c1-958c-e4f1a0177949",
+        "title": "客户引导AI助手",
+        "description": "按照标准通过对话的方式引导用户输入对应的信息：\n服务流程指引引导用户完成注册、支付、投诉等操作多轮对话引导机制",
+        "icon": "https://south-maxkb2.fit2cloud.cn/admin/oss/file/0198cfe9-4e11-78b3-a21f-3219379986c2",
+        "url": "https://south-maxkb2.fit2cloud.cn/chat/8589400806d05488"
+      }
+    ]
+  }
+]
