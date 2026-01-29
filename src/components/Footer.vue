@@ -20,7 +20,7 @@ const emit = defineEmits<{
         @click="emit('sync')"
         class="flex items-center gap-2 px-3 py-1.5 text-[13px] font-medium text-text-secondary hover:text-primary transition-colors rounded-full hover:bg-white/50"
         :class="{ 'animate-spin': isSyncing }"
-        title="Sync Data"
+        title="同步数据"
       >
         <RefreshCw class="w-4 h-4" />
         <span>Sync</span>

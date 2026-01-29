@@ -1,5 +1,5 @@
 /**
- * Vercel deploy entry handler, for serverless deployment, please don't modify this file
+ * Vercel 部署入口处理器，用于无服务器部署，请勿修改此文件
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import app from './app.js';

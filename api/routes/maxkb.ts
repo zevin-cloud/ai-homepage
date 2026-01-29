@@ -3,7 +3,7 @@ import { syncMaxKBData, getCategories } from '../services/maxkb.js';
 
 const router = express.Router();
 
-// Get all categories with agents
+// 获取所有分类和助手
 router.get('/categories', async (req, res) => {
   try {
     const categories = await getCategories();
@@ -13,7 +13,7 @@ router.get('/categories', async (req, res) => {
   }
 });
 
-// Trigger sync manually
+// 手动触发同步
 router.post('/sync', async (req, res) => {
   try {
     await syncMaxKBData();

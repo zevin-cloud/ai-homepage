@@ -30,7 +30,7 @@ export const syncMaxKBData = async () => {
   try {
     console.log('Starting MaxKB sync...');
     
-    // Reload env vars to ensure they are available
+    // 重新加载环境变量确保可用
     const apiKey = process.env.MAXKB_API_KEY;
     const baseURL = process.env.MAXKB_BASE_URL;
     const rootFolderName = process.env.MAXKB_ROOT_FOLDER || 'Portal';
@@ -45,22 +45,21 @@ export const syncMaxKBData = async () => {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
-      // Ignore SSL certificate errors
+      // 忽略 SSL 证书错误
       httpsAgent: new (await import('https')).Agent({  
         rejectUnauthorized: false
       })
     });
 
-    // 1. Get all folders
+    // 1. 获取所有文件夹
     const foldersRes = await client.get(`/admin/api/workspace/${workspaceId}/APPLICATION/folder`);
     const folders = foldersRes.data.data;
 
-    // 2. Find the root folder (e.g., "Portal")
-    // Note: The API returns a nested structure where "Portal" might be a child of "default"
-    // We need to search recursively or check the structure
+    // 2. 查找根文件夹（例如 "Portal"）
+    // 注意：API 返回嵌套结构，"Portal" 可能是 "default" 的子文件夹
     let rootFolder = folders.find((f: any) => f.name === rootFolderName);
     
-    // If not found at top level, check children of "default" (or other top-level folders)
+    // 如果在顶层没找到，检查 "default" 的子文件夹
     if (!rootFolder) {
       for (const folder of folders) {
         if (folder.children) {
@@ -75,17 +74,17 @@ export const syncMaxKBData = async () => {
       throw new Error(`Root folder "${rootFolderName}" not found.`);
     }
 
-    // 3. Get subfolders (Categories)
-    // If rootFolder has children property, use that directly
+    // 3. 获取子文件夹（分类）
+    // 如果 rootFolder 有 children 属性，直接使用
     let categories = [];
     if (rootFolder.children && rootFolder.children.length > 0) {
       categories = rootFolder.children;
     } else {
-      // Fallback to filtering by parent_id if children array is empty but structure is flat
+      // 回退方案：通过 parent_id 过滤
       categories = folders.filter((f: any) => f.parent_id === rootFolder.id);
     }
 
-    // If no categories found, create a default category and put all apps in it
+    // 如果没有找到分类，将根文件夹作为默认分类
     if (categories.length === 0) {
       console.log('No subcategories found, using root folder as default category');
       categories = [rootFolder];
@@ -102,7 +101,7 @@ export const syncMaxKBData = async () => {
         agents: [] as any[],
       };
 
-      // 4. Get applications for this category
+      // 4. 获取该分类下的应用
       const appsRes = await client.get(`/admin/api/workspace/${workspaceId}/application/1/30?folder_id=${cat.id}`);
       const apps = appsRes.data.data.records;
 
@@ -112,37 +111,37 @@ export const syncMaxKBData = async () => {
         let iconUrl = '';
         if (app.icon) {
           if (app.icon.startsWith('http')) {
-            // Full URL, use as is
+            // 完整 URL，直接使用
             iconUrl = app.icon;
           } else if (app.icon.startsWith('./oss/file/')) {
-            // Handle relative path starting with ./oss/file/
-            // Example: ./oss/file/019c04ea-2dca-77f2-8398-fea781afd9b8
-            // Should become: {baseURL}/admin/oss/file/{id}
+            // 处理以 ./oss/file/ 开头的相对路径
+            // 示例：./oss/file/019c04ea-2dca-77f2-8398-fea781afd9b8
+            // 转换为：{baseURL}/admin/oss/file/{id}
             const fileId = app.icon.replace('./oss/file/', '');
             iconUrl = `${baseURL}/admin/oss/file/${fileId}`;
           } else if (app.icon.includes('/admin/oss/file/')) {
-            // Handle path containing /admin/oss/file/
+            // 处理包含 /admin/oss/file/ 的路径
             iconUrl = app.icon.startsWith('http') ? app.icon : `${baseURL}${app.icon}`;
           } else if (app.icon.startsWith('./')) {
-            // Handle other relative paths like "./favicon.ico"
-            // These are default icons, treat as empty (will show fallback)
+            // 处理其他相对路径如 "./favicon.ico"
+            // 这些是默认图标，设为空（会显示备用图标）
             iconUrl = '';
           } else if (app.icon.includes('.')) {
-            // Likely a filename like favicon.ico, treat as empty (will show fallback)
+            // 可能是文件名如 favicon.ico，设为空
             iconUrl = '';
           } else {
-            // Assume it is a file ID (UUID), construct the full URL
-            // Format: ${baseURL}/admin/oss/file/{id}
+            // 假设是文件 ID（UUID），构建完整 URL
+            // 格式：${baseURL}/admin/oss/file/{id}
             iconUrl = `${baseURL}/admin/oss/file/${app.icon}`;
           }
           console.log(`Processed icon for app ${app.name}: ${app.icon} -> ${iconUrl}`);
         } else if (app.icon_file_id) {
-          // Handle case where icon is stored in icon_file_id field
+          // 处理 icon 存储在 icon_file_id 字段的情况
           iconUrl = `${baseURL}/admin/oss/file/${app.icon_file_id}`;
           console.log(`Processed icon from icon_file_id for app ${app.name}: ${app.icon_file_id} -> ${iconUrl}`);
         }
 
-        // Get access_token for the application
+        // 获取应用的 access_token
         let chatUrl = '';
         try {
           const accessTokenRes = await client.get(`/admin/api/workspace/${workspaceId}/application/${app.id}/access_token`);
@@ -171,7 +170,7 @@ export const syncMaxKBData = async () => {
       result.push(categoryData);
     }
 
-    // Save to JSON file
+    // 保存到 JSON 文件
     await fs.writeFile(DATA_FILE, JSON.stringify(result, null, 2));
 
     console.log('MaxKB sync completed successfully.');
@@ -187,7 +186,7 @@ export const getCategories = async () => {
     const data = await fs.readFile(DATA_FILE, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
-    // If file doesn't exist, return empty array
+    // 如果文件不存在，返回空数组
     return [];
   }
 };

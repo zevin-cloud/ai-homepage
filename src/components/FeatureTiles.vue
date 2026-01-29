@@ -46,7 +46,7 @@ onMounted(() => {
           class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-start shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-transparent hover:border-primary/20 group"
         >
           <div class="flex items-center gap-3 w-full mb-4">
-            <!-- Icon Container with gradient background -->
+            <!-- 图标容器，带渐变背景 -->
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0 group-hover:from-primary/30 group-hover:to-primary/10 transition-all duration-300">
               <img v-if="agent.icon" :src="agent.icon" alt="Icon" class="w-5 h-5 object-contain" />
               <Sparkles v-else class="w-5 h-5 text-primary" />

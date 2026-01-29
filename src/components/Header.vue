@@ -10,7 +10,7 @@ const emit = defineEmits<{
   (e: 'go-home'): void;
 }>();
 
-// State for tracking which dropdown is open (by category ID)
+// 跟踪哪个下拉菜单处于打开状态（按分类 ID）
 const openDropdownId = ref<string | null>(null);
 const headerRef = ref<HTMLElement | null>(null);
 
@@ -58,7 +58,7 @@ const scrollToCategory = (id: string) => {
   openDropdownId.value = null;
 };
 
-// Close dropdown when clicking outside
+// 点击外部时关闭下拉菜单
 const handleClickOutside = (event: MouseEvent) => {
   if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
     openDropdownId.value = null;
@@ -87,21 +87,21 @@ onUnmounted(() => {
 
     <!-- Navigation -->
     <nav class="flex items-center space-x-6">
-      <!-- Visible Categories -->
+      <!-- 可见分类 -->
       <div 
         v-for="category in visibleCategories" 
         :key="category.id"
         class="relative group"
       >
         <div class="flex items-center">
-          <!-- Click text to scroll -->
+          <!-- 点击文字滚动 -->
           <button
             @click="scrollToCategory(category.id)"
             class="text-sm font-medium text-text-main hover:text-primary transition-colors tracking-tight"
           >
             {{ category.name }}
           </button>
-          <!-- Click arrow to toggle dropdown -->
+          <!-- 点击箭头切换下拉菜单 -->
           <button 
             @click.stop="toggleDropdown(category.id)"
             class="ml-1 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none"
@@ -142,7 +142,7 @@ onUnmounted(() => {
           <ChevronDown class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': openDropdownId === 'more' }" />
         </button>
 
-        <!-- More Dropdown Menu -->
+        <!-- 更多下拉菜单 -->
         <div 
           v-if="openDropdownId === 'more'"
           class="absolute top-full right-0 mt-4 w-64 bg-white/95 backdrop-blur-md border border-white/50 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50"
@@ -173,9 +173,9 @@ onUnmounted(() => {
       </div>
     </nav>
 
-    <!-- Right Side -->
+    <!-- 右侧 -->
     <div class="flex items-center space-x-4">
-      <!-- Empty right side -->
+      <!-- 右侧为空 -->
     </div>
   </header>
 </template>

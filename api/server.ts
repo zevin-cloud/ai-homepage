@@ -1,5 +1,5 @@
 /**
- * local server entry file, for local development
+ * 本地服务器入口文件，用于本地开发
  */
 import dotenv from 'dotenv';
 dotenv.config();
@@ -7,7 +7,7 @@ dotenv.config();
 import app from './app.js';
 
 /**
- * start server with port
+ * 使用指定端口启动服务器
  */
 const PORT = process.env.PORT || 3001;
 
@@ -16,7 +16,7 @@ const server = app.listen(PORT, () => {
 });
 
 /**
- * close server
+ * 关闭服务器
  */
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received');

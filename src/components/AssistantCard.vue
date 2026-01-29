@@ -38,14 +38,14 @@ const closeChat = () => {
          'mt-32 max-w-[800px]': !isChatOpen 
        }">
     
-    <!-- Chat Interface (Iframe) -->
+    <!-- 聊天界面（Iframe） -->
     <div v-if="isChatOpen" 
          class="w-full h-full bg-white/90 backdrop-blur-md border border-primary/20 shadow-lg overflow-hidden flex flex-col relative transition-all duration-300 pointer-events-auto"
          :class="{ 'rounded-[30px]': isHeaderVisible, 'rounded-none': !isHeaderVisible }"
     >
-      <!-- Header/Controls for Chat -->
+      <!-- 聊天头部/控制按钮 -->
       <div class="absolute top-4 right-4 z-10 flex space-x-2">
-        <!-- Fullscreen Toggle -->
+        <!-- 全屏切换 -->
         <button 
           @click="$emit('toggle-fullscreen')" 
           class="p-2 bg-white/50 hover:bg-white/80 rounded-full transition-colors text-text-secondary hover:text-primary"
@@ -55,7 +55,7 @@ const closeChat = () => {
           <Minimize2 v-else class="w-5 h-5" />
         </button>
 
-        <!-- Close Button -->
+        <!-- 关闭按钮 -->
         <button @click="closeChat" class="p-2 bg-white/50 hover:bg-white/80 rounded-full transition-colors text-text-secondary hover:text-primary">
           <X class="w-5 h-5" />
         </button>

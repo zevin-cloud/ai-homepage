@@ -12,7 +12,7 @@ export interface Category {
   agents: Agent[];
 }
 
-// Helper to get icon URL
+// 获取图标 URL 的辅助函数
 const getIcon = (name: string) => new URL(`../assets/images/${name}`, import.meta.url).href;
 
 export const categories: Category[] = [

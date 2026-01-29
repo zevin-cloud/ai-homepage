@@ -1,5 +1,5 @@
 /**
- * This is a API server
+ * API 服务器主文件
  */
 
 import express, {
@@ -14,11 +14,11 @@ import { fileURLToPath } from 'url'
 import authRoutes from './routes/auth.js'
 import maxkbRoutes from './routes/maxkb.js'
 
-// for esm mode
+// ESM 模式下获取 __dirname
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// load env
+// 加载环境变量
 dotenv.config()
 
 const app: express.Application = express()
@@ -28,13 +28,13 @@ app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
 /**
- * API Routes
+ * API 路由
  */
 app.use('/api/auth', authRoutes)
 app.use('/api/maxkb', maxkbRoutes)
 
 /**
- * health
+ * 健康检查接口
  */
 app.use(
   '/api/health',
@@ -47,7 +47,7 @@ app.use(
 )
 
 /**
- * error handler middleware
+ * 错误处理中间件
  */
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({
@@ -57,7 +57,7 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 })
 
 /**
- * 404 handler
+ * 404 处理
  */
 app.use((req: Request, res: Response) => {
   res.status(404).json({

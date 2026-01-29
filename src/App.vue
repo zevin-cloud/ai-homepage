@@ -11,7 +11,7 @@ const isSyncing = ref(false);
 
 const handleAgentSelection = (url: string) => {
   currentAgentUrl.value = url;
-  // Ensure header is visible when opening a new agent
+  // 打开新助手时确保头部可见
   isHeaderVisible.value = true;
 };
 
@@ -68,14 +68,14 @@ const onMouseMove = (e: MouseEvent) => {
   if (!isDown.value || !scrollContainer.value) return;
   e.preventDefault();
   const y = e.pageY - scrollContainer.value.offsetTop;
-  const walk = (y - startY.value) * 2; // scroll-fast
+  const walk = (y - startY.value) * 2; // 快速滚动
   scrollContainer.value.scrollTop = scrollTop.value - walk;
 };
 </script>
 
 <template>
   <div class="h-screen w-full bg-background bg-hero-pattern bg-cover bg-center bg-no-repeat flex flex-col overflow-hidden">
-    <!-- Fixed Header with Transition -->
+    <!-- 固定头部，带动画过渡 -->
     <transition name="slide-down">
       <Header 
         v-show="isHeaderVisible" 
@@ -87,7 +87,7 @@ const onMouseMove = (e: MouseEvent) => {
     
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col w-full overflow-hidden relative transition-all duration-300">
-      <!-- Assistant Card (Fixed at top of main area) -->
+      <!-- 助手卡片（固定在主区域顶部） -->
       <div class="shrink-0 w-full z-10 h-full pointer-events-none">
         <div class="w-full h-full">
           <AssistantCard 
@@ -131,7 +131,7 @@ const onMouseMove = (e: MouseEvent) => {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* Header Transition */
+/* 头部动画过渡 */
 .slide-down-enter-active,
 .slide-down-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
