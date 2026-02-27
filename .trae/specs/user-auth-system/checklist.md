@@ -1,0 +1,11 @@
+- [ ] User data storage (JSON) is implemented and working.
+- [ ] MaxKB user sync service successfully fetches and stores users.
+- [ ] SSO Login redirects correctly and logs the user in.
+- [ ] Admin API allows listing users.
+- [ ] Admin API allows granting app permissions to a user.
+- [ ] Auth Middleware correctly blocks unauthorized access to protected routes.
+- [ ] Frontend Login page works.
+- [ ] Frontend Admin User Management page displays users.
+- [ ] Frontend Admin can assign apps to users via UI.
+- [ ] Non-admin users cannot access the Admin page.
+- [ ] Users cannot access apps they are not authorized for.

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import type { Category, Agent } from '@/data/categories';
-import { ChevronDown, Sparkles } from 'lucide-vue-next';
+import { ChevronDown, Sparkles, LogOut, Settings } from 'lucide-vue-next';
+import { useAuthStore } from '@/stores/auth';
 
+const authStore = useAuthStore();
 const categories = ref<Category[]>([]);
 
 const emit = defineEmits<{
@@ -10,11 +12,9 @@ const emit = defineEmits<{
   (e: 'go-home'): void;
 }>();
 
-// 跟踪哪个下拉菜单处于打开状态（按分类 ID）
 const openDropdownId = ref<string | null>(null);
 const headerRef = ref<HTMLElement | null>(null);
 
-// Logic to split categories into "Visible" and "More"
 const VISIBLE_LIMIT = 5;
 const visibleCategories = computed(() => categories.value.slice(0, VISIBLE_LIMIT));
 const moreCategories = computed(() => categories.value.slice(VISIBLE_LIMIT));
@@ -58,7 +58,6 @@ const scrollToCategory = (id: string) => {
   openDropdownId.value = null;
 };
 
-// 点击外部时关闭下拉菜单
 const handleClickOutside = (event: MouseEvent) => {
   if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
     openDropdownId.value = null;
@@ -77,7 +76,6 @@ onUnmounted(() => {
 
 <template>
   <header ref="headerRef" class="sticky top-0 z-50 flex items-center justify-between w-full max-w-[1440px] px-8 py-3 mx-auto mt-4 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full shadow-sm shrink-0">
-    <!-- Logo -->
     <div class="flex items-center cursor-pointer gap-2" @click="goHome">
       <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
         <Sparkles class="w-5 h-5 text-white" />
@@ -85,23 +83,19 @@ onUnmounted(() => {
       <span class="text-lg font-semibold text-text-main tracking-tight">FIT2CLOUD</span>
     </div>
 
-    <!-- Navigation -->
     <nav class="flex items-center space-x-6">
-      <!-- 可见分类 -->
       <div 
         v-for="category in visibleCategories" 
         :key="category.id"
         class="relative group"
       >
         <div class="flex items-center">
-          <!-- 点击文字滚动 -->
           <button
             @click="scrollToCategory(category.id)"
             class="text-sm font-medium text-text-main hover:text-primary transition-colors tracking-tight"
           >
             {{ category.name }}
           </button>
-          <!-- 点击箭头切换下拉菜单 -->
           <button 
             @click.stop="toggleDropdown(category.id)"
             class="ml-1 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none"
@@ -110,7 +104,6 @@ onUnmounted(() => {
           </button>
         </div>
 
-        <!-- Dropdown Menu -->
         <div 
           v-if="openDropdownId === category.id"
           class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-md border border-white/50 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50"
@@ -132,7 +125,6 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- "More" Dropdown (if categories > 5) -->
       <div v-if="hasMore" class="relative">
         <button 
           @click.stop="toggleDropdown('more')"
@@ -142,7 +134,6 @@ onUnmounted(() => {
           <ChevronDown class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': openDropdownId === 'more' }" />
         </button>
 
-        <!-- 更多下拉菜单 -->
         <div 
           v-if="openDropdownId === 'more'"
           class="absolute top-full right-0 mt-4 w-64 bg-white/95 backdrop-blur-md border border-white/50 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50"
@@ -162,10 +153,10 @@ onUnmounted(() => {
                 class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/5 flex items-center space-x-3 transition-colors group"
               >
                 <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center flex-shrink-0">
-                <img v-if="agent.icon" :src="agent.icon" class="w-3.5 h-3.5 object-contain" />
-                <Sparkles v-else class="w-3.5 h-3.5 text-primary" />
-              </div>
-              <span class="text-sm font-normal text-text-main group-hover:text-primary truncate">{{ agent.title }}</span>
+                  <img v-if="agent.icon" :src="agent.icon" class="w-3.5 h-3.5 object-contain" />
+                  <Sparkles v-else class="w-3.5 h-3.5 text-primary" />
+                </div>
+                <span class="text-sm font-normal text-text-main group-hover:text-primary truncate">{{ agent.title }}</span>
               </button>
             </div>
           </div>
@@ -173,9 +164,32 @@ onUnmounted(() => {
       </div>
     </nav>
 
-    <!-- 右侧 -->
     <div class="flex items-center space-x-4">
-      <!-- 右侧为空 -->
+      <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
+        <span class="text-sm text-gray-600">{{ authStore.user?.username }}</span>
+        
+        <router-link 
+          v-if="authStore.isAdmin" 
+          to="/admin" 
+          class="p-2 text-gray-600 hover:text-primary transition-colors"
+          title="Admin Management"
+        >
+          <Settings class="w-5 h-5" />
+        </router-link>
+
+        <button 
+          @click="authStore.logout()" 
+          class="p-2 text-gray-600 hover:text-red-600 transition-colors"
+          title="Logout"
+        >
+          <LogOut class="w-5 h-5" />
+        </button>
+      </div>
+      <div v-else>
+        <router-link to="/login" class="text-sm font-medium text-primary hover:text-primary/80">
+          Login
+        </router-link>
+      </div>
     </div>
   </header>
 </template>
