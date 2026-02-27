@@ -63,7 +63,7 @@ export const handleCasCallback = async (ticket: string) => {
     const existingUser = await findUserById(`cas-${username}`);
     
     // Prepare user data - DO NOT include role/allowedApps to preserve existing values
-    const user: User = {
+    const user: Partial<User> & { id: string; username: string; email: string } = {
       id: `cas-${username}`,
       username: username,
       email: email,
@@ -73,7 +73,7 @@ export const handleCasCallback = async (ticket: string) => {
         username,
         attributes
       }
-    } as User;
+    };
 
     // Save/Update user - this will preserve existing role and allowedApps
     const savedUser = await upsertUser(user);

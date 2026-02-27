@@ -45,17 +45,15 @@ export const syncMaxKBUsers = async () => {
     for (const record of records) {
       // Map MaxKB user to our User interface
       const username = record.username || record.name || record.email || 'Unknown';
-      const user: User = {
-        id: record.id,
+      const userId = record.id;
+      
+      // 检查用户是否已存在，如果存在则保留其 role 和 allowedApps
+      const existingUser = await upsertUser({
+        id: userId,
         username: username,
-        email: record.email || '',
-        // 默认角色为 user，管理员权限在本地管理
-        role: 'user', 
-        allowedApps: [], 
-        maxkb_data: record
-      };
-
-      await upsertUser(user);
+        email: record.email || ''
+      });
+      
       syncedCount++;
     }
 

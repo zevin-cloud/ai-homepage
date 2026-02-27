@@ -79,7 +79,7 @@ export const updateUserPermissions = async (
  * - 只有当 userData 明确提供 role/allowedApps 时才更新
  * - 优先通过 id 匹配，其次通过 username 匹配以防止重复
  */
-export const upsertUser = async (userData: User): Promise<User> => {
+export const upsertUser = async (userData: Partial<User> & { id?: string; username: string; email: string }): Promise<User> => {
   const users = await getUsers();
   
   // 1. 尝试通过 id 匹配
@@ -110,10 +110,17 @@ export const upsertUser = async (userData: User): Promise<User> => {
     return users[index];
   } else {
     // 创建新用户
-    if (!userData.role) userData.role = 'user';
-    if (!userData.allowedApps) userData.allowedApps = [];
-    users.push(userData);
+    const { id, username, email, role, allowedApps, ...extraData } = userData;
+    const newUser: User = {
+      id: id || `user-${Date.now()}`,
+      username,
+      email,
+      role: role || 'user',
+      allowedApps: allowedApps || [],
+      ...extraData
+    };
+    users.push(newUser);
     await saveUsers(users);
-    return userData;
+    return newUser;
   }
 };

@@ -27,7 +27,16 @@ const syncData = async () => {
   if (isSyncing.value) return;
   isSyncing.value = true;
   try {
-    const response = await fetch('/api/maxkb/sync', { method: 'POST' });
+    const headers: Record<string, string> = {};
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const response = await fetch('/api/maxkb/sync', { 
+      method: 'POST',
+      headers 
+    });
     const result = await response.json();
     if (result.success) {
       window.location.reload();

@@ -5,8 +5,8 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 // 默认管理员账号
 const DEFAULT_ADMIN = {
-  id: 'admin',
-  username: 'admin',
+  id: 'admin123',
+  username: 'admin123',
   password: '123456', // 在实际应用中应该使用哈希密码
   role: 'admin' as const
 };
