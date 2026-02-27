@@ -49,6 +49,11 @@ export const findUserById = async (id: string): Promise<User | undefined> => {
   return users.find(u => u.id === id);
 };
 
+export const findUserByUsername = async (username: string): Promise<User | undefined> => {
+  const users = await getUsers();
+  return users.find(u => u.username === username);
+};
+
 export const updateUserPermissions = async (
   id: string, 
   updates: { role?: 'admin' | 'user'; allowedApps?: string[] }
@@ -72,32 +77,43 @@ export const updateUserPermissions = async (
  * Create or Update user (Upsert)
  * - 更新用户时，保留现有的 role 和 allowedApps
  * - 只有当 userData 明确提供 role/allowedApps 时才更新
+ * - 优先通过 id 匹配，其次通过 username 匹配以防止重复
  */
 export const upsertUser = async (userData: User): Promise<User> => {
   const users = await getUsers();
-  const index = users.findIndex(u => u.id === userData.id);
+  
+  // 1. 尝试通过 id 匹配
+  let index = users.findIndex(u => u.id === userData.id);
+  
+  // 2. 如果 id 没匹配到，尝试通过 username 匹配 (防止 CAS 用户和同步用户重复)
+  if (index === -1 && userData.username) {
+    index = users.findIndex(u => u.username === userData.username);
+  }
   
   if (index !== -1) {
     const existingUser = users[index];
     
     // 保留现有的 role 和 allowedApps，除非 userData 明确提供了新值
-    // 注意：这里我们检查 userData 是否明确设置了这些字段
     const newRole = userData.role !== undefined ? userData.role : existingUser.role;
     const newAllowedApps = userData.allowedApps !== undefined ? userData.allowedApps : existingUser.allowedApps;
     
+    // 更新用户信息，但保留原有的 ID (如果是通过 username 匹配到的)
     users[index] = {
       ...existingUser,
       ...userData,
+      id: existingUser.id, // 保持原有 ID 不变
       role: newRole,
       allowedApps: newAllowedApps
     };
+    
+    await saveUsers(users);
+    return users[index];
   } else {
     // 创建新用户
     if (!userData.role) userData.role = 'user';
     if (!userData.allowedApps) userData.allowedApps = [];
     users.push(userData);
+    await saveUsers(users);
+    return userData;
   }
-  
-  await saveUsers(users);
-  return users.find(u => u.id === userData.id)!;
 };

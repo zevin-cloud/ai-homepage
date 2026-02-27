@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from 'express';
 import { getAuthUrl, handleCallback } from '../services/auth.js';
 import { getCasAuthUrl, handleCasCallback } from '../services/cas.js';
+import { localLogin } from '../services/localAuth.js';
 import jwt from 'jsonwebtoken';
 import { upsertUser, type User } from '../services/user.js';
 
@@ -10,35 +11,27 @@ const COOKIE_NAME = 'oidc_cv';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 /**
- * Dev Login - For testing without SSO
- * GET /api/auth/dev-login
+ * Local Login - Username/Password
+ * POST /api/auth/local-login
  */
-router.get('/dev-login', async (req: Request, res: Response) => {
+router.post('/local-login', async (req: Request, res: Response) => {
   try {
-    // Create a test admin user
-    const user: User = {
-      id: 'dev-admin',
-      username: 'Dev Admin',
-      email: 'dev@test.com',
-      role: 'admin',
-      allowedApps: []
-    };
+    const { username, password } = req.body;
     
-    await upsertUser(user);
+    if (!username || !password) {
+      return res.status(400).json({ success: false, error: '用户名和密码不能为空' });
+    }
     
-    // Generate token
-    const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '24h' }
-    );
+    const result = await localLogin(username, password);
     
-    // Redirect to frontend with token
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    res.redirect(`${frontendUrl}/login/callback?token=${token}`);
+    if (!result.success) {
+      return res.status(401).json({ success: false, error: result.error });
+    }
+    
+    res.json({ success: true, token: result.token, user: result.user });
   } catch (error) {
-    console.error('Dev login error:', error);
-    res.status(500).json({ error: 'Dev login failed' });
+    console.error('Local login error:', error);
+    res.status(500).json({ success: false, error: '登录失败' });
   }
 });
 

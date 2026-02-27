@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { upsertUser, type User } from './user.js';
+import https from 'https';
+import { upsertUser, getUsers, saveUsers, type User } from './user.js';
 
 const MAXKB_BASE_URL = process.env.MAXKB_BASE_URL || 'https://mk2.zevin.xin:20000';
 const MAXKB_USER_API_URL = `${MAXKB_BASE_URL}/admin/api/system/chat_user/user_manage/1/100`;
@@ -20,13 +21,13 @@ export const syncMaxKBUsers = async () => {
   try {
     const response = await axios.get(MAXKB_USER_API_URL, {
       headers: {
-        // Trying Bearer prefix
         'Authorization': `Bearer ${MAXKB_USER_TOKEN}`,
-      }
+      },
+      // 忽略 SSL 证书错误，与 maxkb.ts 保持一致
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      })
     });
-
-    // Log the structure to help debugging if it fails
-    // console.log('MaxKB User API Response:', JSON.stringify(response.data, null, 2));
 
     const records = response.data?.data?.records || response.data?.data || [];
     
@@ -37,17 +38,20 @@ export const syncMaxKBUsers = async () => {
 
     console.log(`Found ${records.length} users from MaxKB.`);
 
+    // 获取当前本地用户列表，用于后续删除不再存在的用户
+    const maxkbUsernames = new Set(records.map((r: any) => r.username || r.name || r.email).filter(Boolean));
+
     let syncedCount = 0;
     for (const record of records) {
       // Map MaxKB user to our User interface
+      const username = record.username || record.name || record.email || 'Unknown';
       const user: User = {
         id: record.id,
-        username: record.username || record.name || record.email || 'Unknown',
+        username: username,
         email: record.email || '',
-        // Default role is 'user', admin status is managed locally
+        // 默认角色为 user，管理员权限在本地管理
         role: 'user', 
-        allowedApps: [], // Default no apps, managed locally
-        // Store original data for reference
+        allowedApps: [], 
         maxkb_data: record
       };
 
@@ -55,8 +59,32 @@ export const syncMaxKBUsers = async () => {
       syncedCount++;
     }
 
-    console.log(`Successfully synced ${syncedCount} users.`);
-    return { success: true, count: syncedCount };
+    // 删除逻辑：如果本地用户不在 MaxKB 列表中，且不是默认 admin，则删除
+    let deletedCount = 0;
+    const updatedLocalUsers = await getUsers();
+    const finalUsers = updatedLocalUsers.filter(user => {
+      // 始终保留 admin 用户
+      if (user.username === 'admin' || user.role === 'admin') {
+        return true;
+      }
+      
+      // 如果用户在 MaxKB 中 (通过 username 匹配)，保留
+      if (maxkbUsernames.has(user.username)) {
+        return true;
+      }
+
+      // 如果用户不在 MaxKB 中，且不是 admin，则删除
+      console.log(`Deleting user ${user.username} (ID: ${user.id}) as they are no longer in MaxKB.`);
+      deletedCount++;
+      return false;
+    });
+
+    if (deletedCount > 0) {
+      await saveUsers(finalUsers);
+    }
+
+    console.log(`Successfully synced ${syncedCount} users, deleted ${deletedCount} users.`);
+    return { success: true, count: syncedCount, deletedCount };
 
   } catch (error) {
     console.error('MaxKB User sync failed:', error);

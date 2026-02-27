@@ -1,15 +1,5 @@
 [
   {
-    "id": "test-user-1",
-    "username": "Test User",
-    "email": "test@example.com",
-    "role": "user",
-    "allowedApps": [
-      "app-1",
-      "app-2"
-    ]
-  },
-  {
     "id": "019bf023-7161-7441-b30d-a77ef8f57658",
     "username": "zevin",
     "email": "zevin@cas.com",
@@ -134,13 +124,6 @@
     }
   },
   {
-    "id": "test-admin",
-    "username": "Test Admin",
-    "email": "admin@test.com",
-    "role": "user",
-    "allowedApps": []
-  },
-  {
     "id": "target-user",
     "username": "Target User",
     "email": "target@test.com",
@@ -158,12 +141,15 @@
     "id": "cas-user1",
     "username": "user1",
     "email": "0d4qo8@example.com",
-    "role": "admin",
-    "allowedApps": [],
+    "role": "user",
+    "allowedApps": [
+      "019a6115-ce80-7972-8706-4dd791a96914",
+      "019b0643-c7ff-7813-b9d0-49fc88e9aada"
+    ],
     "cas_data": {
       "username": "user1",
       "attributes": {
-        "authenticationDate": "2026-02-27T06:01:00.867665119Z",
+        "authenticationDate": "2026-02-27T06:53:50.217325913Z",
         "longTermAuthenticationRequestTokenUsed": "false",
         "isFromNewLogin": "false",
         "email": "0d4qo8@example.com",
@@ -174,57 +160,15 @@
         "userAttributes": {
           "attribute": [
             {
-              "_": "false",
+              "_": "2025-12-08T12:39:44Z",
               "$": {
-                "name": "isForbidden"
+                "name": "updatedTime"
               }
             },
             {
-              "_": "0",
+              "_": "staff",
               "$": {
-                "name": "balanceCredit"
-              }
-            },
-            {
-              "_": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
-              "$": {
-                "name": "id"
-              }
-            },
-            {
-              "_": "***",
-              "$": {
-                "name": "password"
-              }
-            },
-            {
-              "_": "user1",
-              "$": {
-                "name": "displayName"
-              }
-            },
-            {
-              "_": "0d4qo8@example.com",
-              "$": {
-                "name": "email"
-              }
-            },
-            {
-              "_": "built-in/admin",
-              "$": {
-                "name": "registerSource"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "signinWrongTimes"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaPhoneEnabled"
+                "name": "tag"
               }
             },
             {
@@ -234,81 +178,27 @@
               }
             },
             {
-              "_": "2025-12-08T20:38:33+08:00",
-              "$": {
-                "name": "createdTime"
-              }
-            },
-            {
-              "_": "2025-12-08T12:39:44Z",
-              "$": {
-                "name": "updatedTime"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isDefaultAvatar"
-              }
-            },
-            {
-              "_": "dataease",
-              "$": {
-                "name": "signupApplication"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isVerified"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaEmailEnabled"
-              }
-            },
-            {
-              "_": "fit2cloud",
-              "$": {
-                "name": "owner"
-              }
-            },
-            {
               "_": "false",
               "$": {
                 "name": "isAdmin"
               }
             },
             {
-              "_": "normal-user",
+              "_": "ac1536525443c3f5b309",
               "$": {
-                "name": "type"
+                "name": "passwordSalt"
               }
             },
             {
-              "_": "false",
+              "_": "Add User",
               "$": {
-                "name": "emailVerified"
+                "name": "registerType"
               }
             },
             {
-              "_": "Example Inc.",
+              "_": "plain",
               "$": {
-                "name": "affiliation"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "karma"
-              }
-            },
-            {
-              "_": "2",
-              "$": {
-                "name": "ranking"
+                "name": "passwordType"
               }
             },
             {
@@ -326,25 +216,7 @@
             {
               "_": "user1",
               "$": {
-                "name": "name"
-              }
-            },
-            {
-              "_": "https://cdn.casbin.org/img/casbin.svg",
-              "$": {
-                "name": "avatar"
-              }
-            },
-            {
-              "_": "All",
-              "$": {
-                "name": "countryCode"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaRadiusEnabled"
+                "name": "displayName"
               }
             },
             {
@@ -356,19 +228,109 @@
             {
               "_": "0",
               "$": {
-                "name": "balance"
+                "name": "score"
               }
             },
             {
-              "_": "staff",
+              "_": "false",
               "$": {
-                "name": "tag"
+                "name": "isDefaultAvatar"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "isForbidden"
+              }
+            },
+            {
+              "_": "user1",
+              "$": {
+                "name": "name"
               }
             },
             {
               "_": "0",
               "$": {
-                "name": "score"
+                "name": "signinWrongTimes"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "balance"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaRadiusEnabled"
+              }
+            },
+            {
+              "_": "2025-12-08T20:38:33+08:00",
+              "$": {
+                "name": "createdTime"
+              }
+            },
+            {
+              "_": "https://cdn.casbin.org/img/casbin.svg",
+              "$": {
+                "name": "avatar"
+              }
+            },
+            {
+              "_": "2",
+              "$": {
+                "name": "ranking"
+              }
+            },
+            {
+              "_": "normal-user",
+              "$": {
+                "name": "type"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "balanceCredit"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "isVerified"
+              }
+            },
+            {
+              "_": "All",
+              "$": {
+                "name": "countryCode"
+              }
+            },
+            {
+              "_": "fit2cloud",
+              "$": {
+                "name": "owner"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaPhoneEnabled"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaEmailEnabled"
+              }
+            },
+            {
+              "_": "Example Inc.",
+              "$": {
+                "name": "affiliation"
               }
             },
             {
@@ -378,15 +340,39 @@
               }
             },
             {
-              "_": "plain",
+              "_": "dataease",
               "$": {
-                "name": "passwordType"
+                "name": "signupApplication"
               }
             },
             {
-              "_": "ac1536525443c3f5b309",
+              "_": "***",
               "$": {
-                "name": "passwordSalt"
+                "name": "password"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "emailVerified"
+              }
+            },
+            {
+              "_": "built-in/admin",
+              "$": {
+                "name": "registerSource"
+              }
+            },
+            {
+              "_": "0d4qo8@example.com",
+              "$": {
+                "name": "email"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "karma"
               }
             },
             {
@@ -396,14 +382,45 @@
               }
             },
             {
-              "_": "Add User",
+              "_": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
               "$": {
-                "name": "registerType"
+                "name": "id"
               }
             }
           ]
         }
       }
+    }
+  },
+  {
+    "id": "admin",
+    "username": "admin",
+    "email": "admin@local.com",
+    "role": "admin",
+    "allowedApps": []
+  },
+  {
+    "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
+    "username": "test1",
+    "email": "233333307773333312@qq.com",
+    "role": "admin",
+    "allowedApps": [],
+    "maxkb_data": {
+      "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
+      "username": "test1",
+      "email": "233333307773333312@qq.com",
+      "phone": "13044543454",
+      "is_active": true,
+      "nick_name": "11",
+      "create_time": "2026-02-27T14:46:39.771962+08:00",
+      "update_time": "2026-02-27T14:48:11.421731+08:00",
+      "source": "LOCAL",
+      "user_group_ids": [
+        "default"
+      ],
+      "user_group_names": [
+        "默认用户组"
+      ]
     }
   }
 ]
