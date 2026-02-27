@@ -149,7 +149,7 @@
     "cas_data": {
       "username": "user1",
       "attributes": {
-        "authenticationDate": "2026-02-27T06:53:50.217325913Z",
+        "authenticationDate": "2026-02-27T07:41:44.143701673Z",
         "longTermAuthenticationRequestTokenUsed": "false",
         "isFromNewLogin": "false",
         "email": "0d4qo8@example.com",
@@ -160,27 +160,9 @@
         "userAttributes": {
           "attribute": [
             {
-              "_": "2025-12-08T12:39:44Z",
-              "$": {
-                "name": "updatedTime"
-              }
-            },
-            {
-              "_": "staff",
-              "$": {
-                "name": "tag"
-              }
-            },
-            {
-              "_": "CNY",
-              "$": {
-                "name": "balanceCurrency"
-              }
-            },
-            {
               "_": "false",
               "$": {
-                "name": "isAdmin"
+                "name": "mfaEmailEnabled"
               }
             },
             {
@@ -190,117 +172,15 @@
               }
             },
             {
-              "_": "Add User",
-              "$": {
-                "name": "registerType"
-              }
-            },
-            {
               "_": "plain",
               "$": {
                 "name": "passwordType"
               }
             },
             {
-              "_": "false",
-              "$": {
-                "name": "mfaPushEnabled"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "needUpdatePassword"
-              }
-            },
-            {
-              "_": "user1",
-              "$": {
-                "name": "displayName"
-              }
-            },
-            {
-              "_": "69774914549",
-              "$": {
-                "name": "phone"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "score"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isDefaultAvatar"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isForbidden"
-              }
-            },
-            {
-              "_": "user1",
-              "$": {
-                "name": "name"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "signinWrongTimes"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "balance"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaRadiusEnabled"
-              }
-            },
-            {
-              "_": "2025-12-08T20:38:33+08:00",
-              "$": {
-                "name": "createdTime"
-              }
-            },
-            {
               "_": "https://cdn.casbin.org/img/casbin.svg",
               "$": {
                 "name": "avatar"
-              }
-            },
-            {
-              "_": "2",
-              "$": {
-                "name": "ranking"
-              }
-            },
-            {
-              "_": "normal-user",
-              "$": {
-                "name": "type"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "balanceCredit"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isVerified"
               }
             },
             {
@@ -316,39 +196,45 @@
               }
             },
             {
-              "_": "false",
+              "_": "user1",
               "$": {
-                "name": "mfaPhoneEnabled"
+                "name": "name"
               }
             },
             {
               "_": "false",
               "$": {
-                "name": "mfaEmailEnabled"
-              }
-            },
-            {
-              "_": "Example Inc.",
-              "$": {
-                "name": "affiliation"
+                "name": "isDefaultAvatar"
               }
             },
             {
               "_": "false",
               "$": {
-                "name": "isOnline"
+                "name": "isDeleted"
               }
             },
             {
-              "_": "dataease",
+              "_": "false",
               "$": {
-                "name": "signupApplication"
+                "name": "isVerified"
               }
             },
             {
-              "_": "***",
+              "_": "0",
               "$": {
-                "name": "password"
+                "name": "signinWrongTimes"
+              }
+            },
+            {
+              "_": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
+              "$": {
+                "name": "id"
+              }
+            },
+            {
+              "_": "2025-12-08T12:39:44Z",
+              "$": {
+                "name": "updatedTime"
               }
             },
             {
@@ -364,9 +250,9 @@
               }
             },
             {
-              "_": "0d4qo8@example.com",
+              "_": "2025-12-08T20:38:33+08:00",
               "$": {
-                "name": "email"
+                "name": "createdTime"
               }
             },
             {
@@ -378,13 +264,127 @@
             {
               "_": "false",
               "$": {
-                "name": "isDeleted"
+                "name": "isForbidden"
               }
             },
             {
-              "_": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
+              "_": "0d4qo8@example.com",
               "$": {
-                "name": "id"
+                "name": "email"
+              }
+            },
+            {
+              "_": "69774914549",
+              "$": {
+                "name": "phone"
+              }
+            },
+            {
+              "_": "Example Inc.",
+              "$": {
+                "name": "affiliation"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "score"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "balance"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "needUpdatePassword"
+              }
+            },
+            {
+              "_": "0",
+              "$": {
+                "name": "balanceCredit"
+              }
+            },
+            {
+              "_": "user1",
+              "$": {
+                "name": "displayName"
+              }
+            },
+            {
+              "_": "CNY",
+              "$": {
+                "name": "balanceCurrency"
+              }
+            },
+            {
+              "_": "Add User",
+              "$": {
+                "name": "registerType"
+              }
+            },
+            {
+              "_": "dataease",
+              "$": {
+                "name": "signupApplication"
+              }
+            },
+            {
+              "_": "normal-user",
+              "$": {
+                "name": "type"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaPhoneEnabled"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaRadiusEnabled"
+              }
+            },
+            {
+              "_": "2",
+              "$": {
+                "name": "ranking"
+              }
+            },
+            {
+              "_": "staff",
+              "$": {
+                "name": "tag"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "isAdmin"
+              }
+            },
+            {
+              "_": "***",
+              "$": {
+                "name": "password"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "isOnline"
+              }
+            },
+            {
+              "_": "false",
+              "$": {
+                "name": "mfaPushEnabled"
               }
             }
           ]
