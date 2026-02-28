@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { Shield, ShieldAlert, RefreshCw, Edit } from 'lucide-vue-next';
+import { Shield, ShieldAlert, RefreshCw, Edit, Key } from 'lucide-vue-next';
 
 interface User {
   id: string;
@@ -24,10 +24,15 @@ const loading = ref(false);
 const syncing = ref(false);
 const error = ref<string | null>(null);
 
-// Modal state
 const showModal = ref(false);
 const editingUser = ref<User | null>(null);
 const selectedApps = ref<string[]>([]);
+
+const showPasswordModal = ref(false);
+const passwordUserId = ref('');
+const passwordUsername = ref('');
+const newPassword = ref('');
+const passwordLoading = ref(false);
 
 const fetchUsers = async () => {
   loading.value = true;
@@ -138,6 +143,46 @@ const saveApps = async () => {
   }
 };
 
+const openPasswordModal = (user: User) => {
+  passwordUserId.value = user.id;
+  passwordUsername.value = user.username;
+  newPassword.value = '';
+  showPasswordModal.value = true;
+};
+
+const resetPassword = async () => {
+  if (!newPassword.value || newPassword.value.length < 6) {
+    alert('密码长度至少6位');
+    return;
+  }
+  
+  passwordLoading.value = true;
+  try {
+    const res = await fetch('/api/auth/reset-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authStore.token}`
+      },
+      body: JSON.stringify({
+        userId: passwordUserId.value,
+        newPassword: newPassword.value
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert('密码重置成功');
+      showPasswordModal.value = false;
+    } else {
+      alert('重置失败: ' + data.error);
+    }
+  } catch (e) {
+    alert('重置失败');
+  } finally {
+    passwordLoading.value = false;
+  }
+};
+
 onMounted(() => {
   fetchUsers();
   fetchApps();
@@ -215,6 +260,14 @@ onMounted(() => {
                     <Shield v-else class="w-5 h-5" />
                   </button>
                   <button 
+                    v-if="!user.id.startsWith('cas-') && !user.id.startsWith('maxkb-')"
+                    @click="openPasswordModal(user)" 
+                    class="text-green-600 hover:text-green-900 mr-4"
+                    title="重置密码"
+                  >
+                    <Key class="w-5 h-5" />
+                  </button>
+                  <button 
                     @click="openEditApps(user)" 
                     class="text-blue-600 hover:text-blue-900"
                     title="编辑应用权限"
@@ -282,6 +335,53 @@ onMounted(() => {
               type="button" 
               class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               @click="showModal = false"
+            >
+              取消
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div v-if="showPasswordModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" @click="showPasswordModal = false"></div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                  重置 {{ passwordUsername }} 的密码
+                </h3>
+                <div class="mt-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">新密码</label>
+                  <input 
+                    v-model="newPassword"
+                    type="password" 
+                    placeholder="请输入新密码（至少6位）"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button 
+              type="button" 
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+              @click="resetPassword"
+              :disabled="passwordLoading"
+            >
+              {{ passwordLoading ? '处理中...' : '确认重置' }}
+            </button>
+            <button 
+              type="button" 
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              @click="showPasswordModal = false"
             >
               取消
             </button>
