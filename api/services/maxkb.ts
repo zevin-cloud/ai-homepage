@@ -164,6 +164,7 @@ export const syncMaxKBData = async () => {
           description: app.desc || '',
           icon: iconUrl,
           url: chatUrl,
+          accessToken: chatUrl.split('/chat/')[1] || '',
         });
       }
       

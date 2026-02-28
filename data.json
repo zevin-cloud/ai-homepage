@@ -13,35 +13,40 @@
         "title": "jms4 数据库查询",
         "description": "通过语义转 SQL 连接 JumpServer v4 数据库获取到 JumpServer v4 的数据",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/8c46a20b8e2344b6"
+        "url": "https://mk2.zevin.xin:20000/chat/8c46a20b8e2344b6",
+        "accessToken": "8c46a20b8e2344b6"
       },
       {
         "id": "019a5da2-6c51-7941-b9f3-243df0624402",
         "title": "文件下载",
         "description": "1",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/c80124545ec3f455"
+        "url": "https://mk2.zevin.xin:20000/chat/c80124545ec3f455",
+        "accessToken": "c80124545ec3f455"
       },
       {
         "id": "019960ad-9a68-7440-aff6-f7ddcb1cfe34",
         "title": "文档上传读取传输",
         "description": "用户上传文档，提取存储到指定数据库中",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/4e17896d91b98946"
+        "url": "https://mk2.zevin.xin:20000/chat/4e17896d91b98946",
+        "accessToken": "4e17896d91b98946"
       },
       {
         "id": "0198e435-556f-7ab3-8ff4-648c37c3143d",
         "title": "jms4 小助手-MCP",
         "description": "使用 MCP 的 JumpServer 小助手",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/381621021cf58acb"
+        "url": "https://mk2.zevin.xin:20000/chat/381621021cf58acb",
+        "accessToken": "381621021cf58acb"
       },
       {
         "id": "0198d158-047e-7dd3-8a7c-71a1df0baf6b",
         "title": "数据库查询",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/252d855a7141d195"
+        "url": "https://mk2.zevin.xin:20000/chat/252d855a7141d195",
+        "accessToken": "252d855a7141d195"
       }
     ]
   },
@@ -54,182 +59,208 @@
         "title": "表单测试",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/d1fb967a4c5a732c"
+        "url": "https://mk2.zevin.xin:20000/chat/d1fb967a4c5a732c",
+        "accessToken": "d1fb967a4c5a732c"
       },
       {
         "id": "019a7763-2e0e-7a73-962c-dfda5d351773",
         "title": "PDF文件解析助手",
         "description": "基于MinerU进行PDF解析",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/f61e04f454a59328"
+        "url": "https://mk2.zevin.xin:20000/chat/f61e04f454a59328",
+        "accessToken": "f61e04f454a59328"
       },
       {
         "id": "019a760c-daa3-71f3-8408-d341743a2462",
         "title": "宏发 邮件处理",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/c5be66c0f4221f27"
+        "url": "https://mk2.zevin.xin:20000/chat/c5be66c0f4221f27",
+        "accessToken": "c5be66c0f4221f27"
       },
       {
         "id": "019a6bde-93f3-74e2-947d-c7e68093e3f4",
         "title": "cordys手册问答助手",
         "description": "cordys手册问答助手",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/8a1105d525bca091"
+        "url": "https://mk2.zevin.xin:20000/chat/8a1105d525bca091",
+        "accessToken": "8a1105d525bca091"
       },
       {
         "id": "019a100f-e580-7090-a3e9-e251e5926404",
         "title": "langfuse 对接测试",
         "description": "",
         "icon": "https://mk2.zevin.xin:20000/admin/oss/file/019b59de-bcfd-7c40-aa08-a78327e453a6",
-        "url": "https://mk2.zevin.xin:20000/chat/24f61db45008f8de"
+        "url": "https://mk2.zevin.xin:20000/chat/24f61db45008f8de",
+        "accessToken": "24f61db45008f8de"
       },
       {
         "id": "0199ffbd-1ece-7843-8e4b-9b9530cbe700",
         "title": "变量赋值",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/15c6585a0bbe04d6"
+        "url": "https://mk2.zevin.xin:20000/chat/15c6585a0bbe04d6",
+        "accessToken": "15c6585a0bbe04d6"
       },
       {
         "id": "0199fc46-d91b-7b40-81ce-098f54cdb33f",
         "title": "<form_rander>",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/e12382da5c6ad47d"
+        "url": "https://mk2.zevin.xin:20000/chat/e12382da5c6ad47d",
+        "accessToken": "e12382da5c6ad47d"
       },
       {
         "id": "0199cbe9-b105-70a0-8cc6-68c514b1c071",
         "title": "简单应用cordys手册问答助手",
         "description": "简单应用cordys手册问答助手\n",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/1fdb73085a0d9291"
+        "url": "https://mk2.zevin.xin:20000/chat/1fdb73085a0d9291",
+        "accessToken": "1fdb73085a0d9291"
       },
       {
         "id": "0199cbe7-a9d0-7f42-891a-5be8ddcdfbac",
         "title": "循环",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/6a3aec98379529a7"
+        "url": "https://mk2.zevin.xin:20000/chat/6a3aec98379529a7",
+        "accessToken": "6a3aec98379529a7"
       },
       {
         "id": "019970db-7706-7d81-969e-7b598d0d040d",
         "title": "cordys",
         "description": "cordys 接入",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/c616642e38e0906f"
+        "url": "https://mk2.zevin.xin:20000/chat/c616642e38e0906f",
+        "accessToken": "c616642e38e0906f"
       },
       {
         "id": "01995fc0-1df7-7ae1-99be-18649c9c1c6a",
         "title": "视频文件上传",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/6651431ce3ec1f2c"
+        "url": "https://mk2.zevin.xin:20000/chat/6651431ce3ec1f2c",
+        "accessToken": "6651431ce3ec1f2c"
       },
       {
         "id": "01994c17-7591-7e51-ac99-b2f7970f265a",
         "title": "html-render shaow 测试",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/0ade856dec0c978d"
+        "url": "https://mk2.zevin.xin:20000/chat/0ade856dec0c978d",
+        "accessToken": "0ade856dec0c978d"
       },
       {
         "id": "019931c9-ad0b-79b0-99c6-36ec7374634c",
         "title": "文件上传试用",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/36be9f66ca61c120"
+        "url": "https://mk2.zevin.xin:20000/chat/36be9f66ca61c120",
+        "accessToken": "36be9f66ca61c120"
       },
       {
         "id": "01992ca5-16bf-7971-a757-3d05b7d727d8",
         "title": "echartteest",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/ec06b6b31585fad5"
+        "url": "https://mk2.zevin.xin:20000/chat/ec06b6b31585fad5",
+        "accessToken": "ec06b6b31585fad5"
       },
       {
         "id": "01992712-91a0-7882-9a4b-874bb920ec88",
         "title": "合同审核助手",
         "description": "用于财务部审核一般采购合同使用",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/9e7e537e2173b880"
+        "url": "https://mk2.zevin.xin:20000/chat/9e7e537e2173b880",
+        "accessToken": "9e7e537e2173b880"
       },
       {
         "id": "019926fc-05d3-7ae2-b853-e85d04c377bc",
         "title": "合同审查",
         "description": "合同审查",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/f80a16d216e5d3aa"
+        "url": "https://mk2.zevin.xin:20000/chat/f80a16d216e5d3aa",
+        "accessToken": "f80a16d216e5d3aa"
       },
       {
         "id": "01991e0d-bc33-71e1-9e09-8d67f05e6eb0",
         "title": "html 格式化生成",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/e9ba5d6e24ee4c06"
+        "url": "https://mk2.zevin.xin:20000/chat/e9ba5d6e24ee4c06",
+        "accessToken": "e9ba5d6e24ee4c06"
       },
       {
         "id": "01991e0c-4d15-7c02-89b8-20ef7a591586",
         "title": "html 格式化生成",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/016d2bd6afd403d4"
+        "url": "https://mk2.zevin.xin:20000/chat/016d2bd6afd403d4",
+        "accessToken": "016d2bd6afd403d4"
       },
       {
         "id": "01990829-b2e3-7171-a91c-01a5f8b1f981",
         "title": "桔子科技",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/3c5a1c6331fb973c"
+        "url": "https://mk2.zevin.xin:20000/chat/3c5a1c6331fb973c",
+        "accessToken": "3c5a1c6331fb973c"
       },
       {
         "id": "0198ea9f-d2d9-77d2-92f4-1ab68dd81226",
         "title": "返回分段",
         "description": "",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/c179d1383a11374c"
+        "url": "https://mk2.zevin.xin:20000/chat/c179d1383a11374c",
+        "accessToken": "c179d1383a11374c"
       },
       {
         "id": "0198e0a6-55ce-7e81-970f-4afbf984560c",
         "title": "客户画像AI助手",
         "description": "结合CRM数据，根据客户行为数据生成画像标签",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/ab78533db05a6545"
+        "url": "https://mk2.zevin.xin:20000/chat/ab78533db05a6545",
+        "accessToken": "ab78533db05a6545"
       },
       {
         "id": "0198e08e-d711-7e83-bfea-96539e16e28a",
         "title": "合同审核助手",
         "description": "用于财务部审核一般采购合同使用",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/d9e3f8e4711852c3"
+        "url": "https://mk2.zevin.xin:20000/chat/d9e3f8e4711852c3",
+        "accessToken": "d9e3f8e4711852c3"
       },
       {
         "id": "0198e08e-be2a-71f2-8c0f-43381af2684d",
         "title": "审批意见自动生成助手",
         "description": "自动根据申请内容生成审批意见草稿，结合 LLM（大语言模型） 和 审批模板 ，提升审批效率，减少人工输入。",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/58b3f7b31ab714d3"
+        "url": "https://mk2.zevin.xin:20000/chat/58b3f7b31ab714d3",
+        "accessToken": "58b3f7b31ab714d3"
       },
       {
         "id": "0198e08e-ab12-7041-8e81-015ec75bec40",
         "title": "会议辅助",
         "description": "根据会议记录自动生成摘要、行动项自动生成会议纪要。\n后续需要补充一个提取文件信息的节点，在会议纪要加入附件内容。\n注意： 该应用的清楚策略是7天，避免文件过多",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/66114230fc3abbf0"
+        "url": "https://mk2.zevin.xin:20000/chat/66114230fc3abbf0",
+        "accessToken": "66114230fc3abbf0"
       },
       {
         "id": "0198e08e-94c1-7513-875b-8c495077394b",
         "title": "基于权限控制的问答",
         "description": "不同岗位查看不同资料，财务只能看财务相关，IT只能看系统文档等",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/fe8e963dc7f9c533"
+        "url": "https://mk2.zevin.xin:20000/chat/fe8e963dc7f9c533",
+        "accessToken": "fe8e963dc7f9c533"
       },
       {
         "id": "0198e059-cb3b-7642-a7b2-7419522bc5ac",
         "title": "MaxKB应用场景与客户案例查询小助手",
         "description": "解答MK相关应用场景和客户案例",
         "icon": "",
-        "url": "https://mk2.zevin.xin:20000/chat/78a57ce0c70ed81a"
+        "url": "https://mk2.zevin.xin:20000/chat/78a57ce0c70ed81a",
+        "accessToken": "78a57ce0c70ed81a"
       }
     ]
   }
