@@ -1,15 +1,62 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { findUserById, findUserByUsername, upsertUser, type User } from './user.js';
+import fs from 'fs';
+import path from 'path';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const LOCAL_USERS_FILE = path.join(process.cwd(), 'local-users.json');
 
-// 默认管理员账号
-const DEFAULT_ADMIN = {
-  id: 'admin123',
-  username: 'admin123',
-  password: '123456', // 在实际应用中应该使用哈希密码
-  role: 'admin' as const
+interface LocalUser {
+  id: string;
+  username: string;
+  password: string;
+  role: 'admin' | 'user';
+}
+
+const loadLocalUsers = (): LocalUser[] => {
+  try {
+    if (fs.existsSync(LOCAL_USERS_FILE)) {
+      const data = fs.readFileSync(LOCAL_USERS_FILE, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error('Error loading local users:', error);
+  }
+  return [];
 };
+
+const saveLocalUsers = (users: LocalUser[]) => {
+  try {
+    fs.writeFileSync(LOCAL_USERS_FILE, JSON.stringify(users, null, 2));
+  } catch (error) {
+    console.error('Error saving local users:', error);
+  }
+};
+
+const getDefaultAdmin = async (): Promise<LocalUser> => {
+  const users = loadLocalUsers();
+  const existingAdmin = users.find(u => u.id === 'admin123');
+  
+  if (existingAdmin) {
+    return existingAdmin;
+  }
+  
+  const hashedPassword = await bcrypt.hash('123456', 10);
+  const defaultAdmin: LocalUser = {
+    id: 'admin123',
+    username: 'admin123',
+    password: hashedPassword,
+    role: 'admin'
+  };
+  
+  users.push(defaultAdmin);
+  saveLocalUsers(users);
+  
+  return defaultAdmin;
+};
+
+getDefaultAdmin().catch(console.error);
 
 interface LoginResult {
   success: boolean;
@@ -18,60 +65,110 @@ interface LoginResult {
   error?: string;
 }
 
+export const changePassword = async (userId: string, oldPassword: string, newPassword: string): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const users = loadLocalUsers();
+    const userIndex = users.findIndex(u => u.id === userId);
+    
+    if (userIndex === -1) {
+      return { success: false, error: '用户不存在' };
+    }
+    
+    const user = users[userIndex];
+    const isValid = await bcrypt.compare(oldPassword, user.password);
+    
+    if (!isValid) {
+      return { success: false, error: '原密码错误' };
+    }
+    
+    if (newPassword.length < 6) {
+      return { success: false, error: '新密码长度至少6位' };
+    }
+    
+    users[userIndex].password = await bcrypt.hash(newPassword, 10);
+    saveLocalUsers(users);
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Change password error:', error);
+    return { success: false, error: '修改密码失败' };
+  }
+};
+
+export const resetPassword = async (userId: string, newPassword: string): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const users = loadLocalUsers();
+    const userIndex = users.findIndex(u => u.id === userId);
+    
+    if (userIndex === -1) {
+      return { success: false, error: '用户不存在' };
+    }
+    
+    if (newPassword.length < 6) {
+      return { success: false, error: '新密码长度至少6位' };
+    }
+    
+    users[userIndex].password = await bcrypt.hash(newPassword, 10);
+    saveLocalUsers(users);
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Reset password error:', error);
+    return { success: false, error: '重置密码失败' };
+  }
+};
+
 /**
  * 本地登录验证
  */
 export const localLogin = async (username: string, password: string): Promise<LoginResult> => {
   try {
-    // 检查是否是默认管理员
-    if (username === DEFAULT_ADMIN.username && password === DEFAULT_ADMIN.password) {
-      // 确保 admin 用户存在于数据库中
-      let adminUser = await findUserById(DEFAULT_ADMIN.id);
+    const localUsers = loadLocalUsers();
+    const localUser = localUsers.find(u => u.username === username);
+    
+    if (localUser) {
+      const isValid = await bcrypt.compare(password, localUser.password);
       
-      if (!adminUser) {
-        adminUser = await upsertUser({
-          id: DEFAULT_ADMIN.id,
-          username: DEFAULT_ADMIN.username,
-          email: 'admin@local.com',
-          role: DEFAULT_ADMIN.role,
+      if (!isValid) {
+        return { success: false, error: '密码错误' };
+      }
+      
+      let user = await findUserById(localUser.id);
+      
+      if (!user) {
+        user = await upsertUser({
+          id: localUser.id,
+          username: localUser.username,
+          email: `${localUser.username}@local.com`,
+          role: localUser.role,
           allowedApps: []
         });
       }
       
       const token = jwt.sign(
-        { id: adminUser.id, username: adminUser.username, role: adminUser.role },
+        { id: user.id, username: user.username, role: user.role },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
       
-      return { success: true, token, user: adminUser };
+      return { success: true, token, user };
     }
     
-    // 检查其他本地用户 (从 users.json)
     const user = await findUserByUsername(username);
     
     if (!user) {
       return { success: false, error: '用户不存在' };
     }
     
-    // 对于 CAS 同步的用户，不允许本地密码登录
     if (user.id.startsWith('cas-')) {
       return { success: false, error: '请使用 CAS 单点登录' };
     }
     
-    // 简单密码验证 (实际应用中应该使用 bcrypt 等哈希验证)
-    const userPassword = (user as any).password;
-    if (!userPassword || userPassword !== password) {
-      return { success: false, error: '密码错误' };
+    if (user.id.startsWith('maxkb-')) {
+      return { success: false, error: '请使用 MaxKB 单点登录' };
     }
     
-    const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '24h' }
-    );
-    
-    return { success: true, token, user };
+    return { success: false, error: '密码错误' };
     
   } catch (error) {
     console.error('Local login error:', error);

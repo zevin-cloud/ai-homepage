@@ -2,6 +2,9 @@
  * API 服务器主文件
  */
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 import express, {
   type Request,
   type Response,
@@ -9,7 +12,6 @@ import express, {
 } from 'express'
 import cors from 'cors'
 import path from 'path'
-import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { fileURLToPath } from 'url'
 import authRoutes from './routes/auth.js'
@@ -19,9 +21,6 @@ import userRoutes from './routes/user.js'
 // ESM 模式下获取 __dirname
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-// 加载环境变量
-dotenv.config()
 
 const app: express.Application = express()
 

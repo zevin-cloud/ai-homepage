@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from 'express';
 import { getAuthUrl, handleCallback } from '../services/auth.js';
 import { getCasAuthUrl, handleCasCallback } from '../services/cas.js';
-import { localLogin } from '../services/localAuth.js';
+import { localLogin, changePassword, resetPassword } from '../services/localAuth.js';
 import jwt from 'jsonwebtoken';
 import { upsertUser, type User } from '../services/user.js';
 
@@ -126,6 +126,76 @@ router.get('/cas/callback', async (req: Request, res: Response) => {
  */
 router.post('/logout', async (req: Request, res: Response) => {
   res.json({ success: true, message: 'Logged out' });
+});
+
+/**
+ * Change Password
+ * POST /api/auth/change-password
+ */
+router.post('/change-password', async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, error: '未授权' });
+    }
+    
+    const token = authHeader.substring(7);
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    
+    const { oldPassword, newPassword } = req.body;
+    
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({ success: false, error: '请填写完整信息' });
+    }
+    
+    const result = await changePassword(decoded.id, oldPassword, newPassword);
+    
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+    
+    res.json({ success: true, message: '密码修改成功' });
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({ success: false, error: '修改密码失败' });
+  }
+});
+
+/**
+ * Reset Password (Admin only)
+ * POST /api/auth/reset-password
+ */
+router.post('/reset-password', async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, error: '未授权' });
+    }
+    
+    const token = authHeader.substring(7);
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string; role: string };
+    
+    if (decoded.role !== 'admin') {
+      return res.status(403).json({ success: false, error: '无权限' });
+    }
+    
+    const { userId, newPassword } = req.body;
+    
+    if (!userId || !newPassword) {
+      return res.status(400).json({ success: false, error: '请填写完整信息' });
+    }
+    
+    const result = await resetPassword(userId, newPassword);
+    
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+    
+    res.json({ success: true, message: '密码重置成功' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ success: false, error: '重置密码失败' });
+  }
 });
 
 export default router;
