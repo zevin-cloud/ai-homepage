@@ -8,7 +8,7 @@ import { upsertUser, type User } from '../services/user.js';
 const router: Router = Router();
 
 const COOKIE_NAME = 'oidc_cv';
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
 
 /**
  * Local Login - Username/Password
@@ -140,7 +140,7 @@ router.post('/change-password', async (req: Request, res: Response) => {
     }
     
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    const decoded = jwt.verify(token, getJwtSecret()) as { id: string };
     
     const { oldPassword, newPassword } = req.body;
     
@@ -173,7 +173,7 @@ router.post('/reset-password', async (req: Request, res: Response) => {
     }
     
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string; role: string };
+    const decoded = jwt.verify(token, getJwtSecret()) as { id: string; role: string };
     
     if (decoded.role !== 'admin') {
       return res.status(403).json({ success: false, error: '无权限' });
@@ -195,6 +195,34 @@ router.post('/reset-password', async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Reset password error:', error);
     res.status(500).json({ success: false, error: '重置密码失败' });
+  }
+});
+
+/**
+ * Get current user info
+ * GET /api/auth/me
+ */
+router.get('/me', async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, error: '未授权' });
+    }
+    
+    const token = authHeader.substring(7);
+    const decoded = jwt.verify(token, getJwtSecret()) as { id: string; username: string; role: string };
+    
+    res.json({ 
+      success: true, 
+      user: {
+        id: decoded.id,
+        username: decoded.username,
+        role: decoded.role
+      }
+    });
+  } catch (error) {
+    console.error('Get user info error:', error);
+    res.status(401).json({ success: false, error: '无效的 token' });
   }
 });
 

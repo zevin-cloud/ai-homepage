@@ -4,7 +4,8 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const USERS_FILE = path.join(__dirname, '../../users.json');
+// Use path relative to this file's location
+const USERS_FILE = path.resolve(__dirname, '../../users.json');
 
 export interface User {
   id: string;

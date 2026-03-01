@@ -3,7 +3,7 @@ import { parseStringPromise } from 'xml2js';
 import jwt from 'jsonwebtoken';
 import { upsertUser, findUserById, type User } from './user.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
 
 const getCasConfig = () => ({
   serverUrl: process.env.CAS_SERVER_URL || 'https://cas.example.com/cas',
@@ -84,7 +84,7 @@ export const handleCasCallback = async (ticket: string) => {
         username: savedUser.username, 
         role: savedUser.role 
       },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '24h' }
     );
 

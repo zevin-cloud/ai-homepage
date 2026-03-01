@@ -4,7 +4,7 @@ import { findUserById, findUserByUsername, upsertUser, type User } from './user.
 import fs from 'fs';
 import path from 'path';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
 const LOCAL_USERS_FILE = path.join(process.cwd(), 'local-users.json');
 
 interface LocalUser {
@@ -147,7 +147,7 @@ export const localLogin = async (username: string, password: string): Promise<Lo
       
       const token = jwt.sign(
         { id: user.id, username: user.username, role: user.role },
-        JWT_SECRET,
+        getJwtSecret(),
         { expiresIn: '24h' }
       );
       

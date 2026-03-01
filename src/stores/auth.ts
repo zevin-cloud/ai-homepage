@@ -31,13 +31,28 @@ export const useAuthStore = defineStore('auth', () => {
     if (!token.value) return;
     
     try {
-      // Mock decoding for now since we don't have jwt-decode on frontend
-      const payload = JSON.parse(atob(token.value.split('.')[1]));
+      // Validate token with backend
+      const response = await fetch('/api/auth/me', {
+        headers: {
+          'Authorization': `Bearer ${token.value}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Token validation failed');
+      }
+      
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Token validation failed');
+      }
+      
       user.value = {
-        id: payload.id,
-        username: payload.username,
+        id: result.user.id,
+        username: result.user.username,
         email: '', // Not in token payload currently
-        role: payload.role,
+        role: result.user.role,
         allowedApps: [] // Not in token payload currently
       };
       
