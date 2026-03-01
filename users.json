@@ -1,5 +1,131 @@
 [
   {
+    "id": "01983105-600e-77a2-89e1-b4ae61a14103",
+    "username": "admin",
+    "email": "",
+    "role": "user",
+    "allowedApps": [],
+    "maxkb_data": {
+      "id": "01983105-600e-77a2-89e1-b4ae61a14103",
+      "username": "admin",
+      "email": "",
+      "phone": "",
+      "is_active": true,
+      "nick_name": "系统管理员",
+      "create_time": "2025-07-22T15:24:52.623142+08:00",
+      "update_time": "2025-09-18T09:56:13.385133+08:00",
+      "source": "LOCAL",
+      "user_group_ids": [
+        "default",
+        "019abf14-dea5-7313-bbdc-976218bb4e97"
+      ],
+      "user_group_names": [
+        "默认用户组",
+        "销售"
+      ]
+    }
+  },
+  {
+    "id": "target-user",
+    "username": "Target User",
+    "email": "target@test.com",
+    "role": "admin",
+    "allowedApps": []
+  },
+  {
+    "id": "dev-admin",
+    "username": "Dev Admin",
+    "email": "dev@test.com",
+    "role": "admin",
+    "allowedApps": []
+  },
+  {
+    "id": "admin",
+    "username": "admin",
+    "email": "admin@local.com",
+    "role": "admin",
+    "allowedApps": []
+  },
+  {
+    "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
+    "username": "test1",
+    "email": "233333307773333312@qq.com",
+    "role": "admin",
+    "allowedApps": [],
+    "maxkb_data": {
+      "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
+      "username": "test1",
+      "email": "233333307773333312@qq.com",
+      "phone": "13044543454",
+      "is_active": true,
+      "nick_name": "11",
+      "create_time": "2026-02-27T14:46:39.771962+08:00",
+      "update_time": "2026-02-27T14:48:11.421731+08:00",
+      "source": "LOCAL",
+      "user_group_ids": [
+        "default"
+      ],
+      "user_group_names": [
+        "默认用户组"
+      ]
+    }
+  },
+  {
+    "id": "admin123",
+    "username": "admin123",
+    "email": "admin@local.com",
+    "role": "admin",
+    "allowedApps": []
+  },
+  {
+    "id": "019ca8d1-6d3e-7112-a091-f1e3ac7cfb5f",
+    "username": "99999",
+    "email": "3894431982@qq.com",
+    "role": "user",
+    "allowedApps": [],
+    "maxkb_data": {
+      "id": "019ca8d1-6d3e-7112-a091-f1e3ac7cfb5f",
+      "username": "99999",
+      "email": "3894431982@qq.com",
+      "phone": "",
+      "is_active": true,
+      "nick_name": "999",
+      "create_time": "2026-03-01T17:53:43.231398+08:00",
+      "update_time": "2026-03-01T17:53:43.231414+08:00",
+      "source": "LOCAL",
+      "user_group_ids": [
+        "019abf14-dea5-7313-bbdc-976218bb4e97"
+      ],
+      "user_group_names": [
+        "销售"
+      ]
+    }
+  },
+  {
+    "id": "019c9f15-e8d8-72c3-91da-eeb9f4b1e4fa",
+    "username": "user1",
+    "email": "user1@cas.com",
+    "role": "user",
+    "allowedApps": [],
+    "maxkb_data": {
+      "id": "019c9f15-e8d8-72c3-91da-eeb9f4b1e4fa",
+      "username": "user1",
+      "email": "user1@cas.com",
+      "phone": "",
+      "is_active": true,
+      "nick_name": "user1",
+      "create_time": "2026-02-27T20:32:19.160929+08:00",
+      "update_time": "2026-02-27T20:32:19.160944+08:00",
+      "source": "CAS",
+      "user_group_ids": [
+        "default"
+      ],
+      "user_group_names": [
+        "默认用户组"
+      ]
+    }
+  },
+  {
     "id": "019bf023-7161-7441-b30d-a77ef8f57658",
     "username": "zevin",
     "email": "zevin@cas.com",
@@ -96,434 +222,5 @@
         "默认用户组"
       ]
     }
-  },
-  {
-    "id": "01983105-600e-77a2-89e1-b4ae61a14103",
-    "username": "admin",
-    "email": "",
-    "role": "user",
-    "allowedApps": [],
-    "maxkb_data": {
-      "id": "01983105-600e-77a2-89e1-b4ae61a14103",
-      "username": "admin",
-      "email": "",
-      "phone": "",
-      "is_active": true,
-      "nick_name": "系统管理员",
-      "create_time": "2025-07-22T15:24:52.623142+08:00",
-      "update_time": "2025-09-18T09:56:13.385133+08:00",
-      "source": "LOCAL",
-      "user_group_ids": [
-        "default",
-        "019abf14-dea5-7313-bbdc-976218bb4e97"
-      ],
-      "user_group_names": [
-        "默认用户组",
-        "销售"
-      ]
-    }
-  },
-  {
-    "id": "target-user",
-    "username": "Target User",
-    "email": "target@test.com",
-    "role": "admin",
-    "allowedApps": []
-  },
-  {
-    "id": "dev-admin",
-    "username": "Dev Admin",
-    "email": "dev@test.com",
-    "role": "admin",
-    "allowedApps": []
-  },
-  {
-    "id": "cas-user1",
-    "username": "user1",
-    "email": "user1@cas.com",
-    "role": "user",
-    "allowedApps": [],
-    "cas_data": {
-      "username": "user1",
-      "attributes": {
-        "authenticationDate": "2026-03-01T08:48:07.693138986Z",
-        "longTermAuthenticationRequestTokenUsed": "false",
-        "isFromNewLogin": "false",
-        "email": "0d4qo8@example.com",
-        "affiliation": "Example Inc.",
-        "avatar": "https://cdn.casbin.org/img/casbin.svg",
-        "phone": "69774914549",
-        "displayName": "user1",
-        "userAttributes": {
-          "attribute": [
-            {
-              "_": "fit2cloud",
-              "$": {
-                "name": "owner"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaRadiusEnabled"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "score"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "balance"
-              }
-            },
-            {
-              "_": "ac1536525443c3f5b309",
-              "$": {
-                "name": "passwordSalt"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "emailVerified"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "signinWrongTimes"
-              }
-            },
-            {
-              "_": "2",
-              "$": {
-                "name": "ranking"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isOnline"
-              }
-            },
-            {
-              "_": "user1",
-              "$": {
-                "name": "name"
-              }
-            },
-            {
-              "_": "plain",
-              "$": {
-                "name": "passwordType"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaPushEnabled"
-              }
-            },
-            {
-              "_": "0d4qo8@example.com",
-              "$": {
-                "name": "email"
-              }
-            },
-            {
-              "_": "dataease",
-              "$": {
-                "name": "signupApplication"
-              }
-            },
-            {
-              "_": "All",
-              "$": {
-                "name": "countryCode"
-              }
-            },
-            {
-              "_": "69774914549",
-              "$": {
-                "name": "phone"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "karma"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isDeleted"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaPhoneEnabled"
-              }
-            },
-            {
-              "_": "user1",
-              "$": {
-                "name": "displayName"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isForbidden"
-              }
-            },
-            {
-              "_": "normal-user",
-              "$": {
-                "name": "type"
-              }
-            },
-            {
-              "_": "Example Inc.",
-              "$": {
-                "name": "affiliation"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isDefaultAvatar"
-              }
-            },
-            {
-              "_": "2025-12-08T20:38:33+08:00",
-              "$": {
-                "name": "createdTime"
-              }
-            },
-            {
-              "_": "***",
-              "$": {
-                "name": "password"
-              }
-            },
-            {
-              "_": "2026-02-28T07:30:38Z",
-              "$": {
-                "name": "updatedTime"
-              }
-            },
-            {
-              "_": "staff",
-              "$": {
-                "name": "tag"
-              }
-            },
-            {
-              "_": "built-in/admin",
-              "$": {
-                "name": "registerSource"
-              }
-            },
-            {
-              "_": "0",
-              "$": {
-                "name": "balanceCredit"
-              }
-            },
-            {
-              "_": "Add User",
-              "$": {
-                "name": "registerType"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "mfaEmailEnabled"
-              }
-            },
-            {
-              "_": "https://cdn.casbin.org/img/casbin.svg",
-              "$": {
-                "name": "avatar"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isVerified"
-              }
-            },
-            {
-              "_": "CNY",
-              "$": {
-                "name": "balanceCurrency"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "needUpdatePassword"
-              }
-            },
-            {
-              "_": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
-              "$": {
-                "name": "id"
-              }
-            },
-            {
-              "_": "false",
-              "$": {
-                "name": "isAdmin"
-              }
-            }
-          ]
-        }
-      }
-    },
-    "oidc_data": {
-      "owner": "fit2cloud",
-      "name": "user1",
-      "createdTime": "2025-12-08T20:38:33+08:00",
-      "updatedTime": "2026-02-28T07:30:38Z",
-      "deletedTime": "",
-      "id": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
-      "type": "normal-user",
-      "password": "",
-      "passwordSalt": "ac1536525443c3f5b309",
-      "passwordType": "plain",
-      "displayName": "user1",
-      "firstName": "",
-      "lastName": "",
-      "avatar": "https://cdn.casbin.org/img/casbin.svg",
-      "avatarType": "",
-      "permanentAvatar": "",
-      "email": "0d4qo8@example.com",
-      "emailVerified": false,
-      "phone": "69774914549",
-      "countryCode": "All",
-      "region": "",
-      "location": "",
-      "address": [],
-      "affiliation": "Example Inc.",
-      "title": "",
-      "idCardType": "",
-      "idCard": "",
-      "homepage": "",
-      "bio": "",
-      "language": "",
-      "gender": "",
-      "birthday": "",
-      "education": "",
-      "score": 0,
-      "karma": 0,
-      "ranking": 2,
-      "isDefaultAvatar": false,
-      "isOnline": false,
-      "isAdmin": false,
-      "isForbidden": false,
-      "isDeleted": false,
-      "signupApplication": "dataease",
-      "hash": "",
-      "preHash": "",
-      "registerType": "Add User",
-      "registerSource": "built-in/admin",
-      "accessKey": "",
-      "accessSecret": "",
-      "github": "",
-      "google": "",
-      "qq": "",
-      "wechat": "",
-      "facebook": "",
-      "dingtalk": "",
-      "weibo": "",
-      "gitee": "",
-      "linkedin": "",
-      "wecom": "",
-      "lark": "",
-      "gitlab": "",
-      "createdIp": "",
-      "lastSigninTime": "",
-      "lastSigninIp": "",
-      "preferredMfaType": "",
-      "recoveryCodes": null,
-      "totpSecret": "",
-      "mfaPhoneEnabled": false,
-      "mfaEmailEnabled": false,
-      "ldap": "",
-      "properties": {},
-      "roles": [],
-      "permissions": [],
-      "groups": [],
-      "lastSigninWrongTime": "",
-      "signinWrongTimes": 0,
-      "managedAccounts": null,
-      "tokenType": "access-token",
-      "tag": "staff",
-      "scope": "openid profile email",
-      "azp": "90983ef80c9c5c0cb6e2",
-      "signinMethod": "autoSignin",
-      "iss": "https://iam.zevin.xin",
-      "sub": "52d67a6c-9800-42ba-8e7f-1bd82f9cc258",
-      "aud": [
-        "90983ef80c9c5c0cb6e2"
-      ],
-      "exp": 1772868837,
-      "nbf": 1772264037,
-      "iat": 1772264037,
-      "jti": "admin/e71015fd-808a-46e1-b93e-e257a4e60af4"
-    }
-  },
-  {
-    "id": "admin",
-    "username": "admin",
-    "email": "admin@local.com",
-    "role": "admin",
-    "allowedApps": []
-  },
-  {
-    "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
-    "username": "test1",
-    "email": "233333307773333312@qq.com",
-    "role": "admin",
-    "allowedApps": [],
-    "maxkb_data": {
-      "id": "019c9dd9-739b-7233-bf28-911f5e9e9027",
-      "username": "test1",
-      "email": "233333307773333312@qq.com",
-      "phone": "13044543454",
-      "is_active": true,
-      "nick_name": "11",
-      "create_time": "2026-02-27T14:46:39.771962+08:00",
-      "update_time": "2026-02-27T14:48:11.421731+08:00",
-      "source": "LOCAL",
-      "user_group_ids": [
-        "default"
-      ],
-      "user_group_names": [
-        "默认用户组"
-      ]
-    }
-  },
-  {
-    "id": "admin123",
-    "username": "admin123",
-    "email": "admin@local.com",
-    "role": "admin",
-    "allowedApps": []
-  },
-  {
-    "id": "019ca8d1-6d3e-7112-a091-f1e3ac7cfb5f",
-    "username": "99999",
-    "email": "3894431982@qq.com",
-    "role": "user",
-    "allowedApps": []
   }
 ]

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import https from 'https';
-import { upsertUser, getUsers, saveUsers, type User } from './user.js';
+import { upsertUser, getUsers, saveUsers, findUserById, type User } from './user.js';
 
 interface MaxKBUser {
   id: string;
@@ -39,33 +39,75 @@ export const syncMaxKBUsers = async () => {
       })
     });
 
-    const records = response.data?.data?.records || response.data?.data || [];
+    console.log('MaxKB API Response code:', response.data?.code);
+    console.log('MaxKB API Response message:', response.data?.message);
+
+    // 处理不同版本的 API 响应结构
+    // 专业版和企业版都使用 data.records 结构
+    let records: any[] = [];
     
-    if (!Array.isArray(records)) {
-      console.error('Unexpected API response structure:', response.data);
-      throw new Error('Invalid API response structure');
+    if (response.data?.data?.records && Array.isArray(response.data.data.records)) {
+      // 标准结构: { code: 200, data: { records: [...], total: xxx } }
+      records = response.data.data.records;
+    } else if (response.data?.data && Array.isArray(response.data.data)) {
+      // 备选结构: { code: 200, data: [...] }
+      records = response.data.data;
+    } else if (Array.isArray(response.data)) {
+      // 直接数组结构
+      records = response.data;
+    }
+    
+    if (!Array.isArray(records) || records.length === 0) {
+      console.error('Unexpected API response structure:', JSON.stringify(response.data, null, 2));
+      throw new Error('Invalid API response structure: no records found');
     }
 
     console.log(`Found ${records.length} users from MaxKB.`);
 
     // 获取当前本地用户列表，用于后续删除不再存在的用户
-    const maxkbUsernames = new Set(records.map((r: any) => r.username || r.name || r.email).filter(Boolean));
+    const maxkbUserIds = new Set(records.map((r: any) => r.id).filter(Boolean));
+    console.log(`MaxKB user IDs count: ${maxkbUserIds.size}`);
 
     let syncedCount = 0;
+    let createdCount = 0;
+    let updatedCount = 0;
+    
     for (const record of records) {
       // Map MaxKB user to our User interface
       const username = record.username || record.name || record.email || 'Unknown';
       const userId = record.id;
       
-      // 检查用户是否已存在，如果存在则保留其 role 和 allowedApps
-      const existingUser = await upsertUser({
+      if (!userId) {
+        console.warn('Skipping user without ID:', record);
+        continue;
+      }
+      
+      // 检查用户是否已存在
+      const existingUser = await findUserById(userId);
+      
+      // 保存完整的 MaxKB 用户数据
+      const userData: Partial<User> & { id: string; username: string; email: string } = {
         id: userId,
         username: username,
-        email: record.email || ''
-      });
+        email: record.email || '',
+        maxkb_data: record // 保存完整的 MaxKB 用户数据
+      };
       
+      // 如果是新用户，设置默认值
+      if (!existingUser) {
+        userData.role = 'user';
+        userData.allowedApps = [];
+        createdCount++;
+      } else {
+        updatedCount++;
+      }
+      
+      // 保存用户
+      await upsertUser(userData);
       syncedCount++;
     }
+
+    console.log(`Synced ${syncedCount} users: ${createdCount} created, ${updatedCount} updated.`);
 
     // 删除逻辑：如果本地用户不在 MaxKB 列表中，且不是默认 admin，则删除
     let deletedCount = 0;
@@ -76,15 +118,20 @@ export const syncMaxKBUsers = async () => {
         return true;
       }
       
-      // 如果用户在 MaxKB 中 (通过 username 匹配)，保留
-      if (maxkbUsernames.has(user.username)) {
+      // 如果用户在 MaxKB 中 (通过 ID 匹配)，保留
+      if (maxkbUserIds.has(user.id)) {
         return true;
       }
-
-      // 如果用户不在 MaxKB 中，且不是 admin，则删除
-      console.log(`Deleting user ${user.username} (ID: ${user.id}) as they are no longer in MaxKB.`);
-      deletedCount++;
-      return false;
+      
+      // 如果用户有 maxkb_data 但不在 MaxKB 列表中，说明已被删除
+      if (user.maxkb_data) {
+        console.log(`Deleting user ${user.username} (ID: ${user.id}) as they are no longer in MaxKB.`);
+        deletedCount++;
+        return false;
+      }
+      
+      // 保留非 MaxKB 用户（如本地用户、CAS 用户）
+      return true;
     });
 
     if (deletedCount > 0) {

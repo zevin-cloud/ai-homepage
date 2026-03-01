@@ -55,32 +55,38 @@ export const syncMaxKBData = async () => {
 
     // 1. 获取所有文件夹
     const foldersRes = await client.get(`/admin/api/workspace/${workspaceId}/APPLICATION/folder`);
-    console.log('Folders API response:', JSON.stringify(foldersRes.data, null, 2));
+    console.log('Folders API response code:', foldersRes.data?.code);
+    console.log('Folders API response message:', foldersRes.data?.message);
     
     // 验证 API 响应结构
     if (!foldersRes.data) {
       throw new Error('MaxKB API returned no data');
     }
     
-    // 处理不同的响应结构
-    let folders = foldersRes.data.data;
-    if (!folders && Array.isArray(foldersRes.data)) {
+    // 处理不同的响应结构（专业版和企业版）
+    let folders: any[] = [];
+    if (foldersRes.data.data && Array.isArray(foldersRes.data.data)) {
+      // 标准结构: { code: 200, data: [...] }
+      folders = foldersRes.data.data;
+    } else if (Array.isArray(foldersRes.data)) {
+      // 直接数组结构
       folders = foldersRes.data;
     }
     
-    if (!Array.isArray(folders)) {
-      console.error('Unexpected folders structure:', folders);
+    if (!Array.isArray(folders) || folders.length === 0) {
+      console.error('Unexpected folders structure:', foldersRes.data);
       throw new Error('MaxKB API returned invalid folders data (expected array)');
     }
 
-    // 2. 查找根文件夹（例如 "Portal"）
-    // 注意：API 返回嵌套结构，"Portal" 可能是 "default" 的子文件夹
+    console.log(`Found ${folders.length} top-level folders.`);
+
+    // 2. 查找根文件夹（例如 "根目录" 或 "Portal"）
     let rootFolder = folders.find((f: any) => f.name === rootFolderName);
     
-    // 如果在顶层没找到，检查 "default" 的子文件夹
+    // 如果在顶层没找到，检查子文件夹
     if (!rootFolder) {
       for (const folder of folders) {
-        if (folder.children) {
+        if (folder.children && Array.isArray(folder.children)) {
           rootFolder = folder.children.find((f: any) => f.name === rootFolderName);
           if (rootFolder) break;
         }
@@ -88,18 +94,23 @@ export const syncMaxKBData = async () => {
     }
 
     if (!rootFolder) {
-      console.log('Available folders:', JSON.stringify(folders, null, 2));
+      console.log('Available folders:', JSON.stringify(folders.map((f: any) => f.name), null, 2));
       throw new Error(`Root folder "${rootFolderName}" not found.`);
     }
 
+    console.log(`Found root folder: ${rootFolder.name} (ID: ${rootFolder.id})`);
+
     // 3. 获取子文件夹（分类）
+    let categories: any[] = [];
+    
     // 如果 rootFolder 有 children 属性，直接使用
-    let categories = [];
-    if (rootFolder.children && rootFolder.children.length > 0) {
+    if (rootFolder.children && Array.isArray(rootFolder.children) && rootFolder.children.length > 0) {
       categories = rootFolder.children;
+      console.log(`Found ${categories.length} categories in root folder children.`);
     } else {
-      // 回退方案：通过 parent_id 过滤
+      // 通过 parent_id 过滤查找子文件夹
       categories = folders.filter((f: any) => f.parent_id === rootFolder.id);
+      console.log(`Found ${categories.length} categories by parent_id.`);
     }
 
     // 如果没有找到分类，将根文件夹作为默认分类
@@ -121,7 +132,19 @@ export const syncMaxKBData = async () => {
 
       // 4. 获取该分类下的应用
       const appsRes = await client.get(`/admin/api/workspace/${workspaceId}/application/1/30?folder_id=${cat.id}`);
-      const apps = appsRes.data.data.records;
+      
+      // 处理不同的 API 响应结构
+      let apps: any[] = [];
+      if (appsRes.data?.data?.records && Array.isArray(appsRes.data.data.records)) {
+        // 标准结构: { code: 200, data: { records: [...], total: xxx } }
+        apps = appsRes.data.data.records;
+      } else if (appsRes.data?.data && Array.isArray(appsRes.data.data)) {
+        // 备选结构: { code: 200, data: [...] }
+        apps = appsRes.data.data;
+      } else if (Array.isArray(appsRes.data)) {
+        // 直接数组结构
+        apps = appsRes.data;
+      }
 
       console.log(`Found ${apps.length} apps in category "${cat.name}".`);
 
@@ -163,8 +186,16 @@ export const syncMaxKBData = async () => {
         let chatUrl = '';
         try {
           const accessTokenRes = await client.get(`/admin/api/workspace/${workspaceId}/application/${app.id}/access_token`);
-          if (accessTokenRes.data.code === 200 && accessTokenRes.data.data?.access_token) {
-            const accessToken = accessTokenRes.data.data.access_token;
+          
+          // 处理不同的 API 响应结构
+          let accessToken: string | null = null;
+          if (accessTokenRes.data?.code === 200 && accessTokenRes.data?.data?.access_token) {
+            accessToken = accessTokenRes.data.data.access_token;
+          } else if (accessTokenRes.data?.access_token) {
+            accessToken = accessTokenRes.data.access_token;
+          }
+          
+          if (accessToken) {
             chatUrl = `${baseURL}/chat/${accessToken}`;
             console.log(`Got access_token for app ${app.name}: ${accessToken}`);
           } else {
