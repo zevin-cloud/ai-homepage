@@ -8,7 +8,21 @@ import { upsertUser, type User } from '../services/user.js';
 const router: Router = Router();
 
 const COOKIE_NAME = 'oidc_cv';
-const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return secret;
+};
+
+const getFrontendUrl = () => {
+  const url = process.env.FRONTEND_URL;
+  if (!url) {
+    throw new Error('FRONTEND_URL is not defined in environment variables');
+  }
+  return url;
+};
 
 /**
  * Local Login - Username/Password
@@ -74,7 +88,7 @@ router.get('/callback', async (req: Request, res: Response) => {
 
     res.clearCookie(COOKIE_NAME);
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendUrl = getFrontendUrl();
     res.redirect(`${frontendUrl}/login/callback?token=${token}`);
 
   } catch (error) {
@@ -111,7 +125,7 @@ router.get('/cas/callback', async (req: Request, res: Response) => {
 
     const { user, token } = await handleCasCallback(ticket);
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendUrl = getFrontendUrl();
     res.redirect(`${frontendUrl}/login/callback?token=${token}`);
 
   } catch (error) {

@@ -4,7 +4,13 @@ import { findUserById, findUserByUsername, upsertUser, type User } from './user.
 import fs from 'fs';
 import path from 'path';
 
-const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return secret;
+};
 const LOCAL_USERS_FILE = path.join(process.cwd(), 'local-users.json');
 
 interface LocalUser {

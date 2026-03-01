@@ -518,5 +518,12 @@
     "email": "admin@local.com",
     "role": "admin",
     "allowedApps": []
+  },
+  {
+    "id": "019ca8d1-6d3e-7112-a091-f1e3ac7cfb5f",
+    "username": "99999",
+    "email": "3894431982@qq.com",
+    "role": "user",
+    "allowedApps": []
   }
 ]

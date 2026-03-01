@@ -3,12 +3,28 @@ import { parseStringPromise } from 'xml2js';
 import jwt from 'jsonwebtoken';
 import { upsertUser, findUserById, type User } from './user.js';
 
-const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return secret;
+};
 
-const getCasConfig = () => ({
-  serverUrl: process.env.CAS_SERVER_URL || 'https://cas.example.com/cas',
-  serviceUrl: process.env.CAS_SERVICE_URL || 'http://localhost:3001/api/auth/cas/callback'
-});
+const getCasConfig = () => {
+  const serverUrl = process.env.CAS_SERVER_URL;
+  const serviceUrl = process.env.CAS_SERVICE_URL;
+  
+  if (!serverUrl) {
+    throw new Error('CAS_SERVER_URL is not defined in environment variables');
+  }
+  
+  if (!serviceUrl) {
+    throw new Error('CAS_SERVICE_URL is not defined in environment variables');
+  }
+  
+  return { serverUrl, serviceUrl };
+};
 
 /**
  * Get CAS Authorization URL

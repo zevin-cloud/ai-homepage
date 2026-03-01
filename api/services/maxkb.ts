@@ -7,34 +7,36 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_FILE = path.join(__dirname, '../../data.json');
 
-const MAXKB_API_KEY = process.env.MAXKB_API_KEY;
-const MAXKB_BASE_URL = process.env.MAXKB_BASE_URL;
-const MAXKB_ROOT_FOLDER = process.env.MAXKB_ROOT_FOLDER || 'Portal';
-const MAXKB_WORKSPACE_ID = process.env.MAXKB_WORKSPACE_ID || 'default';
+const getMaxKBConfig = () => {
+  const apiKey = process.env.MAXKB_API_KEY;
+  const baseURL = process.env.MAXKB_BASE_URL;
+  const rootFolder = process.env.MAXKB_ROOT_FOLDER;
+  const workspaceId = process.env.MAXKB_WORKSPACE_ID;
 
-console.log('MAXKB Config:', {
-  baseURL: MAXKB_BASE_URL,
-  rootFolder: MAXKB_ROOT_FOLDER,
-  workspaceId: MAXKB_WORKSPACE_ID,
-  hasApiKey: !!MAXKB_API_KEY
-});
+  if (!apiKey) {
+    throw new Error('MAXKB_API_KEY is not defined in environment variables');
+  }
+  if (!baseURL) {
+    throw new Error('MAXKB_BASE_URL is not defined in environment variables');
+  }
+  if (!rootFolder) {
+    throw new Error('MAXKB_ROOT_FOLDER is not defined in environment variables');
+  }
+  if (!workspaceId) {
+    throw new Error('MAXKB_WORKSPACE_ID is not defined in environment variables');
+  }
 
-const api = axios.create({
-  baseURL: MAXKB_BASE_URL,
-  headers: {
-    Authorization: `Bearer ${MAXKB_API_KEY}`,
-  },
-});
+  return { apiKey, baseURL, rootFolder, workspaceId };
+};
+
+console.log('MAXKB Config loaded from environment variables');
 
 export const syncMaxKBData = async () => {
   try {
     console.log('Starting MaxKB sync...');
     
-    // 重新加载环境变量确保可用
-    const apiKey = process.env.MAXKB_API_KEY;
-    const baseURL = process.env.MAXKB_BASE_URL;
-    const rootFolderName = process.env.MAXKB_ROOT_FOLDER || 'Portal';
-    const workspaceId = process.env.MAXKB_WORKSPACE_ID || 'default';
+    // 从环境变量读取配置
+    const { apiKey, baseURL, rootFolder: rootFolderName, workspaceId } = getMaxKBConfig();
 
     if (!baseURL) {
       throw new Error('MAXKB_BASE_URL is not defined in environment variables');
@@ -53,7 +55,23 @@ export const syncMaxKBData = async () => {
 
     // 1. 获取所有文件夹
     const foldersRes = await client.get(`/admin/api/workspace/${workspaceId}/APPLICATION/folder`);
-    const folders = foldersRes.data.data;
+    console.log('Folders API response:', JSON.stringify(foldersRes.data, null, 2));
+    
+    // 验证 API 响应结构
+    if (!foldersRes.data) {
+      throw new Error('MaxKB API returned no data');
+    }
+    
+    // 处理不同的响应结构
+    let folders = foldersRes.data.data;
+    if (!folders && Array.isArray(foldersRes.data)) {
+      folders = foldersRes.data;
+    }
+    
+    if (!Array.isArray(folders)) {
+      console.error('Unexpected folders structure:', folders);
+      throw new Error('MaxKB API returned invalid folders data (expected array)');
+    }
 
     // 2. 查找根文件夹（例如 "Portal"）
     // 注意：API 返回嵌套结构，"Portal" 可能是 "default" 的子文件夹

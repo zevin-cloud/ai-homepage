@@ -2,10 +2,6 @@ import axios from 'axios';
 import https from 'https';
 import { upsertUser, getUsers, saveUsers, type User } from './user.js';
 
-const MAXKB_BASE_URL = process.env.MAXKB_BASE_URL || 'https://mk2.zevin.xin:20000';
-const MAXKB_USER_API_URL = `${MAXKB_BASE_URL}/admin/api/system/chat_user/user_manage/1/100`;
-const MAXKB_USER_TOKEN = process.env.MAXKB_API_KEY || 'user-e231ba6ec07aa0a491117a2a7abae662';
-
 interface MaxKBUser {
   id: string;
   username: string;
@@ -17,6 +13,20 @@ interface MaxKBUser {
 
 export const syncMaxKBUsers = async () => {
   console.log('Starting MaxKB User sync...');
+  
+  // 从环境变量读取配置，不硬编码默认值
+  const MAXKB_BASE_URL = process.env.MAXKB_BASE_URL;
+  const MAXKB_USER_TOKEN = process.env.MAXKB_API_KEY;
+  
+  if (!MAXKB_BASE_URL) {
+    throw new Error('MAXKB_BASE_URL is not defined in environment variables');
+  }
+  
+  if (!MAXKB_USER_TOKEN) {
+    throw new Error('MAXKB_API_KEY is not defined in environment variables');
+  }
+  
+  const MAXKB_USER_API_URL = `${MAXKB_BASE_URL}/admin/api/system/chat_user/user_manage/1/100`;
   
   try {
     const response = await axios.get(MAXKB_USER_API_URL, {

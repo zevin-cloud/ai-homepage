@@ -22,7 +22,19 @@ const hasMore = computed(() => categories.value.length > VISIBLE_LIMIT);
 
 const fetchCategories = async () => {
   try {
-    const response = await fetch('/api/maxkb/categories');
+    const headers: Record<string, string> = {};
+    if (authStore.token) {
+      headers['Authorization'] = `Bearer ${authStore.token}`;
+    }
+    
+    const response = await fetch('/api/maxkb/categories', { headers });
+    
+    if (response.status === 401) {
+      // 未授权，不显示错误，只是没有分类数据
+      console.log('User not authenticated, skipping categories fetch');
+      return;
+    }
+    
     const result = await response.json();
     if (result.success) {
       categories.value = result.data;

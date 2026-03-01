@@ -2,11 +2,45 @@ import * as client from 'openid-client';
 import jwt from 'jsonwebtoken';
 import { upsertUser, type User } from './user.js';
 
-const getIssuerUrl = () => process.env.OIDC_ISSUER || 'https://example.com';
-const getClientId = () => process.env.OIDC_CLIENT_ID || 'client-id';
-const getClientSecret = () => process.env.OIDC_CLIENT_SECRET || 'client-secret';
-const getRedirectUri = () => process.env.OIDC_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
-const getJwtSecret = () => process.env.JWT_SECRET || 'your-secret-key';
+const getIssuerUrl = () => {
+  const url = process.env.OIDC_ISSUER;
+  if (!url) {
+    throw new Error('OIDC_ISSUER is not defined in environment variables');
+  }
+  return url;
+};
+
+const getClientId = () => {
+  const id = process.env.OIDC_CLIENT_ID;
+  if (!id) {
+    throw new Error('OIDC_CLIENT_ID is not defined in environment variables');
+  }
+  return id;
+};
+
+const getClientSecret = () => {
+  const secret = process.env.OIDC_CLIENT_SECRET;
+  if (!secret) {
+    throw new Error('OIDC_CLIENT_SECRET is not defined in environment variables');
+  }
+  return secret;
+};
+
+const getRedirectUri = () => {
+  const uri = process.env.OIDC_REDIRECT_URI;
+  if (!uri) {
+    throw new Error('OIDC_REDIRECT_URI is not defined in environment variables');
+  }
+  return uri;
+};
+
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return secret;
+};
 
 let oidcConfig: client.Configuration;
 
