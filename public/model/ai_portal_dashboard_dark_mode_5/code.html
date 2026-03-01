@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Swiss Minimalist Bento Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'swiss-bg': '#F2F2F2',
+                        'swiss-white': '#FFFFFF',
+                        'swiss-red': '#FF3B30',
+                        'swiss-blue': '#007AFF',
+                        'swiss-yellow': '#FFCC00',
+                        'swiss-black': '#000000',
+                        'swiss-grey': '#8E8E93',
+                        'swiss-light-grey': '#D1D1D6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'none': '0',
+                        'sm': '0.125rem',
+                    },
+                    boxShadow: {
+                        'none': 'none',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            background-color: #F2F2F2;
+        }
+        .bento-card {
+            transition: transform 0.2s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="text-swiss-black antialiased min-h-screen relative overflow-x-hidden selection:bg-swiss-black selection:text-white">
+<header class="sticky top-0 z-50 w-full bg-[#F2F2F2]/95 border-b border-swiss-black mb-8 py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-12">
+<div class="flex items-center gap-6">
+<div class="w-10 h-10 bg-swiss-red text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<div>
+<h1 class="text-3xl font-black tracking-tighter text-swiss-black uppercase leading-none">
+                            FIT2CLOUD
+                        </h1>
+<p class="text-xs font-bold tracking-widest uppercase text-swiss-grey mt-1">Swiss AI Portal</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-2 px-4 py-1.5 bg-swiss-black text-white text-xs font-bold uppercase tracking-wide">
+<span class="w-2 h-2 bg-swiss-red"></span>
+                        Operational
+                    </div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 bg-transparent hover:bg-swiss-light-grey flex items-center justify-center transition-all text-swiss-black">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</button>
+<button class="w-10 h-10 bg-transparent hover:bg-swiss-light-grey flex items-center justify-center transition-all text-swiss-black">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+<div class="ml-2 w-10 h-10 bg-swiss-blue text-white flex items-center justify-center font-bold text-lg">
+                            A
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<section class="mb-20">
+<div class="flex items-baseline gap-4 mb-8 border-b-4 border-swiss-black pb-2">
+<h2 class="text-5xl font-black text-swiss-black uppercase tracking-tighter">Data Ops</h2>
+<span class="text-xs font-bold text-swiss-white bg-swiss-black px-2 py-1 uppercase">Fang Yueqiang Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 auto-rows-fr">
+<div class="md:col-span-6 lg:col-span-8 bg-swiss-blue text-white p-8 bento-card relative overflow-hidden group">
+<div class="absolute -bottom-10 -right-10 text-white/10 rotate-12 pointer-events-none">
+<span class="material-symbols-outlined text-[12rem]">database</span>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-white text-swiss-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl">query_stats</span>
+</div>
+<span class="bg-swiss-black text-white text-xs font-bold px-3 py-1 uppercase tracking-wider">SQL</span>
+</div>
+<div class="mt-12">
+<h3 class="text-3xl font-bold mb-4 tracking-tight">jms4 Database Query</h3>
+<p class="text-white/90 font-medium text-lg leading-snug max-w-xl">
+                                Connect to JumpServer v4 database via semantic SQL transformation. Secure, streamlined access for authorized personnel.
+                            </p>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-white p-8 bento-card flex flex-col justify-between h-full">
+<div>
+<div class="w-12 h-12 bg-swiss-black text-white flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">download</span>
+</div>
+<h3 class="text-2xl font-bold text-swiss-black mb-2 tracking-tight">File Downloader</h3>
+<p class="text-swiss-grey text-sm font-medium leading-normal">Secure file retrieval service for distributed systems.</p>
+</div>
+<div class="mt-8 pt-4 border-t-2 border-swiss-light-grey flex justify-between items-center">
+<span class="text-xs font-bold text-swiss-black uppercase tracking-wide">v1.0.2 active</span>
+<span class="material-symbols-outlined text-swiss-black text-sm">arrow_forward</span>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-swiss-yellow p-8 bento-card text-swiss-black">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-swiss-black text-white flex items-center justify-center">
+<span class="material-symbols-outlined">cloud_upload</span>
+</div>
+<span class="bg-white text-swiss-black text-xs font-bold px-2 py-1 uppercase border border-swiss-black">ETL</span>
+</div>
+<h3 class="text-2xl font-bold mb-2 tracking-tight">Doc Upload &amp; Transfer</h3>
+<p class="text-swiss-black/80 text-sm font-medium leading-relaxed">
+                        User document upload pipeline. Extracts and stores content into designated data warehouses.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-5 bg-swiss-red text-white p-8 bento-card">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-white text-swiss-red flex items-center justify-center">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="bg-swiss-black text-white text-xs font-bold px-2 py-1 uppercase">AI MCP</span>
+</div>
+<h3 class="text-2xl font-bold mb-2 tracking-tight">jms4 Assistant-MCP</h3>
+<p class="text-white/90 text-sm font-medium leading-relaxed">
+                        JumpServer smart assistant utilizing MCP protocol for enhanced automation.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-white p-6 bento-card flex flex-col justify-center items-center text-center border-2 border-swiss-light-grey hover:border-swiss-black transition-colors">
+<div class="w-14 h-14 bg-swiss-light-grey text-swiss-black flex items-center justify-center mb-4 rounded-none">
+<span class="material-symbols-outlined">search</span>
+</div>
+<h3 class="text-lg font-bold text-swiss-black uppercase">General DB Search</h3>
+<p class="text-xs text-swiss-grey mt-2 font-medium">No description available</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-baseline gap-4 mb-8 border-b-4 border-swiss-black pb-2 pt-8">
+<h2 class="text-5xl font-black text-swiss-black uppercase tracking-tighter">Analytics</h2>
+<span class="text-xs font-bold text-swiss-white bg-swiss-black px-2 py-1 uppercase">Zheng Zewen Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 auto-rows-fr">
+<div class="md:col-span-3 lg:col-span-3 bg-white border-l-8 border-swiss-yellow p-6 bento-card">
+<div class="w-10 h-10 bg-swiss-yellow text-swiss-black flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<h3 class="text-xl font-bold text-swiss-black mb-2 tracking-tight">Form Testing</h3>
+<p class="text-swiss-grey text-xs font-bold uppercase">No description available.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-6 bg-white p-8 bento-card border border-swiss-light-grey relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-swiss-red text-white text-xs font-bold px-2 py-1 uppercase tracking-wide">OCR Engine</span>
+</div>
+<div class="w-16 h-16 bg-swiss-black text-white flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-3xl">picture_as_pdf</span>
+</div>
+<h3 class="text-3xl font-bold text-swiss-black mb-3 tracking-tight">PDF Parsing Assistant</h3>
+<p class="text-swiss-black/70 font-medium leading-relaxed max-w-md">
+                        Advanced PDF parsing and extraction engine based on MinerU technology. Capable of handling complex layouts and tables.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-swiss-black text-white p-6 bento-card">
+<div class="w-10 h-10 bg-white text-swiss-black flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<h3 class="text-xl font-bold mb-2 tracking-tight">Macro Mail Handler</h3>
+<p class="text-white/50 text-xs font-bold uppercase">No description available.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-4 bg-swiss-light-grey p-8 bento-card">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-swiss-black text-white flex items-center justify-center">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<span class="bg-white text-swiss-black text-xs font-bold px-2 py-1 uppercase border border-swiss-black">FAQ</span>
+</div>
+<h3 class="text-xl font-bold text-swiss-black mb-2 tracking-tight">Cordys Q&amp;A Bot</h3>
+<p class="text-swiss-black/80 text-sm font-medium leading-relaxed">
+                        Intelligent manual query assistant for Cordys platform systems.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-8 bg-white border-2 border-dashed border-swiss-light-grey p-8 flex items-center justify-center">
+<span class="text-swiss-light-grey font-bold uppercase tracking-widest text-sm">New analytics modules coming soon</span>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 border-t border-swiss-black bg-white py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-swiss-black text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-xs">grid_view</span>
+</div>
+<span class="font-black text-xl uppercase tracking-tighter">FIT2CLOUD AI</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-widest text-swiss-grey">© 2023 Swiss Minimalist Design</p>
+</div>
+</footer>
+
+</body></html>

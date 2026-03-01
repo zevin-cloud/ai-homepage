@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Organic Bento AI Library</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sand': '#FDFCF8',
+                        'clay': '#E6DCC8',
+                        'terracotta': '#E89A80',
+                        'terracotta-light': '#F4DCD3',
+                        'sage': '#A8C6AA',
+                        'sage-light': '#E3EDE4',
+                        'ocean': '#8FB6C8',
+                        'ocean-light': '#DAE8EE',
+                        'mustard': '#E8C56B',
+                        'mustard-light': '#F6ECD0',
+                        'charcoal': '#2C2A26',
+                        'stone': '#595650',
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    borderRadius: {
+                        'bento': '1.5rem',
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -10px rgba(44, 42, 38, 0.08)',
+                        'hard': '4px 4px 0px 0px rgba(44, 42, 38, 1)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            background-color: #F7F5EE;
+            background-image: radial-gradient(#E6DCC8 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .bento-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 6px 6px 0px 0px rgba(44, 42, 38, 1);
+        }
+    </style>
+</head>
+<body class="text-charcoal antialiased min-h-screen relative overflow-x-hidden selection:bg-terracotta selection:text-white">
+<header class="sticky top-0 z-50 w-full bg-[#F7F5EE]/90 backdrop-blur-md border-b-2 border-charcoal/10 mb-8 py-4">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-charcoal text-sand flex items-center justify-center border-2 border-transparent">
+<span class="material-symbols-outlined text-2xl">spa</span>
+</div>
+<div>
+<h1 class="text-2xl font-serif font-bold tracking-tight text-charcoal">
+                            FIT2CLOUD
+                        </h1>
+<p class="text-xs font-medium tracking-widest uppercase text-stone mt-0.5">Organic AI Library</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-stone/20 text-sm font-medium text-stone shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-sage"></span>
+                        Operational
+                    </div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full border-2 border-charcoal/10 hover:border-charcoal hover:bg-white flex items-center justify-center transition-all text-stone hover:text-charcoal">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button class="w-10 h-10 rounded-full border-2 border-charcoal/10 hover:border-charcoal hover:bg-white flex items-center justify-center transition-all text-stone hover:text-charcoal">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<div class="ml-2 w-10 h-10 rounded-full bg-terracotta text-white flex items-center justify-center font-serif font-bold text-lg border-2 border-charcoal/10">
+                            A
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<section class="mb-16">
+<div class="flex items-end gap-4 mb-8">
+<div class="relative">
+<h2 class="text-4xl font-serif font-bold text-charcoal relative z-10">Data Operations</h2>
+<div class="absolute -bottom-2 -left-2 w-full h-4 bg-ocean-light/80 -rotate-1 rounded-full -z-0"></div>
+</div>
+<span class="text-sm font-medium text-stone bg-white px-3 py-1 rounded-full border border-stone/20 mb-2">Fang Yueqiang Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+<div class="md:col-span-6 lg:col-span-8 bg-ocean-light rounded-bento border-2 border-charcoal p-8 bento-card relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl">database</span>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 rounded-2xl bg-white border-2 border-charcoal flex items-center justify-center shadow-soft">
+<span class="material-symbols-outlined text-3xl text-ocean">query_stats</span>
+</div>
+<span class="bg-charcoal text-white text-xs font-bold px-3 py-1.5 rounded-full">SQL</span>
+</div>
+<div class="mt-8">
+<h3 class="text-2xl font-serif font-bold text-charcoal mb-3">jms4 Database Query</h3>
+<p class="text-stone font-medium text-lg leading-relaxed max-w-xl">
+                                Connect to JumpServer v4 database via semantic SQL transformation to fetch data securely. Streamlined access for authorized personnel.
+                            </p>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-white rounded-bento border-2 border-charcoal p-6 bento-card flex flex-col">
+<div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">download</span>
+</div>
+<h3 class="text-xl font-serif font-bold text-charcoal mb-2">File Downloader</h3>
+<p class="text-stone text-sm mb-4 flex-grow">Secure file retrieval service for distributed systems.</p>
+<div class="mt-auto pt-4 border-t border-dashed border-stone/30 flex justify-between items-center">
+<span class="text-xs font-bold text-stone uppercase tracking-wide">v1.0.2 active</span>
+<span class="material-symbols-outlined text-stone text-sm">arrow_forward</span>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-white rounded-bento border-2 border-charcoal p-6 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center">
+<span class="material-symbols-outlined">cloud_upload</span>
+</div>
+<span class="bg-ocean/20 text-charcoal text-[10px] font-bold px-2 py-1 rounded-lg border border-ocean/30">ETL</span>
+</div>
+<h3 class="text-lg font-serif font-bold text-charcoal mb-2">Doc Upload &amp; Transfer</h3>
+<p class="text-stone text-sm leading-relaxed">
+                        User document upload pipeline. Extracts and stores content into designated data warehouses.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-5 bg-ocean text-charcoal rounded-bento border-2 border-charcoal p-6 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-white text-ocean flex items-center justify-center">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="bg-white text-charcoal text-[10px] font-bold px-2 py-1 rounded-lg">AI MCP</span>
+</div>
+<h3 class="text-xl font-serif font-bold mb-2">jms4 Assistant-MCP</h3>
+<p class="text-charcoal/80 text-sm font-medium leading-relaxed">
+                        JumpServer smart assistant utilizing MCP protocol for enhanced automation.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-white rounded-bento border-2 border-charcoal p-6 bento-card flex flex-col justify-center items-center text-center">
+<div class="w-14 h-14 rounded-full bg-stone/10 text-stone flex items-center justify-center mb-3 group-hover:bg-ocean group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+<h3 class="text-lg font-serif font-bold text-charcoal">General DB Search</h3>
+<p class="text-xs text-stone mt-1 italic">No description available</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-end gap-4 mb-8 pt-8 border-t-2 border-charcoal/5">
+<div class="relative">
+<h2 class="text-4xl font-serif font-bold text-charcoal relative z-10">Processing &amp; Analytics</h2>
+<div class="absolute -bottom-2 -left-2 w-full h-4 bg-terracotta-light/80 -rotate-1 rounded-full -z-0"></div>
+</div>
+<span class="text-sm font-medium text-stone bg-white px-3 py-1 rounded-full border border-stone/20 mb-2">Zheng Zewen Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+<div class="md:col-span-3 lg:col-span-3 bg-sage-light rounded-bento border-2 border-charcoal p-6 bento-card">
+<div class="w-12 h-12 rounded-xl bg-sage text-white flex items-center justify-center mb-4 shadow-sm">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<h3 class="text-lg font-serif font-bold text-charcoal mb-2">Form Testing</h3>
+<p class="text-stone text-sm italic">No description available.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-6 bg-terracotta-light rounded-bento border-2 border-charcoal p-8 bento-card relative">
+<div class="absolute top-4 right-4">
+<span class="bg-terracotta text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">OCR Engine</span>
+</div>
+<div class="w-16 h-16 rounded-2xl bg-white border-2 border-charcoal text-terracotta flex items-center justify-center mb-6 shadow-soft">
+<span class="material-symbols-outlined text-3xl">picture_as_pdf</span>
+</div>
+<h3 class="text-2xl font-serif font-bold text-charcoal mb-3">PDF Parsing Assistant</h3>
+<p class="text-charcoal/80 font-medium leading-relaxed">
+                        Advanced PDF parsing and extraction engine based on MinerU technology. Capable of handling complex layouts and tables.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-white rounded-bento border-2 border-charcoal p-6 bento-card">
+<div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<h3 class="text-lg font-serif font-bold text-charcoal mb-2">Macro Mail Handler</h3>
+<p class="text-stone text-sm italic">No description available.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-4 bg-mustard-light rounded-bento border-2 border-charcoal p-6 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-mustard text-charcoal flex items-center justify-center">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<span class="bg-mustard/20 text-charcoal text-[10px] font-bold px-2 py-1 rounded-lg border border-mustard/30">FAQ</span>
+</div>
+<h3 class="text-lg font-serif font-bold text-charcoal mb-2">Cordys Q&amp;A Bot</h3>
+<p class="text-stone text-sm leading-relaxed">
+                        Intelligent manual query assistant for Cordys platform systems.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-8 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-clay/20 rounded-bento border-2 border-dashed border-charcoal/20 p-6 flex items-center justify-center text-stone/50 font-serif italic">
+<span>New analytics modules coming soon...</span>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 border-t-2 border-charcoal/10 bg-white py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 opacity-50">
+<span class="material-symbols-outlined text-xl">spa</span>
+<span class="font-serif font-bold">FIT2CLOUD AI</span>
+</div>
+<p class="text-sm text-stone">© 2023 Organic Bento Design. All rights reserved.</p>
+</div>
+</footer>
+
+</body></html>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { Shield, ShieldAlert, RefreshCw, Edit, Key } from 'lucide-vue-next';
+import { Shield, ShieldAlert, RefreshCw, Edit, Key, Search, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-vue-next';
 
 interface User {
   id: string;
@@ -9,6 +9,7 @@ interface User {
   email: string;
   role: 'admin' | 'user';
   allowedApps: string[];
+  createdAt?: string;
 }
 
 interface Category {
@@ -17,12 +18,22 @@ interface Category {
   agents: { id: string; title: string }[];
 }
 
+type SortField = 'username' | 'email' | 'role' | 'createdAt';
+type SortOrder = 'asc' | 'desc';
+
 const authStore = useAuthStore();
 const users = ref<User[]>([]);
 const availableCategories = ref<Category[]>([]);
 const loading = ref(false);
 const syncing = ref(false);
 const error = ref<string | null>(null);
+
+// 搜索和分页状态
+const searchQuery = ref('');
+const currentPage = ref(1);
+const pageSize = ref(10);
+const sortField = ref<SortField>('username');
+const sortOrder = ref<SortOrder>('asc');
 
 const showModal = ref(false);
 const editingUser = ref<User | null>(null);
@@ -33,6 +44,97 @@ const passwordUserId = ref('');
 const passwordUsername = ref('');
 const newPassword = ref('');
 const passwordLoading = ref(false);
+
+// 过滤和排序后的用户列表
+const filteredUsers = computed(() => {
+  let result = users.value;
+
+  // 搜索过滤
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase();
+    result = result.filter(user => 
+      user.username.toLowerCase().includes(query) ||
+      (user.email && user.email.toLowerCase().includes(query))
+    );
+  }
+
+  // 排序
+  result = [...result].sort((a, b) => {
+    let aValue: string | number = '';
+    let bValue: string | number = '';
+
+    switch (sortField.value) {
+      case 'username':
+        aValue = a.username.toLowerCase();
+        bValue = b.username.toLowerCase();
+        break;
+      case 'email':
+        aValue = (a.email || '').toLowerCase();
+        bValue = (b.email || '').toLowerCase();
+        break;
+      case 'role':
+        aValue = a.role;
+        bValue = b.role;
+        break;
+      case 'createdAt':
+        aValue = a.createdAt || '';
+        bValue = b.createdAt || '';
+        break;
+    }
+
+    if (aValue < bValue) return sortOrder.value === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortOrder.value === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  return result;
+});
+
+// 分页后的用户列表
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return filteredUsers.value.slice(start, end);
+});
+
+// 总页数
+const totalPages = computed(() => {
+  return Math.ceil(filteredUsers.value.length / pageSize.value) || 1;
+});
+
+// 分页按钮列表
+const pageNumbers = computed(() => {
+  const pages: (number | string)[] = [];
+  const maxVisible = 5;
+  
+  if (totalPages.value <= maxVisible) {
+    for (let i = 1; i <= totalPages.value; i++) {
+      pages.push(i);
+    }
+  } else {
+    if (currentPage.value <= 3) {
+      for (let i = 1; i <= 4; i++) pages.push(i);
+      pages.push('...');
+      pages.push(totalPages.value);
+    } else if (currentPage.value >= totalPages.value - 2) {
+      pages.push(1);
+      pages.push('...');
+      for (let i = totalPages.value - 3; i <= totalPages.value; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      pages.push('...');
+      for (let i = currentPage.value - 1; i <= currentPage.value + 1; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages.value);
+    }
+  }
+  
+  return pages;
+});
 
 const fetchUsers = async () => {
   loading.value = true;
@@ -55,7 +157,6 @@ const fetchUsers = async () => {
 
 const fetchApps = async () => {
   try {
-    // 需要传递认证 token，管理员可以看到所有应用
     const res = await fetch('/api/maxkb/categories', {
       headers: { Authorization: `Bearer ${authStore.token}` }
     });
@@ -183,6 +284,29 @@ const resetPassword = async () => {
   }
 };
 
+// 切换排序
+const toggleSort = (field: SortField) => {
+  if (sortField.value === field) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortField.value = field;
+    sortOrder.value = 'asc';
+  }
+  currentPage.value = 1;
+};
+
+// 跳转到指定页
+const goToPage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
+
+// 处理搜索
+const handleSearch = () => {
+  currentPage.value = 1;
+};
+
 onMounted(() => {
   fetchUsers();
   fetchApps();
@@ -213,19 +337,97 @@ onMounted(() => {
         {{ error }}
       </div>
 
+      <!-- 搜索和工具栏 -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-4">
+        <div class="flex flex-wrap gap-4 items-center justify-between">
+          <!-- 搜索框 -->
+          <div class="flex-1 min-w-[300px]">
+            <div class="relative">
+              <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                v-model="searchQuery"
+                @input="handleSearch"
+                type="text"
+                placeholder="搜索用户名或邮箱..."
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              />
+            </div>
+          </div>
+
+          <!-- 每页显示数量 -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-600">每页显示:</span>
+            <select
+              v-model="pageSize"
+              @change="currentPage = 1"
+              class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            >
+              <option :value="10">10</option>
+              <option :value="20">20</option>
+              <option :value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="mt-4 text-sm text-gray-600">
+          共 {{ filteredUsers.length }} 位用户
+          <span v-if="searchQuery">（搜索 "{{ searchQuery }}"）</span>
+        </div>
+      </div>
+
+      <!-- 用户列表 -->
       <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用户</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">角色</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">授权应用</th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                <th 
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                  @click="toggleSort('username')"
+                >
+                  <div class="flex items-center gap-1">
+                    用户
+                    <span v-if="sortField === 'username'">
+                      <ChevronUp v-if="sortOrder === 'asc'" class="w-4 h-4" />
+                      <ChevronDown v-else class="w-4 h-4" />
+                    </span>
+                  </div>
+                </th>
+                <th 
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                  @click="toggleSort('email')"
+                >
+                  <div class="flex items-center gap-1">
+                    邮箱
+                    <span v-if="sortField === 'email'">
+                      <ChevronUp v-if="sortOrder === 'asc'" class="w-4 h-4" />
+                      <ChevronDown v-else class="w-4 h-4" />
+                    </span>
+                  </div>
+                </th>
+                <th 
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                  @click="toggleSort('role')"
+                >
+                  <div class="flex items-center gap-1">
+                    角色
+                    <span v-if="sortField === 'role'">
+                      <ChevronUp v-if="sortOrder === 'asc'" class="w-4 h-4" />
+                      <ChevronDown v-else class="w-4 h-4" />
+                    </span>
+                  </div>
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  授权应用
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  操作
+                </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50">
+              <tr v-for="user in paginatedUsers" :key="user.id" class="hover:bg-gray-50">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
@@ -233,9 +435,11 @@ onMounted(() => {
                     </div>
                     <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">{{ user.username }}</div>
-                      <div class="text-sm text-gray-500">{{ user.email || '无邮箱' }}</div>
                     </div>
                   </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-500">{{ user.email || '无邮箱' }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span 
@@ -278,8 +482,61 @@ onMounted(() => {
                   </button>
                 </td>
               </tr>
+              <tr v-if="paginatedUsers.length === 0">
+                <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                  <div v-if="loading" class="flex items-center justify-center gap-2">
+                    <RefreshCw class="w-5 h-5 animate-spin" />
+                    加载中...
+                  </div>
+                  <div v-else>
+                    没有找到匹配的用户
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- 分页 -->
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-600">
+              显示第 {{ (currentPage - 1) * pageSize + 1 }} - 
+              {{ Math.min(currentPage * pageSize, filteredUsers.length) }} 条，
+              共 {{ filteredUsers.length }} 条
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                @click="goToPage(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronLeft class="w-5 h-5" />
+              </button>
+              
+              <template v-for="page in pageNumbers" :key="page">
+                <button
+                  v-if="page !== '...'"
+                  @click="goToPage(page as number)"
+                  class="px-4 py-2 rounded-lg border transition-colors"
+                  :class="currentPage === page 
+                    ? 'bg-blue-600 text-white border-blue-600' 
+                    : 'border-gray-300 hover:bg-gray-100 text-gray-700'"
+                >
+                  {{ page }}
+                </button>
+                <span v-else class="px-2 text-gray-500">...</span>
+              </template>
+              
+              <button
+                @click="goToPage(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronRight class="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cyber-Tech Bento Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'midnight': '#050A14',
+                        'midnight-light': '#0F172A',
+                        'neon-cyan': '#00F0FF',
+                        'neon-magenta': '#FF003C',
+                        'neon-purple': '#BD00FF',
+                        'neon-green': '#0AFF60',
+                        'glass-dark': 'rgba(15, 23, 42, 0.6)',
+                        'glass-lighter': 'rgba(30, 41, 59, 0.7)',
+                        'cyber-text': '#E2E8F0',
+                        'cyber-muted': '#94A3B8',
+                    },
+                    fontFamily: {
+                        sans: ['Rajdhani', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    },
+                    borderRadius: {
+                        'bento': '0.5rem',
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 10px rgba(0, 240, 255, 0.3), 0 0 20px rgba(0, 240, 255, 0.1)',
+                        'neon-magenta': '0 0 10px rgba(255, 0, 60, 0.3), 0 0 20px rgba(255, 0, 60, 0.1)',
+                    },
+                    backgroundImage: {
+                        'cyber-grid': "radial-gradient(circle, rgba(0, 240, 255, 0.1) 1px, transparent 1px)",
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            background-color: #050A14;
+            background-image: 
+                linear-gradient(rgba(5, 10, 20, 0.9), rgba(5, 10, 20, 0.95)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.05' fill='%2300F0FF' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .bento-card {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            border-color: #00F0FF;
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
+        }.scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.02) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="text-cyber-text antialiased min-h-screen relative overflow-x-hidden selection:bg-neon-magenta selection:text-white font-sans">
+<div class="scanline"></div>
+<header class="sticky top-0 z-50 w-full bg-midnight/80 backdrop-blur-md border-b border-neon-cyan/30 mb-8 py-4">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-midnight-light text-neon-cyan flex items-center justify-center border border-neon-cyan/50 shadow-[0_0_10px_rgba(0,240,255,0.3)]">
+<span class="material-symbols-outlined text-3xl icon-glow">security</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-white uppercase font-mono">
+                            CYBER<span class="text-neon-cyan">SEC</span>
+</h1>
+<p class="text-xs font-medium tracking-[0.2em] uppercase text-neon-magenta mt-0.5">Systems Portal v4.0</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-4 py-2 bg-black/40 border border-neon-green/30 text-sm font-mono text-neon-green shadow-[0_0_5px_rgba(10,255,96,0.2)]">
+<span class="w-2 h-2 bg-neon-green animate-pulse"></span>
+                        SYSTEM_ONLINE
+                    </div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 border border-cyber-muted/30 hover:border-neon-cyan hover:bg-neon-cyan/10 flex items-center justify-center transition-all text-cyber-muted hover:text-neon-cyan group">
+<span class="material-symbols-outlined text-[20px] group-hover:icon-glow">search</span>
+</button>
+<button class="w-10 h-10 border border-cyber-muted/30 hover:border-neon-cyan hover:bg-neon-cyan/10 flex items-center justify-center transition-all text-cyber-muted hover:text-neon-cyan group">
+<span class="material-symbols-outlined text-[20px] group-hover:icon-glow">settings</span>
+</button>
+<div class="ml-2 w-10 h-10 bg-neon-magenta/20 text-neon-magenta flex items-center justify-center font-bold text-lg border border-neon-magenta shadow-[0_0_10px_rgba(255,0,60,0.3)]">
+                            A
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<section class="mb-16">
+<div class="flex items-end gap-4 mb-8">
+<div class="relative">
+<h2 class="text-4xl font-bold text-white uppercase tracking-wider font-mono relative z-10 text-glow">Data Operations</h2>
+<div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-neon-cyan"></div>
+</div>
+<span class="text-xs font-mono text-neon-cyan bg-midnight-light px-3 py-1 border border-neon-cyan/30 mb-2">WS: FANG_YUEQIANG</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+<div class="md:col-span-6 lg:col-span-8 bg-glass-dark rounded-bento border border-neon-cyan/40 p-8 bento-card relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-9xl text-neon-cyan">database</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-neon-cyan/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-midnight border border-neon-cyan flex items-center justify-center shadow-neon-cyan">
+<span class="material-symbols-outlined text-3xl text-neon-cyan icon-glow">query_stats</span>
+</div>
+<span class="bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/50 text-xs font-bold px-3 py-1 font-mono">PROTOCOL: SQL</span>
+</div>
+<div class="mt-8">
+<h3 class="text-2xl font-bold text-white mb-3 font-mono uppercase tracking-wide">jms4_DB_Query</h3>
+<p class="text-cyber-muted font-medium text-lg leading-relaxed max-w-xl font-sans">
+                                Establish secure connection to JumpServer v4. Semantic SQL transformation active. Authorization required for data stream access.
+                            </p>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-glass-dark rounded-bento border border-white/10 hover:border-neon-magenta/50 p-6 bento-card flex flex-col group">
+<div class="w-12 h-12 bg-midnight border border-neon-magenta/50 text-neon-magenta flex items-center justify-center mb-4 group-hover:shadow-[0_0_10px_rgba(255,0,60,0.4)] transition-shadow">
+<span class="material-symbols-outlined">download</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2 font-mono">SECURE_DOWNLOADER</h3>
+<p class="text-cyber-muted text-sm mb-4 flex-grow">Encrypted file retrieval for distributed nodes.</p>
+<div class="mt-auto pt-4 border-t border-dashed border-white/10 flex justify-between items-center">
+<span class="text-xs font-bold text-neon-green uppercase tracking-wide font-mono">● v1.0.2 ACTIVE</span>
+<span class="material-symbols-outlined text-cyber-muted text-sm group-hover:text-neon-magenta transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-glass-dark rounded-bento border border-white/10 hover:border-neon-purple/50 p-6 bento-card group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-midnight border border-neon-purple/50 text-neon-purple flex items-center justify-center group-hover:shadow-[0_0_10px_rgba(189,0,255,0.4)] transition-shadow">
+<span class="material-symbols-outlined">cloud_upload</span>
+</div>
+<span class="bg-neon-purple/10 text-neon-purple text-[10px] font-mono font-bold px-2 py-1 border border-neon-purple/30">ETL_PIPE</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 font-mono">DOC_TRANSFER</h3>
+<p class="text-cyber-muted text-sm leading-relaxed">
+                        Secure upload pipeline. Content extraction to isolated data vaults.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-5 bg-midnight-light border border-neon-cyan p-6 bento-card relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-neon-cyan text-midnight flex items-center justify-center shadow-neon-cyan">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="bg-white text-black text-[10px] font-bold px-2 py-1 font-mono">AI_CORE_MCP</span>
+</div>
+<h3 class="text-xl font-bold mb-2 text-white font-mono">jms4_ASSISTANT</h3>
+<p class="text-cyber-text/80 text-sm font-medium leading-relaxed">
+                            JumpServer autonomous agent via MCP protocol. Automation level: HIGH.
+                        </p>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-glass-dark rounded-bento border border-white/10 p-6 bento-card flex flex-col justify-center items-center text-center group hover:border-neon-cyan">
+<div class="w-14 h-14 rounded-full bg-white/5 text-cyber-muted flex items-center justify-center mb-3 group-hover:bg-neon-cyan group-hover:text-black group-hover:shadow-neon-cyan transition-all">
+<span class="material-symbols-outlined">search</span>
+</div>
+<h3 class="text-lg font-bold text-white font-mono">DB_SCAN</h3>
+<p class="text-xs text-cyber-muted mt-1 font-mono opacity-50">NO_DATA</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-end gap-4 mb-8 pt-8 border-t border-white/5">
+<div class="relative">
+<h2 class="text-4xl font-bold text-white uppercase tracking-wider font-mono relative z-10 text-glow">Processing &amp; Analytics</h2>
+<div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-neon-magenta"></div>
+</div>
+<span class="text-xs font-mono text-neon-magenta bg-midnight-light px-3 py-1 border border-neon-magenta/30 mb-2">WS: ZHENG_ZEWEN</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+<div class="md:col-span-3 lg:col-span-3 bg-glass-dark rounded-bento border border-white/10 hover:border-neon-green/50 p-6 bento-card group">
+<div class="w-12 h-12 bg-midnight border border-neon-green/50 text-neon-green flex items-center justify-center mb-4 group-hover:shadow-[0_0_10px_rgba(10,255,96,0.4)] transition-shadow">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 font-mono">FORM_DIAGNOSTIC</h3>
+<p class="text-cyber-muted text-sm italic font-mono opacity-50">STATUS: OFFLINE</p>
+</div>
+<div class="md:col-span-6 lg:col-span-6 bg-glass-lighter rounded-bento border border-neon-magenta/40 p-8 bento-card relative group">
+<div class="absolute inset-0 bg-gradient-to-br from-neon-magenta/5 to-transparent pointer-events-none"></div>
+<div class="absolute top-4 right-4">
+<span class="bg-neon-magenta text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider shadow-[0_0_10px_rgba(255,0,60,0.5)]">OCR_ENGINE_V2</span>
+</div>
+<div class="w-16 h-16 bg-midnight border border-neon-magenta text-neon-magenta flex items-center justify-center mb-6 shadow-neon-magenta">
+<span class="material-symbols-outlined text-3xl icon-glow">picture_as_pdf</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 font-mono">PDF_PARSER_UNIT</h3>
+<p class="text-cyber-text/90 font-medium leading-relaxed">
+                        MinerU-based extraction core. Decrypts complex layouts and tables. High-accuracy text mining enabled.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-glass-dark rounded-bento border border-white/10 hover:border-neon-cyan/50 p-6 bento-card group">
+<div class="w-12 h-12 bg-midnight border border-neon-cyan/50 text-neon-cyan flex items-center justify-center mb-4 group-hover:shadow-[0_0_10px_rgba(0,240,255,0.4)] transition-shadow">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 font-mono">MACRO_MAIL</h3>
+<p class="text-cyber-muted text-sm italic font-mono opacity-50">STATUS: IDLE</p>
+</div>
+<div class="md:col-span-6 lg:col-span-4 bg-glass-dark rounded-bento border border-white/10 hover:border-yellow-400/50 p-6 bento-card group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-midnight border border-yellow-400/50 text-yellow-400 flex items-center justify-center group-hover:shadow-[0_0_10px_rgba(250,204,21,0.4)] transition-shadow">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<span class="bg-yellow-400/10 text-yellow-400 text-[10px] font-bold px-2 py-1 font-mono border border-yellow-400/30">FAQ_BOT</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 font-mono">CORDYS_QUERY</h3>
+<p class="text-cyber-muted text-sm leading-relaxed">
+                        Manual query assistant for Cordys infrastructure. AI-driven response system.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-8 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] bg-midnight-light rounded-bento border border-dashed border-white/20 p-6 flex items-center justify-center text-cyber-muted/40 font-mono italic relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<span class="relative z-10 flex items-center gap-2">
+<span class="w-2 h-2 bg-cyber-muted/40 rounded-full animate-ping"></span>
+                        INITIALIZING_NEW_MODULES...
+                    </span>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 border-t border-white/10 bg-midnight-light/50 py-12 relative">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 opacity-70">
+<span class="material-symbols-outlined text-xl text-neon-cyan">security</span>
+<span class="font-mono font-bold text-white tracking-widest">FIT2CLOUD_AI_SEC</span>
+</div>
+<p class="text-xs text-cyber-muted font-mono uppercase">© 2023 Cyber-Tech Bento. All systems operational.</p>
+</div>
+</footer>
+
+</body></html>

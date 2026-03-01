@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Cyber AI Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        "cyber-bg": "#0D0B14",
+                        "cyber-card": "rgba(20, 15, 30, 0.7)",
+                        "neon-magenta": "#FF00FF",
+                        "neon-blue": "#00FFFF",
+                        "neon-purple": "#BC13FE",
+                        "text-main": "#F0F0F0",
+                        "text-muted": "#A0A0B0",
+                    },
+                    fontFamily: {
+                        sans: ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                    },
+                    backgroundImage: {
+                        'cyber-gradient': 'linear-gradient(135deg, #1A103C 0%, #000000 100%)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            background-color: #050408;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 40%);
+        }
+        .glass-sidebar {
+            background: rgba(13, 11, 20, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .cyber-card {
+            background: linear-gradient(160deg, rgba(30, 20, 50, 0.6) 0%, rgba(10, 5, 20, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cyber-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(188, 19, 254, 0.5);
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.2);
+        }
+        .cyber-card:hover::before {
+            opacity: 1;
+        }
+        .cyber-card:hover .card-icon-bg {
+            background: rgba(188, 19, 254, 0.2);
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+        .cyber-nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .cyber-nav-item::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 0;
+            background: #00FFFF;
+            transition: height 0.3s ease;
+            border-radius: 0 4px 4px 0;
+        }
+        .cyber-nav-item:hover::after, .cyber-nav-item.active::after {
+            height: 70%;
+        }
+        .cyber-nav-item:hover .material-symbols-outlined,
+        .cyber-nav-item.active .material-symbols-outlined {
+            color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+        }.fluid-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .blob-1 { top: -10%; right: -5%; width: 600px; height: 600px; background: radial-gradient(circle, #4c1d95 0%, transparent 70%); animation: pulse-glow 8s infinite alternate; }
+        .blob-2 { bottom: -10%; left: -10%; width: 500px; height: 500px; background: radial-gradient(circle, #0e7490 0%, transparent 70%); animation: pulse-glow 10s infinite alternate-reverse; }
+        .blob-3 { top: 40%; left: 30%; width: 300px; height: 300px; background: radial-gradient(circle, #be185d 0%, transparent 70%); opacity: 0.3; }
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.1); opacity: 0.6; }
+        }
+        .grid-asymmetric {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            grid-auto-flow: dense;
+        }
+        @media (min-width: 1024px) {
+            .col-span-2-lg {
+                grid-column: span 2;
+            }
+            .row-span-2-lg {
+                grid-row: span 2;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050408; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #331D45; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #BC13FE; 
+        }
+    </style>
+</head>
+<body class="text-text-main font-sans antialiased min-h-screen overflow-x-hidden selection:bg-neon-purple selection:text-white">
+<div class="fixed inset-0 pointer-events-none overflow-hidden">
+<div class="fluid-blob blob-1"></div>
+<div class="fluid-blob blob-2"></div>
+<div class="fluid-blob blob-3"></div>
+</div>
+<div class="flex h-screen overflow-hidden">
+<aside class="w-24 lg:w-32 hidden md:flex flex-col items-center py-8 glass-sidebar z-40 h-full relative">
+<div class="mb-12">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple to-indigo-600 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.4)]">
+<span class="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-10 w-full items-center">
+<button class="cyber-nav-item active group flex flex-col items-center gap-2 w-full">
+<span class="material-symbols-outlined text-3xl text-gray-400 transition-colors">dashboard</span>
+<span class="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-neon-blue transition-colors">Portal</span>
+</button>
+<button class="cyber-nav-item group flex flex-col items-center gap-2 w-full">
+<span class="material-symbols-outlined text-3xl text-gray-400 transition-colors">brush</span>
+<span class="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-neon-blue transition-colors">Creative</span>
+</button>
+<button class="cyber-nav-item group flex flex-col items-center gap-2 w-full">
+<span class="material-symbols-outlined text-3xl text-gray-400 transition-colors">psychology</span>
+<span class="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-neon-blue transition-colors">Logic</span>
+</button>
+<button class="cyber-nav-item group flex flex-col items-center gap-2 w-full">
+<span class="material-symbols-outlined text-3xl text-gray-400 transition-colors">precision_manufacturing</span>
+<span class="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-neon-blue transition-colors">Auto</span>
+</button>
+</nav>
+<div class="mt-auto flex flex-col gap-6 w-full items-center">
+<button class="w-10 h-10 rounded-full hover:bg-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 p-[2px]">
+<img alt="Profile" class="rounded-full w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCErJQXjzaxzYBJ2FFROkehWFpQRvraQDFAIe_m2sXSmbEI9hKfNWxaxApG0RNQRRxJm18MeaxyH59wC3tdrA6n8Q75jFf70W6jVX6Aa5dKyfgsQO0FKorBKoP3m8sQfTOTcRhNyfs4b0_upoBwsreDnigC7TCLcL6ZHIZWELK_OQ1pAoq-O9KMW-s23vLL5Q2ipZLbDrtBhmEMIpEZ-uYSF5sHL14xjt0kcf8BkAwCbQqwcxFy4KnFHbGV9NgOUdlXwSfj60V9xy4"/>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto relative z-10 p-4 md:p-8 lg:p-12 scroll-smooth">
+<header class="md:hidden flex justify-between items-center mb-8 glass-sidebar p-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-purple to-indigo-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg">auto_awesome</span>
+</div>
+<span class="font-bold text-white tracking-wider">CYBER PORTAL</span>
+</div>
+<button class="text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+<div>
+<h1 class="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-neon-blue mb-2 tracking-tight">
+                            Command Center
+                        </h1>
+<p class="text-text-muted text-lg font-light tracking-wide">
+<span class="text-neon-magenta">System Status:</span> Operational <span class="mx-2 text-gray-600">|</span> v.4.0.2
+                        </p>
+</div>
+<div class="mt-4 md:mt-0">
+<div class="inline-flex items-center bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 py-2">
+<span class="w-2 h-2 bg-neon-blue rounded-full mr-3 animate-pulse"></span>
+<span class="text-sm font-medium text-gray-300">Live Feed Active</span>
+</div>
+</div>
+</div>
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-8">
+<span class="h-px w-8 bg-neon-blue/50"></span>
+<h2 class="text-xl font-bold text-white uppercase tracking-[0.2em] text-neon-blue drop-shadow-[0_0_5px_rgba(0,255,255,0.5)]">
+                            Data Operations
+                        </h2>
+<span class="h-px flex-1 bg-gradient-to-r from-neon-blue/50 to-transparent"></span>
+</div>
+<div class="grid-asymmetric">
+<div class="cyber-card col-span-1 md:col-span-2 lg:col-span-2 row-span-1 md:row-span-2 rounded-3xl p-8 group cursor-pointer flex flex-col justify-between min-h-[320px]">
+<div class="absolute right-0 top-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl">query_stats</span>
+</div>
+<div class="relative z-10">
+<div class="card-icon-bg w-14 h-14 rounded-2xl bg-blue-500/10 text-neon-blue flex items-center justify-center border border-blue-500/20 mb-6 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl">query_stats</span>
+</div>
+<div class="flex items-center gap-3 mb-2">
+<h3 class="text-2xl font-bold text-white group-hover:text-neon-blue transition-colors">jms4 Database Query</h3>
+<span class="bg-blue-500/20 text-neon-blue text-[10px] font-bold px-2 py-0.5 rounded border border-blue-500/30 uppercase tracking-wider">Primary</span>
+</div>
+<p class="text-gray-400 leading-relaxed max-w-md">
+                                    Direct neural link to JumpServer v4. Perform semantic SQL transformations and fetch secure data streams with zero latency.
+                                </p>
+</div>
+<div class="mt-6 flex items-center gap-2 text-sm text-neon-blue font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span>Initiate Query</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">download</span>
+</div>
+<span class="text-xs text-gray-500 font-mono">V1.0.2</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">File Downloader</h3>
+<p class="text-sm text-gray-400">Secure retrieval protocol for encrypted assets.</p>
+</div>
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">cloud_upload</span>
+</div>
+<span class="text-[10px] bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 px-2 py-1 rounded">ETL</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Doc Transfer</h3>
+<p class="text-sm text-gray-400">Upload pipeline to designated data warehouses.</p>
+</div>
+<div class="cyber-card row-span-2 rounded-2xl p-6 group cursor-pointer flex flex-col">
+<div class="mb-auto">
+<div class="flex justify-between items-start mb-6">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-purple-500/10 text-neon-purple flex items-center justify-center border border-purple-500/20 transition-all duration-300 shadow-[0_0_10px_rgba(188,19,254,0.1)]">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="text-[10px] bg-purple-900/30 border border-purple-500/30 text-purple-300 px-2 py-1 rounded animate-pulse">AI ACTIVE</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3 group-hover:text-neon-purple transition-colors">jms4 Assistant-MCP</h3>
+<p class="text-sm text-gray-400 leading-relaxed">
+                                    JumpServer smart assistant utilizing Model Context Protocol. Optimized for complex automation tasks and predictive maintenance.
+                                </p>
+</div>
+<div class="mt-6 pt-6 border-t border-white/5">
+<div class="flex items-center justify-between text-xs text-gray-500">
+<span>Latency: 12ms</span>
+<span>Load: 45%</span>
+</div>
+<div class="w-full bg-gray-800 h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-neon-purple w-[45%] h-full"></div>
+</div>
+</div>
+</div>
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer flex flex-col justify-center">
+<div class="flex items-center gap-4">
+<div class="card-icon-bg w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">search</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">DB Search</h3>
+<p class="text-xs text-gray-500">General Indexing</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-20">
+<div class="flex items-center gap-4 mb-8">
+<span class="h-px w-8 bg-neon-magenta/50"></span>
+<h2 class="text-xl font-bold text-white uppercase tracking-[0.2em] text-neon-magenta drop-shadow-[0_0_5px_rgba(255,0,255,0.5)]">
+                            Processing &amp; Analytics
+                        </h2>
+<span class="h-px flex-1 bg-gradient-to-r from-neon-magenta/50 to-transparent"></span>
+</div>
+<div class="grid-asymmetric">
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer">
+<div class="flex justify-between mb-4">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center border border-orange-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 group-hover:text-orange-300 transition-colors">Form Testing</h3>
+<p class="text-sm text-gray-500 italic">Validation Pending...</p>
+</div>
+<div class="cyber-card md:col-span-2 rounded-2xl p-6 group cursor-pointer relative overflow-hidden">
+<div class="absolute right-0 bottom-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl group-hover:bg-red-500/10 transition-colors"></div>
+<div class="relative z-10 flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="card-icon-bg w-16 h-16 rounded-2xl bg-red-500/10 text-red-400 flex items-center justify-center border border-red-500/20 shrink-0 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl">picture_as_pdf</span>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h3 class="text-xl font-bold text-white group-hover:text-red-300 transition-colors">PDF Parsing Assistant</h3>
+<span class="text-[10px] border border-red-500/30 text-red-300 px-2 py-0.5 rounded">OCR Engine</span>
+</div>
+<p class="text-sm text-gray-400 max-w-lg">
+                                        Advanced extraction based on MinerU technology. Capable of processing 500+ pages/minute with high fidelity layout preservation.
+                                    </p>
+</div>
+</div>
+</div>
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer">
+<div class="flex justify-between mb-4">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center border border-teal-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">mail</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 group-hover:text-teal-300 transition-colors">Macro Mail</h3>
+<p class="text-sm text-gray-500">Automated Handler</p>
+</div>
+<div class="cyber-card rounded-2xl p-6 group cursor-pointer">
+<div class="flex justify-between mb-4">
+<div class="card-icon-bg w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center border border-yellow-500/20 transition-all duration-300">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<span class="text-[10px] bg-yellow-900/30 border border-yellow-500/30 text-yellow-300 px-2 py-1 rounded">FAQ</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">Cordys Q&amp;A</h3>
+<p class="text-sm text-gray-400">Intelligent manual query bot.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script>
+        // Subtle tilt effect for cards
+        const cards = document.querySelectorAll('.cyber-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                // Calculate rotation based on mouse position relative to center
+                // Reduced intensity for better usability
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / 20) * -1; // Invert Y axis
+                const rotateY = (x - centerX) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    </script>
+
+</body></html>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import type { Category, Agent } from '@/data/categories';
-import { ChevronDown, Sparkles, LogOut, Settings } from 'lucide-vue-next';
+import { ChevronDown, Sparkles, LogOut, Settings, Palette } from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -10,6 +10,7 @@ const categories = ref<Category[]>([]);
 const emit = defineEmits<{
   (e: 'select-agent', url: string): void;
   (e: 'go-home'): void;
+  (e: 'open-settings'): void;
 }>();
 
 const openDropdownId = ref<string | null>(null);
@@ -63,7 +64,7 @@ const goHome = () => {
 };
 
 const scrollToCategory = (id: string) => {
-  const element = document.getElementById(id);
+  const element = document.getElementById(`category-${id}`);
   if (element) {
     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -177,6 +178,15 @@ onUnmounted(() => {
     </nav>
 
     <div class="flex items-center space-x-4">
+      <!-- 主题设置按钮 -->
+      <button
+        @click="$emit('open-settings')"
+        class="p-2 text-gray-600 hover:text-primary transition-colors"
+        title="主题设置"
+      >
+        <Palette class="w-5 h-5" />
+      </button>
+
       <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
         <span class="text-sm text-gray-600">{{ authStore.user?.username }}</span>
         

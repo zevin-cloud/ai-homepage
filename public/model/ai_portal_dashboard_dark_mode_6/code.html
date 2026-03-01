@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pastel Dream Bento Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cream': '#FFFDF9',
+                        'lavender-light': '#F3E8FF',
+                        'lavender': '#E9D5FF',
+                        'lavender-dark': '#D8B4FE',
+                        'peach-light': '#FFF1F2',
+                        'peach': '#FECDD3',
+                        'mint-light': '#F0FDFA',
+                        'mint': '#CCFBF1',
+                        'sky-light': '#F0F9FF',
+                        'sky': '#BAE6FD',
+                        'rose-light': '#FFF1F2',
+                        'rose': '#FECDD3',
+                        'bubblegum': '#FBCFE8',
+                        'lemon': '#FEF9C3',
+                        'indigo-soft': '#4338CA',
+                        'slate-soft': '#475569',
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'Nunito', 'sans-serif'],
+                        display: ['Nunito', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'bento': '2.5rem',
+                        'bubbly': '1.75rem',
+                    },
+                    boxShadow: {
+                        'soft-purple': '0 20px 40px -10px rgba(216, 180, 254, 0.5)',
+                        'soft-blue': '0 20px 40px -10px rgba(186, 230, 253, 0.5)',
+                        'soft-mint': '0 20px 40px -10px rgba(167, 243, 208, 0.5)',
+                        'soft-peach': '0 20px 40px -10px rgba(253, 186, 116, 0.5)',
+                        'glow': '0 0 20px rgba(255, 255, 255, 0.8)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            background-color: #FFFDF9;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(243, 232, 255, 0.7) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(204, 251, 241, 0.7) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(254, 249, 195, 0.4) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .bento-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-8px) scale(1.01);
+        }.text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #9333EA, #DB2777);
+        }
+    </style>
+</head>
+<body class="text-slate-soft antialiased min-h-screen relative overflow-x-hidden selection:bg-lavender-dark selection:text-white font-sans">
+<header class="sticky top-0 z-50 w-full bg-cream/80 backdrop-blur-xl border-b border-white/50 mb-8 py-4 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-lavender to-bubblegum text-indigo-soft flex items-center justify-center shadow-lg shadow-lavender/50">
+<span class="material-symbols-outlined text-2xl font-bold">bubble_chart</span>
+</div>
+<div>
+<h1 class="text-2xl font-display font-extrabold tracking-tight text-indigo-soft/90">
+                            FIT2CLOUD
+                        </h1>
+<p class="text-xs font-bold tracking-wider uppercase text-slate-400 mt-0.5 bg-lavender-light/50 px-2 py-0.5 rounded-full inline-block">Pastel Dream AI</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-white/60 text-sm font-bold text-slate-500 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<span class="w-3 h-3 rounded-full bg-gradient-to-r from-mint to-teal-300 shadow-[0_0_10px_rgba(45,212,191,0.6)]"></span>
+                        Operational
+                    </div>
+<div class="flex items-center gap-3">
+<button class="w-11 h-11 rounded-full bg-white hover:bg-sky-light text-slate-400 hover:text-sky-600 shadow-sm hover:shadow-md transition-all flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</button>
+<button class="w-11 h-11 rounded-full bg-white hover:bg-rose-light text-slate-400 hover:text-rose-500 shadow-sm hover:shadow-md transition-all flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</button>
+<div class="ml-2 w-11 h-11 rounded-full bg-gradient-to-br from-peach to-rose text-white flex items-center justify-center font-display font-bold text-lg shadow-lg shadow-rose/40 ring-4 ring-white/50">
+                            A
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<section class="mb-20">
+<div class="flex items-end gap-4 mb-10 pl-2">
+<div class="relative">
+<h2 class="text-4xl md:text-5xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 relative z-10">Data Operations</h2>
+<div class="absolute -bottom-3 -left-4 w-[120%] h-8 bg-lavender-light/60 blur-xl -z-0 rounded-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-400 bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm mb-2 shadow-sm border border-white">Fang Yueqiang Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-8 auto-rows-fr">
+<div class="md:col-span-6 lg:col-span-8 bg-gradient-to-br from-sky-light via-white to-lavender-light rounded-bento p-10 bento-card relative overflow-hidden group shadow-soft-blue border border-white/60">
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-br from-sky-200 to-indigo-200 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+<div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity rotate-12">
+<span class="material-symbols-outlined text-9xl text-indigo-500">database</span>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<div class="w-20 h-20 rounded-3xl bg-white flex items-center justify-center shadow-lg shadow-sky-100 ring-4 ring-white/50 transform group-hover:rotate-6 transition-transform">
+<span class="material-symbols-outlined text-4xl text-sky-400 bg-gradient-to-br from-sky-400 to-indigo-500 bg-clip-text text-transparent">query_stats</span>
+</div>
+<span class="bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-200">SQL</span>
+</div>
+<div class="mt-8">
+<h3 class="text-3xl font-display font-bold text-slate-700 mb-4 group-hover:text-indigo-600 transition-colors">jms4 Database Query</h3>
+<p class="text-slate-500 font-medium text-lg leading-relaxed max-w-xl">
+                                Connect to JumpServer v4 database via semantic SQL transformation to fetch data securely. Streamlined access for authorized personnel.
+                            </p>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-white rounded-bento p-8 bento-card flex flex-col shadow-soft-purple border border-white/60 relative overflow-hidden group">
+<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-100 rounded-full blur-2xl opacity-40"></div>
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-lavender to-purple-200 text-purple-600 flex items-center justify-center mb-6 shadow-md shadow-purple-100">
+<span class="material-symbols-outlined text-2xl">download</span>
+</div>
+<h3 class="text-2xl font-display font-bold text-slate-700 mb-3">File Downloader</h3>
+<p class="text-slate-500 text-sm mb-4 flex-grow font-medium">Secure file retrieval service for distributed systems.</p>
+<div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+<span class="text-xs font-bold text-purple-400 uppercase tracking-wide bg-purple-50 px-2 py-1 rounded-lg">v1.0.2 active</span>
+<div class="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-4 bg-white rounded-bento p-8 bento-card shadow-soft-mint border border-white/60 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-mint to-teal-100 text-teal-600 flex items-center justify-center shadow-md shadow-teal-50">
+<span class="material-symbols-outlined text-2xl">cloud_upload</span>
+</div>
+<span class="bg-teal-50 text-teal-600 text-[10px] font-bold px-3 py-1.5 rounded-xl border border-teal-100">ETL</span>
+</div>
+<h3 class="text-xl font-display font-bold text-slate-700 mb-3 group-hover:text-teal-600 transition-colors">Doc Upload &amp; Transfer</h3>
+<p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        User document upload pipeline. Extracts and stores content into designated data warehouses.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-5 bg-gradient-to-r from-indigo-400 to-purple-500 text-white rounded-bento p-8 bento-card shadow-lg shadow-indigo-200 border-none relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+<div class="absolute bottom-0 left-0 w-32 h-32 bg-pink-400 opacity-20 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
+<div class="flex justify-between items-start mb-6 relative z-10">
+<div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center border border-white/30">
+<span class="material-symbols-outlined text-2xl">smart_toy</span>
+</div>
+<span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-xl border border-white/30">AI MCP</span>
+</div>
+<h3 class="text-2xl font-display font-bold mb-3 relative z-10">jms4 Assistant-MCP</h3>
+<p class="text-white/90 text-sm font-medium leading-relaxed relative z-10">
+                        JumpServer smart assistant utilizing MCP protocol for enhanced automation.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-white rounded-bento p-6 bento-card flex flex-col justify-center items-center text-center shadow-soft-peach border border-white/60 group hover:bg-gradient-to-br hover:from-orange-50 hover:to-white">
+<div class="w-16 h-16 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center mb-4 group-hover:bg-gradient-to-br group-hover:from-orange-300 group-hover:to-rose-300 group-hover:text-white transition-all shadow-sm group-hover:shadow-lg group-hover:shadow-orange-200">
+<span class="material-symbols-outlined text-3xl">search</span>
+</div>
+<h3 class="text-lg font-display font-bold text-slate-700">General DB Search</h3>
+<p class="text-xs text-slate-400 mt-2 font-medium bg-slate-50 px-3 py-1 rounded-full">Coming Soon</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-end gap-4 mb-10 pt-10 border-t border-slate-100 pl-2">
+<div class="relative">
+<h2 class="text-4xl md:text-5xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400 relative z-10">Processing &amp; Analytics</h2>
+<div class="absolute -bottom-3 -left-4 w-[120%] h-8 bg-peach-light/60 blur-xl -z-0 rounded-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-400 bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm mb-2 shadow-sm border border-white">Zheng Zewen Workspace</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-8 auto-rows-fr">
+<div class="md:col-span-3 lg:col-span-3 bg-gradient-to-b from-mint-light to-white rounded-bento p-8 bento-card shadow-soft-mint border border-white/60">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-mint to-teal-200 text-teal-700 flex items-center justify-center mb-6 shadow-md shadow-mint/50">
+<span class="material-symbols-outlined text-2xl">fact_check</span>
+</div>
+<h3 class="text-xl font-display font-bold text-slate-700 mb-2">Form Testing</h3>
+<p class="text-slate-400 text-sm font-medium">Internal testing suite.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-6 bg-gradient-to-br from-rose-50 via-white to-peach-50 rounded-bento p-10 bento-card relative shadow-soft-peach border border-white/60 group">
+<div class="absolute top-6 right-6">
+<span class="bg-gradient-to-r from-rose-400 to-orange-400 text-white text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg shadow-rose-200">OCR Engine</span>
+</div>
+<div class="w-20 h-20 rounded-3xl bg-white border border-rose-100 text-rose-500 flex items-center justify-center mb-8 shadow-lg shadow-rose-100 transform group-hover:-rotate-6 transition-transform">
+<span class="material-symbols-outlined text-4xl bg-gradient-to-br from-rose-400 to-orange-500 bg-clip-text text-transparent">picture_as_pdf</span>
+</div>
+<h3 class="text-3xl font-display font-bold text-slate-700 mb-4 group-hover:text-rose-500 transition-colors">PDF Parsing Assistant</h3>
+<p class="text-slate-500 font-medium text-lg leading-relaxed">
+                        Advanced PDF parsing and extraction engine based on MinerU technology. Capable of handling complex layouts and tables.
+                    </p>
+</div>
+<div class="md:col-span-3 lg:col-span-3 bg-white rounded-bento p-8 bento-card shadow-soft-blue border border-white/60">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-200 to-blue-200 text-blue-600 flex items-center justify-center mb-6 shadow-md shadow-blue-100">
+<span class="material-symbols-outlined text-2xl">mail</span>
+</div>
+<h3 class="text-xl font-display font-bold text-slate-700 mb-2">Macro Mail Handler</h3>
+<p class="text-slate-400 text-sm font-medium">Automated sorting.</p>
+</div>
+<div class="md:col-span-6 lg:col-span-4 bg-gradient-to-br from-lemon to-white rounded-bento p-8 bento-card shadow-lg shadow-yellow-100/50 border border-white/60 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-300 to-orange-300 text-white flex items-center justify-center shadow-md shadow-yellow-100">
+<span class="material-symbols-outlined text-2xl">help_center</span>
+</div>
+<span class="bg-yellow-50 text-yellow-700 text-[10px] font-bold px-3 py-1.5 rounded-xl border border-yellow-200">FAQ</span>
+</div>
+<h3 class="text-xl font-display font-bold text-slate-700 mb-3 group-hover:text-yellow-600 transition-colors">Cordys Q&amp;A Bot</h3>
+<p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        Intelligent manual query assistant for Cordys platform systems.
+                    </p>
+</div>
+<div class="md:col-span-6 lg:col-span-8 bg-white/50 backdrop-blur-sm rounded-bento border-4 border-dashed border-slate-200 p-6 flex flex-col items-center justify-center text-slate-400 font-display min-h-[200px] hover:border-slate-300 transition-colors">
+<span class="material-symbols-outlined text-4xl mb-2 text-slate-300">construction</span>
+<span class="font-bold text-lg">New analytics modules coming soon...</span>
+<div class="mt-4 flex gap-2">
+<div class="w-3 h-3 bg-rose-200 rounded-full animate-bounce"></div>
+<div class="w-3 h-3 bg-sky-200 rounded-full animate-bounce delay-100"></div>
+<div class="w-3 h-3 bg-mint-200 rounded-full animate-bounce delay-200"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 border-t border-slate-100 bg-white/80 backdrop-blur-xl py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3 opacity-70">
+<span class="material-symbols-outlined text-2xl text-indigo-400">bubble_chart</span>
+<span class="font-display font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">FIT2CLOUD AI</span>
+</div>
+<p class="text-sm font-medium text-slate-400">© 2023 Pastel Dream Design. All rights reserved.</p>
+</div>
+</footer>
+
+</body></html>

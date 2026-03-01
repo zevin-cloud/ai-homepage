@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luxury Dark AI Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'charcoal': '#121212',
+                        'obsidian': '#1A1A1A',
+                        'gold': '#D4AF37',
+                        'gold-light': '#F1E5AC',
+                        'copper': '#B87333',
+                        'bronze': '#804A00',
+                        'platinum': '#E5E4E2',
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-charcoal text-platinum antialiased selection:bg-gold selection:text-charcoal;
+                background-image: radial-gradient(circle at 50% -20%, #2A2A2A 0%, #121212 100%);
+            }
+        }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #D4AF37, #F1E5AC, #B87333);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+        }
+        .gold-border:hover {
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<header class="sticky top-0 z-50 w-full bg-charcoal/80 backdrop-blur-xl border-b border-gold/10 py-5">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-6">
+<div class="w-10 h-10 border border-gold/40 flex items-center justify-center rotate-45 group hover:border-gold transition-colors">
+<span class="material-symbols-outlined text-gold -rotate-45 text-2xl">diamond</span>
+</div>
+<div>
+<h1 class="text-2xl font-serif font-semibold tracking-wide gold-gradient-text uppercase">
+                            Aurelius AI
+                        </h1>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-10 text-[11px] uppercase tracking-[0.2em] font-medium text-platinum/60">
+<a class="hover:text-gold transition-colors" href="#">Intelligence</a>
+<a class="hover:text-gold transition-colors" href="#">Analytics</a>
+<a class="hover:text-gold transition-colors" href="#">Network</a>
+<a class="hover:text-gold transition-colors" href="#">Vault</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="text-gold/80 hover:text-gold transition-colors">
+<span class="material-symbols-outlined font-light">search</span>
+</button>
+<div class="h-8 w-[1px] bg-gold/20"></div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] tracking-widest uppercase text-gold/60 font-medium">Premium Access</span>
+<div class="w-10 h-10 rounded-full border border-gold/30 p-0.5">
+<div class="w-full h-full rounded-full bg-gradient-to-br from-gold/40 to-copper/40 flex items-center justify-center font-serif text-sm">A</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="py-16">
+<section class="mb-20">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 mb-8 flex justify-between items-end">
+<div>
+<span class="text-[10px] uppercase tracking-[0.3em] text-gold font-semibold mb-3 block">Curated Selection</span>
+<h2 class="text-4xl font-serif text-platinum italic">Featured Intelligence</h2>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 border border-gold/20 flex items-center justify-center text-gold hover:border-gold transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 border border-gold/20 flex items-center justify-center text-gold hover:border-gold transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto hide-scrollbar flex gap-8 px-6 lg:px-12 pb-8">
+<div class="min-w-[450px] bg-obsidian gold-border p-10 flex flex-col justify-between aspect-[16/10] relative group overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[180px] text-gold">neurology</span>
+</div>
+<div class="relative z-10">
+<div class="w-14 h-14 border border-gold/30 flex items-center justify-center mb-10 bg-charcoal">
+<span class="material-symbols-outlined text-gold text-3xl font-light">model_training</span>
+</div>
+<h3 class="text-3xl font-serif text-platinum mb-4">Neural Architect v4</h3>
+<p class="text-platinum/50 font-light leading-relaxed max-w-sm">
+                            Advanced semantic reasoning engine with proprietary LLM integration for enterprise-scale strategy mapping.
+                        </p>
+</div>
+<div class="relative z-10 mt-auto flex justify-between items-center">
+<span class="text-[10px] uppercase tracking-widest font-bold text-copper">Elite Access</span>
+<a class="text-gold text-sm font-medium border-b border-gold/30 pb-1 hover:border-gold transition-all" href="#">Launch Module</a>
+</div>
+</div>
+<div class="min-w-[450px] bg-obsidian gold-border p-10 flex flex-col justify-between aspect-[16/10] relative group overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[180px] text-gold">monitoring</span>
+</div>
+<div class="relative z-10">
+<div class="w-14 h-14 border border-gold/30 flex items-center justify-center mb-10 bg-charcoal">
+<span class="material-symbols-outlined text-gold text-3xl font-light">query_stats</span>
+</div>
+<h3 class="text-3xl font-serif text-platinum mb-4">Market Oracle</h3>
+<p class="text-platinum/50 font-light leading-relaxed max-w-sm">
+                            Real-time predictive analytics utilizing deep learning to forecast global market volatility and asset trends.
+                        </p>
+</div>
+<div class="relative z-10 mt-auto flex justify-between items-center">
+<span class="text-[10px] uppercase tracking-widest font-bold text-copper">Active Core</span>
+<a class="text-gold text-sm font-medium border-b border-gold/30 pb-1 hover:border-gold transition-all" href="#">Launch Module</a>
+</div>
+</div>
+<div class="min-w-[450px] bg-obsidian gold-border p-10 flex flex-col justify-between aspect-[16/10] relative group overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[180px] text-gold">shield_with_heart</span>
+</div>
+<div class="relative z-10">
+<div class="w-14 h-14 border border-gold/30 flex items-center justify-center mb-10 bg-charcoal">
+<span class="material-symbols-outlined text-gold text-3xl font-light">fingerprint</span>
+</div>
+<h3 class="text-3xl font-serif text-platinum mb-4">Sentinel Protocol</h3>
+<p class="text-platinum/50 font-light leading-relaxed max-w-sm">
+                            Encrypted document verification and multi-factor biometric authentication for high-security environments.
+                        </p>
+</div>
+<div class="relative z-10 mt-auto flex justify-between items-center">
+<span class="text-[10px] uppercase tracking-widest font-bold text-copper">Security Node</span>
+<a class="text-gold text-sm font-medium border-b border-gold/30 pb-1 hover:border-gold transition-all" href="#">Launch Module</a>
+</div>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="mb-12 border-b border-gold/10 pb-6 flex items-end gap-6">
+<h2 class="text-3xl font-serif text-platinum">Service Catalog</h2>
+<div class="flex-grow h-[1px] bg-gold/10 mb-2"></div>
+<div class="flex gap-8 text-[11px] uppercase tracking-widest text-gold/40">
+<span class="text-gold font-bold">All</span>
+<span class="hover:text-gold cursor-pointer transition-colors">Synthesis</span>
+<span class="hover:text-gold cursor-pointer transition-colors">Extraction</span>
+<span class="hover:text-gold cursor-pointer transition-colors">Automation</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">description</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Text Gen</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Scribe Assistant</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Automated high-fidelity report generation for financial and legal auditing.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">filter_vintage</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Creative</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Lumina Engine</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Next-generation visual asset generation with consistent stylistic governance.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">hub</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Nodes</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Connectivity Hub</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Seamlessly bridge legacy data streams with modern AI inferencing pipelines.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">token</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Logic</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Logic Weaver</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Complex workflow automation utilizing chain-of-thought processing.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">language</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">NLP</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Polyglot API</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Real-time translation and sentiment analysis across 140+ dialects.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">terminal</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Code</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Forge DevTools</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Autonomous code refactoring and security vulnerability patching.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="bg-obsidian gold-border p-8 group">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-gold font-light text-2xl">database</span>
+<span class="text-[9px] border border-gold/20 px-2 py-0.5 text-gold/60 uppercase tracking-tighter">Data</span>
+</div>
+<h3 class="text-xl font-serif text-platinum mb-3">Vault Query</h3>
+<p class="text-platinum/40 text-sm font-light leading-relaxed mb-6">
+                        Natural language interface for deep-lake database exploration.
+                    </p>
+<div class="pt-4 border-t border-gold/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-copper uppercase tracking-widest">Available</span>
+<span class="material-symbols-outlined text-gold text-sm">north_east</span>
+</div>
+</div>
+<div class="border border-dashed border-gold/20 p-8 flex flex-col justify-center items-center text-center group hover:bg-gold/5 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-gold/40 mb-4 group-hover:scale-110 transition-transform">add_circle</span>
+<h3 class="text-sm font-serif text-gold/60 uppercase tracking-widest">Request Module</h3>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 border-t border-gold/10 bg-obsidian py-20">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center">
+<div class="w-12 h-12 border border-gold/40 flex items-center justify-center rotate-45 mb-8 opacity-50">
+<span class="material-symbols-outlined text-gold -rotate-45 text-2xl font-light">diamond</span>
+</div>
+<p class="font-serif italic text-2xl text-platinum/80 mb-6">Redefining Digital Sovereignty</p>
+<div class="flex gap-10 text-[10px] uppercase tracking-[0.3em] text-gold/40 font-medium mb-12">
+<a class="hover:text-gold transition-colors" href="#">Privacy Charter</a>
+<a class="hover:text-gold transition-colors" href="#">System Status</a>
+<a class="hover:text-gold transition-colors" href="#">Terminal Access</a>
+</div>
+<p class="text-[10px] text-platinum/30 uppercase tracking-[0.1em]">© 2024 Aurelius Artificial Intelligence Group. All Rights Reserved.</p>
+</div>
+</footer>
+
+</body></html>
