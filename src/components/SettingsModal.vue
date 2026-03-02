@@ -473,6 +473,33 @@ const getLayoutIcon = (iconName: string) => {
                 </p>
               </div>
 
+              <!-- 模糊度调节 -->
+              <div v-if="themeStore.backgroundImage">
+                <h3 class="text-lg font-semibold mb-4" :style="{ color: 'var(--theme-text-main)' }">
+                  背景模糊程度
+                </h3>
+                <div class="flex items-center gap-4">
+                  <span class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">清晰</span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="20"
+                    step="1"
+                    :value="themeStore.backgroundBlur"
+                    @input="(e) => themeStore.setBackgroundBlur(parseInt((e.target as HTMLInputElement).value))"
+                    class="flex-1 h-2 rounded-lg appearance-none cursor-pointer"
+                    :style="{
+                      backgroundColor: 'var(--theme-primary-light)',
+                      accentColor: 'var(--theme-primary)'
+                    }"
+                  />
+                  <span class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">模糊</span>
+                </div>
+                <p class="text-sm mt-2" :style="{ color: 'var(--theme-text-secondary)' }">
+                  当前: {{ themeStore.backgroundBlur }}px
+                </p>
+              </div>
+
               <!-- 操作按钮 -->
               <div v-if="themeStore.backgroundImage" class="flex gap-3">
                 <button

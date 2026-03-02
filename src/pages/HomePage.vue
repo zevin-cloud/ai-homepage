@@ -119,7 +119,7 @@ onMounted(() => {
            class="absolute inset-0 pointer-events-none z-0"
            :style="{
              backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.85)',
-             backdropFilter: 'blur(2px)'
+             backdropFilter: `blur(${themeStore.backgroundBlur}px)`
            }"></div>
       
       <transition name="slide-down">

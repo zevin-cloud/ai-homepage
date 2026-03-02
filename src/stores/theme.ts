@@ -8,6 +8,8 @@ const LAYOUT_STORAGE_KEY = 'ai-portal-layout';
 const CUSTOM_LAYOUT_STORAGE_KEY = 'ai-portal-custom-layout';
 const CUSTOM_LAYOUT_PRESET_STORAGE_KEY = 'ai-portal-custom-layout-preset';
 const BACKGROUND_IMAGE_STORAGE_KEY = 'ai-portal-background-image';
+const CARD_BACKGROUNDS_STORAGE_KEY = 'ai-portal-card-backgrounds';
+const BACKGROUND_BLUR_STORAGE_KEY = 'ai-portal-background-blur';
 
 // 布局模式配置
 export const layoutModes: Record<LayoutMode | 'custom', { name: string; nameZh: string; description: string; icon: string }> = {
@@ -95,6 +97,12 @@ export const useThemeStore = defineStore('theme', () => {
   // 背景图片
   const backgroundImage = ref<string>('');
   
+  // 卡片背景图片（按索引存储）
+  const cardBackgrounds = ref<Record<number, string>>({});
+
+  // 背景模糊程度（0-20px）
+  const backgroundBlur = ref<number>(2);
+
   // 字体加载状态
   const fontsLoaded = ref(false);
 
@@ -330,6 +338,81 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
+  // 设置卡片背景图片
+  function setCardBackground(index: number, imageUrl: string) {
+    cardBackgrounds.value[index] = imageUrl;
+    saveCardBackgroundsToStorage();
+  }
+
+  // 获取卡片背景图片
+  function getCardBackground(index: number): string {
+    return cardBackgrounds.value[index] || '';
+  }
+
+  // 清除卡片背景图片
+  function clearCardBackground(index: number) {
+    delete cardBackgrounds.value[index];
+    saveCardBackgroundsToStorage();
+  }
+
+  // 从localStorage加载卡片背景
+  function loadCardBackgroundsFromStorage() {
+    try {
+      const stored = localStorage.getItem(CARD_BACKGROUNDS_STORAGE_KEY);
+      if (stored) {
+        cardBackgrounds.value = JSON.parse(stored);
+      }
+    } catch (e) {
+      console.warn('Failed to load card backgrounds from storage:', e);
+    }
+  }
+
+  // 保存卡片背景到localStorage
+  function saveCardBackgroundsToStorage() {
+    try {
+      localStorage.setItem(CARD_BACKGROUNDS_STORAGE_KEY, JSON.stringify(cardBackgrounds.value));
+    } catch (e) {
+      console.warn('Failed to save card backgrounds to storage:', e);
+    }
+  }
+
+  // 设置背景模糊程度
+  function setBackgroundBlur(blur: number) {
+    backgroundBlur.value = Math.max(0, Math.min(20, blur));
+    saveBackgroundBlurToStorage();
+    applyBackgroundBlur();
+  }
+
+  // 从localStorage加载背景模糊程度
+  function loadBackgroundBlurFromStorage() {
+    try {
+      const stored = localStorage.getItem(BACKGROUND_BLUR_STORAGE_KEY);
+      if (stored) {
+        const blur = parseInt(stored, 10);
+        if (!isNaN(blur)) {
+          backgroundBlur.value = Math.max(0, Math.min(20, blur));
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load background blur from storage:', e);
+    }
+  }
+
+  // 保存背景模糊程度到localStorage
+  function saveBackgroundBlurToStorage() {
+    try {
+      localStorage.setItem(BACKGROUND_BLUR_STORAGE_KEY, String(backgroundBlur.value));
+    } catch (e) {
+      console.warn('Failed to save background blur to storage:', e);
+    }
+  }
+
+  // 应用背景模糊
+  function applyBackgroundBlur() {
+    const html = document.documentElement;
+    html.style.setProperty('--theme-bg-blur', `${backgroundBlur.value}px`);
+  }
+
   // 加载主题字体
   function loadThemeFonts() {
     const theme = currentTheme.value;
@@ -407,6 +490,9 @@ export const useThemeStore = defineStore('theme', () => {
     loadLayoutFromStorage();
     loadCustomLayoutPresetFromStorage();
     loadBackgroundImageFromStorage();
+    loadCardBackgroundsFromStorage();
+    loadBackgroundBlurFromStorage();
+    applyBackgroundBlur();
     loadThemeFonts();
     applyThemeToDocument();
   }
@@ -422,6 +508,8 @@ export const useThemeStore = defineStore('theme', () => {
     currentLayoutMode,
     currentCustomLayoutPreset,
     backgroundImage,
+    cardBackgrounds,
+    backgroundBlur,
     cssVariables,
     themeClass,
     fontsLoaded,
@@ -431,6 +519,10 @@ export const useThemeStore = defineStore('theme', () => {
     setLayoutMode,
     setCustomLayoutPreset,
     setBackgroundImage,
+    setCardBackground,
+    getCardBackground,
+    clearCardBackground,
+    setBackgroundBlur,
     nextTheme,
     initTheme,
     loadThemeFromStorage,
@@ -441,8 +533,13 @@ export const useThemeStore = defineStore('theme', () => {
     saveCustomLayoutPresetToStorage,
     loadBackgroundImageFromStorage,
     saveBackgroundImageToStorage,
+    loadCardBackgroundsFromStorage,
+    saveCardBackgroundsToStorage,
+    loadBackgroundBlurFromStorage,
+    saveBackgroundBlurToStorage,
     loadThemeFonts,
     applyThemeToDocument,
     applyBackgroundImage,
+    applyBackgroundBlur,
   };
 });

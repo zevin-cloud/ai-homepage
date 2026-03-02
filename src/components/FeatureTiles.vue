@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import type { Category, Agent } from '@/data/categories';
-import { Sparkles } from 'lucide-vue-next';
+import { Sparkles, ArrowRight } from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/auth';
 
 const categories = ref<Category[]>([]);
@@ -16,6 +16,34 @@ const selectAgent = (agent: Agent) => {
   emit('select-agent', agent.url);
 };
 
+// 根据描述长度和标题长度决定卡片大小
+const getCardSize = (agent: Agent, index: number): 'large' | 'medium' | 'small' => {
+  const descLength = agent.description?.length || 0;
+  const titleLength = agent.title?.length || 0;
+  
+  // 优先根据描述长度判断
+  if (descLength > 60) return 'large';
+  if (descLength > 30) return 'medium';
+  if (descLength === 0 && titleLength < 15) return 'small';
+  
+  // 根据位置交替布局，形成 Bento 效果
+  const pattern = index % 6;
+  if (pattern === 0 || pattern === 4) return 'large';
+  if (pattern === 2 || pattern === 5) return 'small';
+  return 'medium';
+};
+
+// 根据描述长度决定卡片高度类
+const getCardHeightClass = (size: 'large' | 'medium' | 'small'): string => {
+  if (size === 'large') {
+    return 'row-span-2 min-h-[200px]';
+  } else if (size === 'small') {
+    return 'row-span-1 min-h-[100px]';
+  } else {
+    return 'row-span-1 min-h-[140px]';
+  }
+};
+
 const fetchCategories = async () => {
   try {
     const headers: Record<string, string> = {};
@@ -26,7 +54,6 @@ const fetchCategories = async () => {
     const response = await fetch('/api/maxkb/categories', { headers });
     
     if (response.status === 401) {
-      // 未授权，跳转到登录页
       window.location.href = '/login';
       return;
     }
@@ -48,33 +75,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full max-w-[1140px] mx-auto mt-10 space-y-16 pb-20">
+  <div class="w-full max-w-[1200px] mx-auto mt-10 space-y-16 pb-20">
     <div v-if="loading" class="text-center text-text-secondary font-normal">Loading...</div>
     <div v-else-if="categories.length === 0" class="text-center text-text-secondary font-normal py-20">
       <p class="text-xl mb-4">暂无可用应用</p>
       <p class="text-sm">请联系管理员为您分配应用权限</p>
     </div>
     <div v-else v-for="category in categories" :key="category.id" :id="category.id">
-      <h2 class="text-2xl font-semibold text-text-main mb-6 px-2 tracking-tight">{{ category.name }}</h2>
-      <div class="grid grid-cols-4 gap-6">
-        <div
-          v-for="agent in category.agents"
-          :key="agent.id"
-          @click="selectAgent(agent)"
-          class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-start shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-transparent hover:border-primary/20 group"
-        >
-          <div class="flex items-center gap-3 w-full mb-4">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0 group-hover:from-primary/30 group-hover:to-primary/10 transition-all duration-300">
-              <img v-if="agent.icon" :src="agent.icon" alt="Icon" class="w-5 h-5 object-contain" />
-              <Sparkles v-else class="w-5 h-5 text-primary" />
-            </div>
-            <span class="text-[15px] font-medium text-text-main truncate">{{ agent.title }}</span>
-          </div>
-          <p class="text-[13px] font-normal text-text-secondary/80 leading-relaxed line-clamp-2">
-            {{ agent.description || '暂无描述' }}
-          </p>
-        </div>
+      <!-- 分类标题 -->
+      <div class="flex items-center gap-3 mb-6 px-2">
+        <h2 class="text-2xl font-semibold text-text-main tracking-tight">{{ category.name }}</h2>
       </div>
-    </div>
-  </div>
-</template>
+      
+      <!-- Bento Grid 布局
