@@ -5,7 +5,6 @@ import LoginCallback from '@/pages/LoginCallback.vue'
 import AdminPage from '@/pages/AdminPage.vue'
 import { useAuthStore } from '@/stores/auth'
 
-// Define route configuration
 const routes = [
   {
     path: '/',
@@ -38,25 +37,49 @@ const routes = [
   },
 ]
 
-// 创建路由实例
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
 
-// Navigation Guard
+let publicAccessFetched = false;
+
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   
-  // Try to restore user session if token exists but user is null
+  if (!publicAccessFetched) {
+    await authStore.fetchPublicAccess();
+    publicAccessFetched = true;
+  }
+  
   if (authStore.token && !authStore.user) {
     await authStore.fetchUser();
+  }
+
+  if (authStore.publicAccess) {
+    if (!authStore.user && !authStore.token) {
+      authStore.setGuestUser();
+    }
+    
+    if (to.meta.requiresAdmin && !authStore.isAdmin) {
+      next('/login?redirect=' + encodeURIComponent(to.fullPath));
+      return;
+    }
+    
+    if (to.path === '/login' && authStore.isAuthenticated && !authStore.isGuest) {
+      const redirect = to.query.redirect as string;
+      next(redirect || '/');
+      return;
+    }
+    
+    next();
+    return;
   }
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login');
   } else if (to.meta.requiresAdmin && !authStore.isAdmin) {
-    next('/'); // Redirect to home if not admin
+    next('/');
   } else if (to.path === '/login' && authStore.isAuthenticated) {
     next('/');
   } else {

@@ -13,11 +13,23 @@ declare global {
 
 /**
  * Middleware to verify JWT token
+ * When PUBLIC_ACCESS=true, creates a guest user for unauthenticated requests
  */
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+  const publicAccess = process.env.PUBLIC_ACCESS === 'true';
   const authHeader = req.headers.authorization;
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (publicAccess) {
+      req.user = {
+        id: 'guest',
+        username: 'guest',
+        email: '',
+        role: 'guest',
+        allowedApps: []
+      };
+      return next();
+    }
     return res.status(401).json({ error: 'Unauthorized: Missing token' });
   }
 
@@ -25,15 +37,32 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
   const decoded = verifyToken(token);
 
   if (!decoded) {
+    if (publicAccess) {
+      req.user = {
+        id: 'guest',
+        username: 'guest',
+        email: '',
+        role: 'guest',
+        allowedApps: []
+      };
+      return next();
+    }
     return res.status(401).json({ error: 'Unauthorized: Invalid token' });
   }
 
-  // Optional: Fetch full user from DB to ensure latest permissions
-  // For performance, we might trust the token claims, but for permission updates to take effect immediately, fetching is better.
-  // Let's fetch from DB.
   const user = await findUserById((decoded as any).id);
   
   if (!user) {
+    if (publicAccess) {
+      req.user = {
+        id: 'guest',
+        username: 'guest',
+        email: '',
+        role: 'guest',
+        allowedApps: []
+      };
+      return next();
+    }
     return res.status(401).json({ error: 'Unauthorized: User not found' });
   }
 
@@ -63,6 +92,11 @@ export const requireAppAccess = (appIdExtractor: (req: Request) => string) => {
 
     // Admins have access to everything
     if (req.user.role === 'admin') {
+      return next();
+    }
+
+    // Guest users have access to all apps in public access mode
+    if (req.user.role === 'guest' && process.env.PUBLIC_ACCESS === 'true') {
       return next();
     }
 

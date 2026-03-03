@@ -240,4 +240,14 @@ router.get('/me', async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * Get public config
+ * GET /api/auth/config
+ */
+router.get('/config', async (req: Request, res: Response) => {
+  res.json({ 
+    publicAccess: process.env.PUBLIC_ACCESS === 'true'
+  });
+});
+
 export default router;

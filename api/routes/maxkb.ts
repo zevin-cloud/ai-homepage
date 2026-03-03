@@ -16,6 +16,11 @@ router.get('/categories', authenticate, async (req, res) => {
       return res.json({ success: true, data: categories });
     }
     
+    // 访客用户在公开访问模式下返回所有应用
+    if (user.role === 'guest' && process.env.PUBLIC_ACCESS === 'true') {
+      return res.json({ success: true, data: categories });
+    }
+    
     // 普通用户：过滤只返回授权的应用
     const allowedAppIds = user.allowedApps || [];
     const filteredCategories = categories.map((cat: any) => ({
