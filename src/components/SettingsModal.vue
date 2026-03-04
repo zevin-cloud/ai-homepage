@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { X, Check, Palette, LayoutGrid, Sparkles, Grid3x3, Shuffle, Columns, Image, Upload, Trash2 } from 'lucide-vue-next';
+import { X, Check, Palette, LayoutGrid, Sparkles, Grid3x3, Shuffle, Columns, Image, Upload, Trash2, Settings } from 'lucide-vue-next';
 import { useThemeStore } from '@/stores/theme';
 import { getThemePreviews } from '@/data/themes';
 import type { ThemeId, LayoutMode } from '@/types/theme';
@@ -93,6 +93,7 @@ const getLayoutIcon = (iconName: string) => {
     'LayoutGrid': LayoutGrid,
     'Shuffle': Shuffle,
     'Columns': Columns,
+    'Settings': Settings,
   };
   return iconMap[iconName] || LayoutGrid;
 };
@@ -107,10 +108,10 @@ const getLayoutIcon = (iconName: string) => {
         @click="handleBackdropClick"
       >
         <!-- 背景遮罩 -->
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"></div>
 
         <!-- 弹窗内容 -->
-        <div class="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl"
+        <div class="relative w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
              :style="{
                backgroundColor: 'var(--theme-card)',
                borderRadius: 'var(--theme-radius-xl)',
@@ -410,6 +411,33 @@ const getLayoutIcon = (iconName: string) => {
                     <div class="col-span-1 h-6 rounded" :style="{ backgroundColor: 'var(--theme-accent-1)' }"></div>
                     <div class="col-span-1 h-10 rounded" :style="{ backgroundColor: 'var(--theme-accent-2)' }"></div>
                   </template>
+                  <!-- 自定义布局预览 -->
+                  <template v-else-if="layoutId === 'custom'">
+                    <div class="col-span-2 h-10 rounded border-dashed border-2" :style="{ borderColor: 'var(--theme-primary)' }"></div>
+                    <div class="col-span-2 h-10 rounded border-dashed border-2" :style="{ borderColor: 'var(--theme-primary)' }"></div>
+                    <div class="col-span-2 h-10 rounded border-dashed border-2" :style="{ borderColor: 'var(--theme-primary)' }"></div>
+                    <div class="col-span-2 h-10 rounded border-dashed border-2" :style="{ borderColor: 'var(--theme-primary)' }"></div>
+                  </template>
+                </div>
+
+                <!-- 自定义布局的子选项 -->
+                <div v-if="layoutId === 'custom' && selectedLayout === 'custom'" class="mt-4 pt-4 border-t" :style="{ borderColor: 'var(--theme-card-border)' }">
+                  <h4 class="text-sm font-medium mb-2" :style="{ color: 'var(--theme-text-main)' }">选择预设</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      v-for="(preset, presetKey) in themeStore.customLayoutPresets"
+                      :key="presetKey"
+                      @click.stop="themeStore.setCustomLayoutPreset(presetKey as any)"
+                      class="px-3 py-1.5 text-xs rounded-lg transition-colors border"
+                      :style="{
+                        backgroundColor: themeStore.currentCustomLayoutPreset === presetKey ? 'var(--theme-primary)' : 'transparent',
+                        color: themeStore.currentCustomLayoutPreset === presetKey ? '#ffffff' : 'var(--theme-text-main)',
+                        borderColor: themeStore.currentCustomLayoutPreset === presetKey ? 'var(--theme-primary)' : 'var(--theme-card-border)'
+                      }"
+                    >
+                      {{ preset.name }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -564,7 +592,7 @@ const getLayoutIcon = (iconName: string) => {
 <style scoped>
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .modal-enter-from,
@@ -574,12 +602,13 @@ const getLayoutIcon = (iconName: string) => {
 
 .modal-enter-active .relative,
 .modal-leave-active .relative {
-  transition: transform 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .modal-enter-from .relative,
 .modal-leave-to .relative {
-  transform: scale(0.95);
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

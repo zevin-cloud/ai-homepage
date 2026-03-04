@@ -12,7 +12,7 @@ const CARD_BACKGROUNDS_STORAGE_KEY = 'ai-portal-card-backgrounds';
 const BACKGROUND_BLUR_STORAGE_KEY = 'ai-portal-background-blur';
 
 // 布局模式配置
-export const layoutModes: Record<LayoutMode | 'custom', { name: string; nameZh: string; description: string; icon: string }> = {
+export const layoutModes: Record<LayoutMode, { name: string; nameZh: string; description: string; icon: string }> = {
   'auto': {
     name: 'Auto',
     nameZh: '智能布局',

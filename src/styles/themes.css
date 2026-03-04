@@ -350,6 +350,29 @@
    Utility Classes
    ============================================ */
 
+/* Skeleton Loader Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--theme-card) 25%, var(--theme-primary-light) 50%, var(--theme-card) 75%);
+  background-size: 1000px 100%;
+  animation: skeleton-shimmer 2s infinite linear;
+  border-radius: var(--theme-radius-sm);
+}
+
+.theme-cyberpunk .skeleton, .theme-luxury .skeleton, .theme-cybertech .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 1000px 100%;
+}
+
+/* Base Transition Utilities */
 .theme-transition {
   transition: background-color 0.3s ease, 
               color 0.3s ease, 

@@ -7,6 +7,36 @@ export default {
       center: true,
     },
     extend: {
+      animation: {
+        'shimmer': 'shimmer 2s linear infinite',
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spring-up': 'springUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+        'border-glow': 'borderGlow 3s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        springUp: {
+          '0%': { opacity: '0', transform: 'translateY(40px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        borderGlow: {
+          '0%': { borderColor: 'rgba(143, 182, 200, 0.2)', boxShadow: '0 0 5px rgba(143, 182, 200, 0.1)' },
+          '100%': { borderColor: 'rgba(143, 182, 200, 0.8)', boxShadow: '0 0 20px rgba(143, 182, 200, 0.4)' },
+        }
+      },
       colors: {
         // 原有颜色配置（向后兼容）
         background: "#f9f4f1",

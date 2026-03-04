@@ -88,127 +88,149 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header ref="headerRef" class="sticky top-0 z-50 flex items-center justify-between w-full max-w-[1440px] px-8 py-3 mx-auto mt-4 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full shadow-sm shrink-0">
-    <div class="flex items-center cursor-pointer gap-2" @click="goHome">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
+  <header ref="headerRef" class="sticky top-4 z-50 flex items-center justify-between w-[95%] max-w-[1200px] px-6 py-3 mx-auto mt-4 bg-white/40 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] shrink-0 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-white/50">
+    <div class="flex items-center cursor-pointer gap-3 transition-transform duration-300 hover:scale-105" @click="goHome">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-sm flex items-center justify-center">
         <Sparkles class="w-5 h-5 text-white" />
       </div>
-      <span class="text-lg font-semibold text-text-main tracking-tight">FIT2CLOUD</span>
+      <span class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600 tracking-tight">FIT2CLOUD</span>
     </div>
 
     <nav class="flex items-center space-x-6">
-      <div 
-        v-for="category in visibleCategories" 
+      <div
+        v-for="category in visibleCategories"
         :key="category.id"
         class="relative group"
       >
         <div class="flex items-center">
           <button
             @click="scrollToCategory(category.id)"
-            class="text-sm font-medium text-text-main hover:text-primary transition-colors tracking-tight"
+            class="text-sm font-semibold text-gray-700 hover:text-primary transition-colors tracking-tight px-2 py-1 rounded-full hover:bg-black/5"
           >
             {{ category.name }}
           </button>
-          <button 
+          <button
             @click.stop="toggleDropdown(category.id)"
-            class="ml-1 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none"
+            class="ml-0.5 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none"
           >
-            <ChevronDown class="w-3 h-3 text-text-secondary transition-transform duration-200" :class="{ 'rotate-180': openDropdownId === category.id }" />
+            <ChevronDown class="w-3.5 h-3.5 text-gray-500 transition-transform duration-300" :class="{ 'rotate-180': openDropdownId === category.id }" />
           </button>
         </div>
 
-        <div 
-          v-if="openDropdownId === category.id"
-          class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-md border border-white/50 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50"
+        <transition
+          enter-active-class="transition ease-out duration-200"
+          enter-from-class="opacity-0 translate-y-2 scale-95"
+          enter-to-class="opacity-100 translate-y-0 scale-100"
+          leave-active-class="transition ease-in duration-150"
+          leave-from-class="opacity-100 translate-y-0 scale-100"
+          leave-to-class="opacity-0 translate-y-2 scale-95"
         >
-          <div class="max-h-[300px] overflow-y-auto custom-scrollbar px-2">
-            <button
-              v-for="agent in category.agents"
-              :key="agent.id"
-              @click="selectAgent(agent)"
-              class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/5 flex items-center space-x-3 transition-colors group"
-            >
-              <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center flex-shrink-0">
-                <img v-if="agent.icon" :src="agent.icon" class="w-3.5 h-3.5 object-contain" />
-                <Sparkles v-else class="w-3.5 h-3.5 text-primary" />
-              </div>
-              <span class="text-sm font-normal text-text-main group-hover:text-primary truncate">{{ agent.title }}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="hasMore" class="relative">
-        <button 
-          @click.stop="toggleDropdown('more')"
-          class="flex items-center text-sm font-medium text-text-main hover:text-primary transition-colors focus:outline-none"
-        >
-          More
-          <ChevronDown class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': openDropdownId === 'more' }" />
-        </button>
-
-        <div 
-          v-if="openDropdownId === 'more'"
-          class="absolute top-full right-0 mt-4 w-64 bg-white/95 backdrop-blur-md border border-white/50 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50"
-        >
-          <div class="max-h-[400px] overflow-y-auto custom-scrollbar">
-            <div v-for="category in moreCategories" :key="category.id" class="px-2 py-2">
-              <div 
-                @click="scrollToCategory(category.id)"
-                class="px-3 py-1 text-xs font-semibold text-text-secondary uppercase tracking-wider cursor-pointer hover:text-primary"
-              >
-                {{ category.name }}
-              </div>
+          <div
+            v-if="openDropdownId === category.id"
+            class="absolute top-full left-0 mt-3 w-64 bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl py-2 overflow-hidden z-50 origin-top"
+          >
+            <div class="max-h-[300px] overflow-y-auto custom-scrollbar px-2 space-y-1">
               <button
                 v-for="agent in category.agents"
                 :key="agent.id"
                 @click="selectAgent(agent)"
-                class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/5 flex items-center space-x-3 transition-colors group"
+                class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/60 flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
               >
-                <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center flex-shrink-0">
-                  <img v-if="agent.icon" :src="agent.icon" class="w-3.5 h-3.5 object-contain" />
-                  <Sparkles v-else class="w-3.5 h-3.5 text-primary" />
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
+                  <Sparkles v-else class="w-4 h-4 text-primary" />
                 </div>
-                <span class="text-sm font-normal text-text-main group-hover:text-primary truncate">{{ agent.title }}</span>
+                <span class="text-sm font-medium text-gray-700 group-hover:text-primary truncate transition-colors">{{ agent.title }}</span>
               </button>
             </div>
           </div>
-        </div>
+        </transition>
+      </div>
+
+      <div v-if="hasMore" class="relative">
+        <button
+          @click.stop="toggleDropdown('more')"
+          class="flex items-center text-sm font-semibold text-gray-700 hover:text-primary transition-colors focus:outline-none px-2 py-1 rounded-full hover:bg-black/5"
+        >
+          More
+          <ChevronDown class="w-3.5 h-3.5 ml-1 transition-transform duration-300" :class="{ 'rotate-180': openDropdownId === 'more' }" />
+        </button>
+
+        <transition
+          enter-active-class="transition ease-out duration-200"
+          enter-from-class="opacity-0 translate-y-2 scale-95"
+          enter-to-class="opacity-100 translate-y-0 scale-100"
+          leave-active-class="transition ease-in duration-150"
+          leave-from-class="opacity-100 translate-y-0 scale-100"
+          leave-to-class="opacity-0 translate-y-2 scale-95"
+        >
+          <div
+            v-if="openDropdownId === 'more'"
+            class="absolute top-full right-0 mt-3 w-72 bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl py-2 overflow-hidden z-50 origin-top"
+          >
+            <div class="max-h-[400px] overflow-y-auto custom-scrollbar space-y-2">
+              <div v-for="category in moreCategories" :key="category.id" class="px-2 py-1">
+                <div
+                  @click="scrollToCategory(category.id)"
+                  class="px-3 py-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-primary transition-colors"
+                >
+                  {{ category.name }}
+                </div>
+                <div class="space-y-1 mt-1">
+                  <button
+                    v-for="agent in category.agents"
+                    :key="agent.id"
+                    @click="selectAgent(agent)"
+                    class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/60 flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
+                      <Sparkles v-else class="w-4 h-4 text-primary" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-700 group-hover:text-primary truncate transition-colors">{{ agent.title }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
       </div>
     </nav>
 
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center space-x-2">
       <!-- 主题设置按钮 -->
       <button
         @click="$emit('open-settings')"
-        class="p-2 text-gray-600 hover:text-primary transition-colors"
-        title="主题设置"
+        class="p-2.5 text-gray-500 hover:text-primary hover:bg-black/5 rounded-full transition-all duration-300"
+        title="Theme Settings"
       >
-        <Palette class="w-5 h-5" />
+        <Palette class="w-4 h-4" />
       </button>
 
-      <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
-        <span class="text-sm text-gray-600">{{ authStore.user?.username }}</span>
-        
-        <router-link 
-          v-if="authStore.isAdmin" 
-          to="/admin" 
-          class="p-2 text-gray-600 hover:text-primary transition-colors"
+      <div class="h-4 w-px bg-gray-300 mx-1"></div>
+
+      <div v-if="authStore.isAuthenticated" class="flex items-center gap-1 ml-1">
+        <span class="text-sm font-medium text-gray-600 px-2 py-1 bg-black/5 rounded-full mr-1">{{ authStore.user?.username }}</span>
+
+        <router-link
+          v-if="authStore.isAdmin"
+          to="/admin"
+          class="p-2.5 text-gray-500 hover:text-primary hover:bg-black/5 rounded-full transition-all duration-300"
           title="Admin Management"
         >
-          <Settings class="w-5 h-5" />
+          <Settings class="w-4 h-4" />
         </router-link>
 
-        <button 
-          @click="authStore.logout()" 
-          class="p-2 text-gray-600 hover:text-red-600 transition-colors"
+        <button
+          @click="authStore.logout()"
+          class="p-2.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-300"
           title="Logout"
         >
-          <LogOut class="w-5 h-5" />
+          <LogOut class="w-4 h-4" />
         </button>
       </div>
-      <div v-else>
-        <router-link to="/login" class="text-sm font-medium text-primary hover:text-primary/80">
+      <div v-else class="ml-1">
+        <router-link to="/login" class="px-4 py-2 text-sm font-semibold text-white bg-primary hover:bg-primary-dark rounded-full shadow-sm hover:shadow-md transition-all duration-300">
           Login
         </router-link>
       </div>

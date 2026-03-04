@@ -115,6 +115,43 @@ const calculateRowLayouts = (totalAgents: number, layoutMode: string): CardLayou
       }
       break;
 
+    case 'custom':
+      // 自定义布局：使用用户配置的预设
+      const preset = themeStore.customLayoutPresets[themeStore.currentCustomLayoutPreset];
+      if (preset && preset.rows) {
+        let patternCount = 0;
+        while (remainingAgents > 0) {
+          // 循环使用预设的行模式
+          const rowPreset = preset.rows[patternCount % preset.rows.length];
+          if (rowPreset.cardCount === 1) {
+            patternSequence.push('12');
+            remainingAgents -= 1;
+          } else if (rowPreset.cardCount === 2) {
+            patternSequence.push('6-6');
+            remainingAgents -= 2;
+          } else if (rowPreset.cardCount === 3) {
+            patternSequence.push('4-4-4');
+            remainingAgents -= 3;
+          } else if (rowPreset.cardCount === 4) {
+            patternSequence.push('3-3-3-3');
+            remainingAgents -= 4;
+          }
+          patternCount++;
+        }
+      } else {
+        // 退化到智能布局
+        while (remainingAgents >= 3) {
+          patternSequence.push('4-4-4');
+          remainingAgents -= 3;
+        }
+        if (remainingAgents === 2) {
+          patternSequence.push('6-6');
+        } else if (remainingAgents === 1) {
+          patternSequence.push('12');
+        }
+      }
+      break;
+
     case 'auto':
     default:
       // 智能布局：第一行8-4，然后4-4-4，然后6-6
@@ -179,8 +216,20 @@ onMounted(() => {
   <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20"
        :class="`theme-layout-${themeStore.currentThemeId}`">
 
-    <div v-if="loading" class="text-center py-20" :style="{ color: 'var(--theme-text-muted)' }">
-      Loading...
+    <!-- Skeleton Loading State -->
+    <div v-if="loading" class="py-12 space-y-16">
+      <div v-for="i in 3" :key="i" class="space-y-8">
+        <div class="h-10 w-48 rounded-lg skeleton"></div>
+        <div class="bento-grid"
+             :style="{
+               display: 'grid',
+               gridTemplateColumns: 'repeat(12, 1fr)',
+               gap: 'var(--theme-grid-gap)',
+               gridAutoRows: '200px'
+             }">
+          <div v-for="j in 3" :key="j" class="skeleton rounded-2xl col-span-4 min-h-[200px]"></div>
+        </div>
+      </div>
     </div>
 
     <div v-else-if="categories.length === 0" class="text-center py-20" :style="{ color: 'var(--theme-text-muted)' }">
@@ -189,18 +238,18 @@ onMounted(() => {
     </div>
 
     <div v-else>
-      <div v-for="(category, categoryIndex) in categories" :key="category.id" :id="`category-${category.id}`" class="mb-16">
+      <div v-for="(category, categoryIndex) in categories" :key="category.id" :id="`category-${category.id}`" class="mb-20 animate-fade-in-up" :style="{ animationDelay: `${categoryIndex * 0.1}s` }">
         <!-- Section Title -->
-        <div class="flex items-end gap-4 mb-8">
-          <div class="relative">
-            <h2 class="text-4xl font-bold relative z-10"
+        <div class="flex items-end gap-4 mb-10">
+          <div class="relative group cursor-default">
+            <h2 class="text-4xl font-bold relative z-10 transition-transform duration-300 group-hover:-translate-y-1"
                 :style="{
                   color: 'var(--theme-text-main)',
                   fontFamily: 'var(--theme-font-secondary)'
                 }">
               {{ category.name }}
             </h2>
-            <div class="absolute -bottom-2 -left-2 w-full h-4 -rotate-1 rounded-full -z-0"
+            <div class="absolute -bottom-2 -left-2 w-full h-4 -rotate-2 rounded-full -z-0 transition-transform duration-300 group-hover:rotate-0 opacity-70"
                  :style="{ backgroundColor: getCardBgColor(categoryIndex) }"></div>
           </div>
         </div>
@@ -226,9 +275,10 @@ onMounted(() => {
             v-for="(agent, agentIndex) in category.agents"
             :key="agent.id"
             @click="selectAgent(agent)"
-            class="bento-card group cursor-pointer"
+            class="bento-card group cursor-pointer animate-fade-in-up hover:z-10"
             :style="{
               ...getCardStyle(agentIndex, category.agents.length),
+              animationDelay: `${(categoryIndex * 0.1) + (agentIndex * 0.05)}s`,
               backgroundColor: themeStore.getCardBackground(agentIndex) ? 'transparent' : getCardBgColor(agentIndex),
               backgroundImage: themeStore.getCardBackground(agentIndex) ? `url(${themeStore.getCardBackground(agentIndex)})` : 'none',
               backgroundSize: 'cover',

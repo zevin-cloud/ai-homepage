@@ -138,7 +138,7 @@ export interface ThemePreview {
 }
 
 // 布局模式ID
-export type LayoutMode = 'auto' | 'compact' | 'loose' | 'random' | 'masonry';
+export type LayoutMode = 'auto' | 'compact' | 'loose' | 'random' | 'masonry' | 'custom';
 
 // 布局配置
 export interface LayoutModeConfig {
