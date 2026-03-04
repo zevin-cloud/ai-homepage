@@ -111,14 +111,14 @@ const getLayoutIcon = (iconName: string) => {
         <div class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"></div>
 
         <!-- 弹窗内容 -->
-        <div class="relative w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
+        <div class="relative w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
              :style="{
                backgroundColor: 'var(--theme-card)',
                borderRadius: 'var(--theme-radius-xl)',
                fontFamily: 'var(--theme-font-primary)'
              }">
           <!-- 头部 -->
-          <div class="flex items-center justify-between p-6 border-b"
+          <div class="flex items-center justify-between p-6 border-b shrink-0"
                :style="{
                  borderColor: 'var(--theme-card-border)',
                  borderWidth: '0 0 1px 0',
@@ -157,7 +157,7 @@ const getLayoutIcon = (iconName: string) => {
           </div>
 
           <!-- 标签页切换 -->
-          <div class="flex border-b"
+          <div class="flex border-b shrink-0"
                :style="{
                  borderColor: 'var(--theme-card-border)',
                  borderWidth: '0 0 1px 0',
@@ -217,7 +217,7 @@ const getLayoutIcon = (iconName: string) => {
           </div>
 
           <!-- 主题列表 -->
-          <div v-if="activeTab === 'theme'" class="p-6 overflow-y-auto max-h-[60vh] custom-scrollbar">
+          <div v-if="activeTab === 'theme'" class="p-6 overflow-y-auto flex-1 custom-scrollbar">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div
                 v-for="theme in themePreviews"
@@ -306,7 +306,7 @@ const getLayoutIcon = (iconName: string) => {
           </div>
 
           <!-- 布局列表 -->
-          <div v-else-if="activeTab === 'layout'" class="p-6 overflow-y-auto max-h-[60vh] custom-scrollbar">
+          <div v-else-if="activeTab === 'layout'" class="p-6 overflow-y-auto flex-1 custom-scrollbar">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div
                 v-for="(layout, layoutId) in themeStore.layoutModes"
@@ -444,7 +444,7 @@ const getLayoutIcon = (iconName: string) => {
           </div>
 
           <!-- 背景设置 -->
-          <div v-else-if="activeTab === 'background'" class="p-6 overflow-y-auto max-h-[60vh] custom-scrollbar">
+          <div v-else-if="activeTab === 'background'" class="p-6 overflow-y-auto flex-1 custom-scrollbar">
             <div class="space-y-6">
               <!-- 当前背景预览 -->
               <div>
@@ -554,7 +554,7 @@ const getLayoutIcon = (iconName: string) => {
           </div>
 
           <!-- 底部 -->
-          <div class="flex items-center justify-between p-6 border-t"
+          <div class="flex items-center justify-between p-6 border-t shrink-0"
                :style="{
                  borderColor: 'var(--theme-card-border)',
                  borderWidth: '1px 0 0 0',
@@ -600,13 +600,13 @@ const getLayoutIcon = (iconName: string) => {
   opacity: 0;
 }
 
-.modal-enter-active .relative,
-.modal-leave-active .relative {
+.modal-enter-active > .relative,
+.modal-leave-active > .relative {
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.modal-enter-from .relative,
-.modal-leave-to .relative {
+.modal-enter-from > .relative,
+.modal-leave-to > .relative {
   transform: scale(0.9) translateY(20px);
   opacity: 0;
 }
