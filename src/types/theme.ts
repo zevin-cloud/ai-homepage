@@ -134,6 +134,8 @@ export interface ThemePreview {
     primary: string;
     background: string;
     accent: string;
+    textMain: string;
+    textSecondary: string;
   };
 }
 

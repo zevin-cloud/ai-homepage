@@ -111,165 +111,145 @@ const getLayoutIcon = (iconName: string) => {
         <div class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"></div>
 
         <!-- 弹窗内容 -->
-        <div class="relative w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
+        <div class="relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border"
              :style="{
                backgroundColor: 'var(--theme-card)',
                borderRadius: 'var(--theme-radius-xl)',
+               borderColor: 'var(--theme-card-border)',
                fontFamily: 'var(--theme-font-primary)'
              }">
-          <!-- 头部 -->
-          <div class="flex items-center justify-between p-6 border-b shrink-0"
-               :style="{
-                 borderColor: 'var(--theme-card-border)',
-                 borderWidth: '0 0 1px 0',
-                 borderStyle: 'solid'
-               }">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center"
-                   :style="{
-                     backgroundColor: 'var(--theme-primary)',
-                     borderRadius: 'var(--theme-radius-md)'
-                   }">
-                <Palette class="w-5 h-5 text-white" />
+          
+          <!-- 头部与标签页区域融合设计 -->
+          <div class="px-8 pt-8 pb-4 shrink-0 flex flex-col gap-6 border-b"
+               :style="{ borderColor: 'var(--theme-card-border)' }">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 flex items-center justify-center shadow-sm"
+                     :style="{
+                       backgroundColor: 'var(--theme-primary)',
+                       borderRadius: 'var(--theme-radius-lg)'
+                     }">
+                  <Palette class="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 class="text-2xl font-bold tracking-tight"
+                      :style="{ color: 'var(--theme-text-main)' }">
+                    界面设置
+                  </h2>
+                  <p class="text-sm mt-0.5"
+                     :style="{ color: 'var(--theme-text-secondary)' }">
+                    自定义系统的主题风格、排版布局与动态背景
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 class="text-xl font-semibold"
-                    :style="{ color: 'var(--theme-text-main)' }">
-                  界面设置
-                </h2>
-                <p class="text-sm"
-                   :style="{ color: 'var(--theme-text-muted)' }">
-                  自定义您的界面风格和布局
-                </p>
-              </div>
+              <button
+                @click="closeModal"
+                class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-105 hover:bg-black/5 dark:hover:bg-white/10"
+                :style="{ color: 'var(--theme-text-secondary)' }"
+              >
+                <X class="w-5 h-5" />
+              </button>
             </div>
-            <button
-              @click="closeModal"
-              class="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
-              :style="{
-                color: 'var(--theme-text-secondary)',
-                borderRadius: 'var(--theme-radius-button)'
-              }"
-              :class="{ 'hover:bg-gray-100': true }"
-            >
-              <X class="w-5 h-5" />
-            </button>
-          </div>
 
-          <!-- 标签页切换 -->
-          <div class="flex border-b shrink-0"
-               :style="{
-                 borderColor: 'var(--theme-card-border)',
-                 borderWidth: '0 0 1px 0',
-                 borderStyle: 'solid'
-               }">
-            <button
-              @click="activeTab = 'theme'"
-              class="flex-1 py-4 text-sm font-medium transition-colors relative"
-              :style="{
-                color: activeTab === 'theme' ? 'var(--theme-primary)' : 'var(--theme-text-muted)'
-              }"
-            >
-              <span class="flex items-center justify-center gap-2">
+            <!-- 胶囊形标签页切换 -->
+            <div class="flex p-1 gap-2 rounded-2xl w-fit"
+                 :style="{ backgroundColor: 'var(--theme-primary-light)', opacity: 0.8 }">
+              <button
+                @click="activeTab = 'theme'"
+                class="px-6 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300 flex items-center gap-2"
+                :class="activeTab === 'theme' ? 'shadow-md scale-100' : 'scale-95 opacity-70 hover:opacity-100'"
+                :style="{
+                  backgroundColor: activeTab === 'theme' ? 'var(--theme-card)' : 'transparent',
+                  color: activeTab === 'theme' ? 'var(--theme-primary)' : 'var(--theme-text-main)'
+                }"
+              >
                 <Palette class="w-4 h-4" />
                 主题风格
-              </span>
-              <div
-                v-if="activeTab === 'theme'"
-                class="absolute bottom-0 left-0 right-0 h-0.5"
-                :style="{ backgroundColor: 'var(--theme-primary)' }"
-              ></div>
-            </button>
-            <button
-              @click="activeTab = 'layout'"
-              class="flex-1 py-4 text-sm font-medium transition-colors relative"
-              :style="{
-                color: activeTab === 'layout' ? 'var(--theme-primary)' : 'var(--theme-text-muted)'
-              }"
-            >
-              <span class="flex items-center justify-center gap-2">
+              </button>
+              <button
+                @click="activeTab = 'layout'"
+                class="px-6 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300 flex items-center gap-2"
+                :class="activeTab === 'layout' ? 'shadow-md scale-100' : 'scale-95 opacity-70 hover:opacity-100'"
+                :style="{
+                  backgroundColor: activeTab === 'layout' ? 'var(--theme-card)' : 'transparent',
+                  color: activeTab === 'layout' ? 'var(--theme-primary)' : 'var(--theme-text-main)'
+                }"
+              >
                 <LayoutGrid class="w-4 h-4" />
                 布局设计
-              </span>
-              <div
-                v-if="activeTab === 'layout'"
-                class="absolute bottom-0 left-0 right-0 h-0.5"
-                :style="{ backgroundColor: 'var(--theme-primary)' }"
-              ></div>
-            </button>
-            <button
-              @click="activeTab = 'background'"
-              class="flex-1 py-4 text-sm font-medium transition-colors relative"
-              :style="{
-                color: activeTab === 'background' ? 'var(--theme-primary)' : 'var(--theme-text-muted)'
-              }"
-            >
-              <span class="flex items-center justify-center gap-2">
+              </button>
+              <button
+                @click="activeTab = 'background'"
+                class="px-6 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300 flex items-center gap-2"
+                :class="activeTab === 'background' ? 'shadow-md scale-100' : 'scale-95 opacity-70 hover:opacity-100'"
+                :style="{
+                  backgroundColor: activeTab === 'background' ? 'var(--theme-card)' : 'transparent',
+                  color: activeTab === 'background' ? 'var(--theme-primary)' : 'var(--theme-text-main)'
+                }"
+              >
                 <Image class="w-4 h-4" />
-                背景设置
-              </span>
-              <div
-                v-if="activeTab === 'background'"
-                class="absolute bottom-0 left-0 right-0 h-0.5"
-                :style="{ backgroundColor: 'var(--theme-primary)' }"
-              ></div>
-            </button>
+                背景特效
+              </button>
+            </div>
           </div>
 
           <!-- 主题列表 -->
-          <div v-if="activeTab === 'theme'" class="p-6 overflow-y-auto flex-1 custom-scrollbar">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div v-if="activeTab === 'theme'" class="p-8 overflow-y-auto flex-1 custom-scrollbar">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               <div
                 v-for="theme in themePreviews"
                 :key="theme.id"
                 @click="selectTheme(theme.id)"
-                class="relative cursor-pointer group overflow-hidden transition-all duration-300"
+                class="relative cursor-pointer group overflow-hidden transition-all duration-400"
                 :class="{
-                  'ring-2 ring-offset-2': selectedTheme === theme.id,
-                  'hover:scale-[1.02]': true
+                  'scale-[1.02] shadow-xl': selectedTheme === theme.id,
+                  'hover:-translate-y-1 hover:shadow-lg': selectedTheme !== theme.id
                 }"
                 :style="{
                   backgroundColor: theme.colors.background,
                   borderRadius: 'var(--theme-radius-card)',
-                  borderColor: selectedTheme === theme.id ? theme.colors.primary : 'transparent',
-                  borderWidth: selectedTheme === theme.id ? '2px' : '1px',
+                  borderColor: selectedTheme === theme.id ? theme.colors.primary : 'var(--theme-card-border)',
+                  borderWidth: '2px',
                   borderStyle: 'solid',
-                  boxShadow: selectedTheme === theme.id ? '0 0 0 2px ' + theme.colors.primary : 'none'
+                  boxShadow: selectedTheme === theme.id ? `0 0 20px ${theme.colors.primary}40` : 'none'
                 }"
               >
                 <!-- 预览图 -->
-                <div class="relative h-32 overflow-hidden">
+                <div class="relative h-40 overflow-hidden border-b-2" :style="{ borderColor: 'var(--theme-card-border)' }">
                   <img
                     :src="theme.previewImage"
                     :alt="theme.name"
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  <!-- 遮罩渐变 -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
                   <!-- 选中标记 -->
                   <div
-                    v-if="selectedTheme === theme.id"
-                    class="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center"
-                    :style="{ backgroundColor: theme.colors.primary }"
+                    class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300"
+                    :style="{ 
+                      backgroundColor: theme.colors.primary,
+                      transform: selectedTheme === theme.id ? 'scale(1)' : 'scale(0)',
+                      boxShadow: `0 4px 12px ${theme.colors.primary}80`
+                    }"
                   >
-                    <Check class="w-4 h-4 text-white" />
+                    <Check class="w-5 h-5 text-white" />
                   </div>
                 </div>
 
                 <!-- 主题信息 -->
-                <div class="p-4">
-                  <div class="flex items-center gap-2 mb-2">
+                <div class="p-5 relative">
+                  <div class="flex items-center gap-3 mb-2">
                     <div
-                      class="w-4 h-4 rounded-full"
+                      class="w-5 h-5 rounded-full shadow-inner"
                       :style="{ backgroundColor: theme.colors.primary }"
                     ></div>
-                    <h3 class="font-semibold text-base"
-                        :style="{ color: theme.colors.background === '#121212' || theme.colors.background === '#050408' || theme.colors.background === '#050A14' ? '#ffffff' : '#000000' }">
+                    <h3 class="font-bold text-lg tracking-tight"
+                        :style="{ color: theme.colors.textMain }">
                       {{ theme.nameZh }}
                     </h3>
                   </div>
-                  <p class="text-sm line-clamp-2"
-                     :style="{
-                       color: theme.colors.background === '#121212' || theme.colors.background === '#050408' || theme.colors.background === '#050A14' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
-                     }">
+                  <p class="text-sm line-clamp-2 mt-1 font-medium"
+                     :style="{ color: theme.colors.textSecondary }">
                     {{ theme.description }}
                   </p>
 

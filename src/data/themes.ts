@@ -502,6 +502,8 @@ export function getThemePreviews(): ThemePreview[] {
       primary: theme.colors.primary,
       background: theme.colors.background,
       accent: theme.colors.accent1,
+      textMain: theme.colors.textMain,
+      textSecondary: theme.colors.textSecondary,
     },
   }));
 }
