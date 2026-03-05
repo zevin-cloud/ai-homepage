@@ -556,8 +556,78 @@ const getLayoutIcon = (iconName: string) => {
                 </p>
               </div>
 
+              <!-- 背景特效设置 -->
+              <div class="mt-8 pt-6 border-t" :style="{ borderColor: 'var(--theme-card-border)' }">
+                <div class="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 class="text-lg font-semibold" :style="{ color: 'var(--theme-text-main)' }">动态粒子与流光背景</h3>
+                    <p class="text-sm mt-1" :style="{ color: 'var(--theme-text-secondary)' }">开启充满未来感的全屏流光发光效果与细微颗粒噪点（对标 New API）</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                    <input 
+                      type="checkbox" 
+                      class="sr-only peer" 
+                      :checked="themeStore.enableNoise"
+                      @change="(e) => themeStore.setEnableNoise((e.target as HTMLInputElement).checked)"
+                    >
+                    <div 
+                      class="w-11 h-6 rounded-full peer peer-focus:outline-none peer-focus:ring-4 transition-colors duration-300"
+                      :style="{
+                        backgroundColor: themeStore.enableNoise ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                        borderColor: themeStore.enableNoise ? 'var(--theme-primary)' : 'var(--theme-card-border)'
+                      }"
+                    ></div>
+                    <div class="absolute left-[2px] top-[2px] bg-white border border-gray-300 rounded-full h-5 w-5 transition-all peer-checked:translate-x-full peer-checked:border-white"></div>
+                  </label>
+                </div>
+
+                <div v-if="themeStore.enableNoise" class="animate-fade-in space-y-4">
+                  <h4 class="text-sm font-medium" :style="{ color: 'var(--theme-text-main)' }">粒子颜色风格</h4>
+                  <div class="grid grid-cols-3 gap-3">
+                    <button 
+                      @click="themeStore.setNoiseColor('rgba(255,255,255,0.25)')"
+                      class="py-2 px-3 rounded-lg border flex items-center justify-center gap-2 transition-all"
+                      :style="{
+                        borderColor: themeStore.noiseColor === 'rgba(255,255,255,0.25)' ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                        backgroundColor: themeStore.noiseColor === 'rgba(255,255,255,0.25)' ? 'var(--theme-primary-light)' : 'transparent',
+                        color: 'var(--theme-text-main)'
+                      }"
+                    >
+                      <div class="w-3 h-3 rounded-full bg-white border border-gray-300"></div>
+                      <span class="text-sm">银白光斑</span>
+                    </button>
+                    
+                    <button 
+                      @click="themeStore.setNoiseColor('rgba(0,0,0,0.25)')"
+                      class="py-2 px-3 rounded-lg border flex items-center justify-center gap-2 transition-all"
+                      :style="{
+                        borderColor: themeStore.noiseColor === 'rgba(0,0,0,0.25)' ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                        backgroundColor: themeStore.noiseColor === 'rgba(0,0,0,0.25)' ? 'var(--theme-primary-light)' : 'transparent',
+                        color: 'var(--theme-text-main)'
+                      }"
+                    >
+                      <div class="w-3 h-3 rounded-full bg-black border border-gray-600"></div>
+                      <span class="text-sm">暗影颗粒</span>
+                    </button>
+
+                    <button 
+                      @click="themeStore.setNoiseColor('var(--theme-primary)')"
+                      class="py-2 px-3 rounded-lg border flex items-center justify-center gap-2 transition-all"
+                      :style="{
+                        borderColor: themeStore.noiseColor === 'var(--theme-primary)' ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                        backgroundColor: themeStore.noiseColor === 'var(--theme-primary)' ? 'var(--theme-primary-light)' : 'transparent',
+                        color: 'var(--theme-text-main)'
+                      }"
+                    >
+                      <div class="w-3 h-3 rounded-full" :style="{ backgroundColor: 'var(--theme-primary)' }"></div>
+                      <span class="text-sm">主题色彩</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <!-- 操作按钮 -->
-              <div v-if="themeStore.backgroundImage" class="flex gap-3">
+              <div v-if="themeStore.backgroundImage" class="flex gap-3 mt-6">
                 <button
                   @click="clearBackgroundImage"
                   class="flex-1 py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"

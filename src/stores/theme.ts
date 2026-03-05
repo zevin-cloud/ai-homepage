@@ -11,6 +11,8 @@ const BACKGROUND_IMAGE_STORAGE_KEY = 'ai-portal-background-image';
 const CARD_BACKGROUNDS_STORAGE_KEY = 'ai-portal-card-backgrounds';
 const BACKGROUND_BLUR_STORAGE_KEY = 'ai-portal-background-blur';
 const COLLAPSE_TILES_STORAGE_KEY = 'ai-portal-collapse-tiles';
+const NOISE_ENABLED_STORAGE_KEY = 'ai-portal-noise-enabled';
+const NOISE_COLOR_STORAGE_KEY = 'ai-portal-noise-color';
 
 // 布局模式配置
 export const layoutModes: Record<LayoutMode, { name: string; nameZh: string; description: string; icon: string }> = {
@@ -106,6 +108,10 @@ export const useThemeStore = defineStore('theme', () => {
 
   // 是否折叠超过两行的卡片
   const collapseTiles = ref<boolean>(false);
+
+  // 粒子特效
+  const enableNoise = ref<boolean>(false);
+  const noiseColor = ref<string>('rgba(255,255,255,0.25)'); // 默认白色粒子
 
   // 字体加载状态
   const fontsLoaded = ref(false);
@@ -444,6 +450,45 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
+  // 设置粒子特效状态
+  function setEnableNoise(enable: boolean) {
+    enableNoise.value = enable;
+    saveNoiseToStorage();
+  }
+
+  // 设置粒子特效颜色
+  function setNoiseColor(color: string) {
+    noiseColor.value = color;
+    saveNoiseToStorage();
+  }
+
+  // 加载粒子特效配置
+  function loadNoiseFromStorage() {
+    try {
+      const enabledStored = localStorage.getItem(NOISE_ENABLED_STORAGE_KEY);
+      if (enabledStored !== null) {
+        enableNoise.value = enabledStored === 'true';
+      }
+      
+      const colorStored = localStorage.getItem(NOISE_COLOR_STORAGE_KEY);
+      if (colorStored !== null) {
+        noiseColor.value = colorStored;
+      }
+    } catch (e) {
+      console.warn('Failed to load noise setting from storage:', e);
+    }
+  }
+
+  // 保存粒子特效配置
+  function saveNoiseToStorage() {
+    try {
+      localStorage.setItem(NOISE_ENABLED_STORAGE_KEY, String(enableNoise.value));
+      localStorage.setItem(NOISE_COLOR_STORAGE_KEY, noiseColor.value);
+    } catch (e) {
+      console.warn('Failed to save noise setting to storage:', e);
+    }
+  }
+
   // 加载主题字体
   function loadThemeFonts() {
     const theme = currentTheme.value;
@@ -524,6 +569,7 @@ export const useThemeStore = defineStore('theme', () => {
     loadCardBackgroundsFromStorage();
     loadBackgroundBlurFromStorage();
     loadCollapseTilesFromStorage();
+    loadNoiseFromStorage();
     applyBackgroundBlur();
     loadThemeFonts();
     applyThemeToDocument();
@@ -543,6 +589,8 @@ export const useThemeStore = defineStore('theme', () => {
     cardBackgrounds,
     backgroundBlur,
     collapseTiles,
+    enableNoise,
+    noiseColor,
     cssVariables,
     themeClass,
     fontsLoaded,
@@ -557,6 +605,8 @@ export const useThemeStore = defineStore('theme', () => {
     clearCardBackground,
     setBackgroundBlur,
     setCollapseTiles,
+    setEnableNoise,
+    setNoiseColor,
     nextTheme,
     initTheme,
     loadThemeFromStorage,
@@ -573,6 +623,8 @@ export const useThemeStore = defineStore('theme', () => {
     saveBackgroundBlurToStorage,
     loadCollapseTilesFromStorage,
     saveCollapseTilesToStorage,
+    loadNoiseFromStorage,
+    saveNoiseToStorage,
     loadThemeFonts,
     applyThemeToDocument,
     applyBackgroundImage,

@@ -114,13 +114,30 @@ onMounted(() => {
            backgroundAttachment: themeStore.backgroundImage ? 'fixed' : undefined,
            fontFamily: 'var(--theme-font-primary)'
          }">
-      <!-- 背景遮罩 -->
-      <div v-if="themeStore.backgroundImage" 
+         
+      <!-- 动态流光背景 (开启粒子特效时显示) -->
+      <div v-if="themeStore.enableNoise" class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="moving-glow absolute inset-0 opacity-60 scale-125"></div>
+      </div>
+
+      <!-- 背景遮罩 (确保流光不会过亮) -->
+      <div v-if="themeStore.backgroundImage || themeStore.enableNoise" 
            class="absolute inset-0 pointer-events-none z-0"
            :style="{
-             backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+             backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.75)' : 'rgba(255, 255, 255, 0.88)',
              backdropFilter: `blur(${themeStore.backgroundBlur}px)`
            }"></div>
+
+      <!-- 核心粒子噪点层 (对标登录页的高级质感) -->
+      <div v-if="themeStore.enableNoise"
+           class="absolute inset-0 z-1 pointer-events-none mix-blend-overlay noise-overlay opacity-30">
+      </div>
+      
+      <!-- 粒子色彩层 (通过遮罩或叠加给粒子上色) -->
+      <div v-if="themeStore.enableNoise"
+           class="absolute inset-0 z-1 pointer-events-none opacity-20"
+           :style="{ backgroundColor: themeStore.noiseColor, mixBlendMode: 'screen' }">
+      </div>
       
       <transition name="slide-down">
         <Header
@@ -168,6 +185,32 @@ onMounted(() => {
 /* 主题页面基础样式 */
 .theme-page {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 极致粒子噪点实现 */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* 核心背景动画 (更鲜艳、更动态) */
+@keyframes glow-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.moving-glow {
+  animation: glow-move 12s ease-in-out infinite;
+  background-image: linear-gradient(
+    -45deg, 
+    #00f2ff 0%, 
+    #b026ff 25%, 
+    #ff2d55 50%, 
+    #007aff 75%,
+    #00f2ff 100%
+  );
+  background-size: 400% 400%;
+  filter: saturate(2.5);
 }
 
 /* 自定义滚动条 */
