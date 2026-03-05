@@ -25,9 +25,9 @@
   --theme-accent-4: #E6DCC8;
   
   /* Text Colors */
-  --theme-text-main: #2C2A26;
-  --theme-text-secondary: #595650;
-  --theme-text-muted: #8B8680;
+  --theme-text-main: #1A1918;
+  --theme-text-secondary: #4A4843;
+  --theme-text-muted: #6B6660;
   
   /* Status Colors */
   --theme-success: #A8C6AA;
@@ -71,8 +71,8 @@
   --theme-hover-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   
   /* Fonts */
-  --theme-font-primary: "DM Sans", sans-serif;
-  --theme-font-secondary: "Playfair Display", serif;
+  --theme-font-primary: "Inter", sans-serif;
+  --theme-font-secondary: "Roboto", sans-serif;
   --theme-font-mono: monospace;
 }
 

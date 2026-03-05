@@ -100,20 +100,20 @@ onUnmounted(() => {
       <div
         v-for="category in visibleCategories"
         :key="category.id"
-        class="relative group"
+        class="relative"
       >
         <div class="flex items-center">
           <button
             @click="scrollToCategory(category.id)"
-            class="text-sm font-semibold text-gray-700 hover:text-primary transition-colors tracking-tight px-2 py-1 rounded-full hover:bg-black/5"
+            class="text-sm font-semibold text-theme-text-main hover:text-theme-primary transition-colors tracking-tight px-2 py-1 rounded-full hover:bg-theme-primary/10"
           >
             {{ category.name }}
           </button>
           <button
             @click.stop="toggleDropdown(category.id)"
-            class="ml-0.5 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none"
+            class="ml-0.5 p-1 rounded-full hover:bg-theme-primary/10 transition-colors focus:outline-none"
           >
-            <ChevronDown class="w-3.5 h-3.5 text-gray-500 transition-transform duration-300" :class="{ 'rotate-180': openDropdownId === category.id }" />
+            <ChevronDown class="w-3.5 h-3.5 text-theme-text-secondary transition-transform duration-300" :class="{ 'rotate-180': openDropdownId === category.id }" />
           </button>
         </div>
 
@@ -127,20 +127,20 @@ onUnmounted(() => {
         >
           <div
             v-if="openDropdownId === category.id"
-            class="absolute top-full left-0 mt-3 w-64 bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl py-2 overflow-hidden z-50 origin-top"
+            class="absolute top-full left-0 mt-3 w-64 bg-theme-card border border-theme-card-border rounded-theme-card shadow-theme-card py-2 overflow-hidden z-50 origin-top"
           >
             <div class="max-h-[300px] overflow-y-auto custom-scrollbar px-2 space-y-1">
               <button
                 v-for="agent in category.agents"
                 :key="agent.id"
                 @click="selectAgent(agent)"
-                class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/60 flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
+                class="w-full text-left px-3 py-2.5 rounded-theme-sm hover:bg-theme-card-hover flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
               >
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
-                  <Sparkles v-else class="w-4 h-4 text-primary" />
+                  <Sparkles v-else class="w-4 h-4 text-theme-primary" />
                 </div>
-                <span class="text-sm font-medium text-gray-700 group-hover:text-primary truncate transition-colors">{{ agent.title }}</span>
+                <span class="text-sm font-medium text-theme-text-main group-hover:text-theme-primary truncate transition-colors">{{ agent.title }}</span>
               </button>
             </div>
           </div>
@@ -150,7 +150,7 @@ onUnmounted(() => {
       <div v-if="hasMore" class="relative">
         <button
           @click.stop="toggleDropdown('more')"
-          class="flex items-center text-sm font-semibold text-gray-700 hover:text-primary transition-colors focus:outline-none px-2 py-1 rounded-full hover:bg-black/5"
+          class="flex items-center text-sm font-semibold text-theme-text-main hover:text-theme-primary transition-colors focus:outline-none px-2 py-1 rounded-full hover:bg-theme-primary/10"
         >
           More
           <ChevronDown class="w-3.5 h-3.5 ml-1 transition-transform duration-300" :class="{ 'rotate-180': openDropdownId === 'more' }" />
@@ -166,13 +166,13 @@ onUnmounted(() => {
         >
           <div
             v-if="openDropdownId === 'more'"
-            class="absolute top-full right-0 mt-3 w-72 bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl py-2 overflow-hidden z-50 origin-top"
+            class="absolute top-full right-0 mt-3 w-72 bg-theme-card border border-theme-card-border rounded-theme-card shadow-theme-card py-2 overflow-hidden z-50 origin-top"
           >
             <div class="max-h-[400px] overflow-y-auto custom-scrollbar space-y-2">
               <div v-for="category in moreCategories" :key="category.id" class="px-2 py-1">
                 <div
                   @click="scrollToCategory(category.id)"
-                  class="px-3 py-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-primary transition-colors"
+                  class="px-3 py-1.5 text-[11px] font-bold text-theme-text-secondary uppercase tracking-widest cursor-pointer hover:text-theme-primary transition-colors"
                 >
                   {{ category.name }}
                 </div>
@@ -181,13 +181,13 @@ onUnmounted(() => {
                     v-for="agent in category.agents"
                     :key="agent.id"
                     @click="selectAgent(agent)"
-                    class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/60 flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
+                    class="w-full text-left px-3 py-2.5 rounded-theme-sm hover:bg-theme-card-hover flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
                   >
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                       <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
-                      <Sparkles v-else class="w-4 h-4 text-primary" />
+                      <Sparkles v-else class="w-4 h-4 text-theme-primary" />
                     </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-primary truncate transition-colors">{{ agent.title }}</span>
+                    <span class="text-sm font-medium text-theme-text-main group-hover:text-theme-primary truncate transition-colors">{{ agent.title }}</span>
                   </button>
                 </div>
               </div>

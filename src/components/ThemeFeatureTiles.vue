@@ -207,6 +207,43 @@ const getCardBgColor = (agentIndex: number): string => {
   return colors[agentIndex % colors.length];
 };
 
+const expandedCategories = ref<Set<string>>(new Set());
+
+const toggleCategory = (categoryId: string) => {
+  if (expandedCategories.value.has(categoryId)) {
+    expandedCategories.value.delete(categoryId);
+  } else {
+    expandedCategories.value.add(categoryId);
+  }
+};
+
+const getVisibleAgents = (category: Category) => {
+  if (!themeStore.collapseTiles || expandedCategories.value.has(category.id)) {
+    return category.agents;
+  }
+  
+  const layouts = calculateRowLayouts(category.agents.length, themeStore.currentLayoutMode);
+  let totalCols = 0;
+  const maxCols = 24; // 2 rows * 12 cols
+  const visibleAgents: Agent[] = [];
+  
+  for (let i = 0; i < category.agents.length; i++) {
+    const layout = layouts[i] || { colSpan: 4 };
+    if (totalCols + layout.colSpan > maxCols) {
+      break;
+    }
+    totalCols += layout.colSpan;
+    visibleAgents.push(category.agents[i]);
+  }
+  
+  return visibleAgents;
+};
+
+const hasHiddenAgents = (category: Category) => {
+  if (!themeStore.collapseTiles) return false;
+  return getVisibleAgents(category).length < category.agents.length;
+};
+
 onMounted(() => {
   fetchCategories();
 });
@@ -272,7 +309,7 @@ onMounted(() => {
              }">
 
           <div
-            v-for="(agent, agentIndex) in category.agents"
+            v-for="(agent, agentIndex) in getVisibleAgents(category)"
             :key="agent.id"
             @click="selectAgent(agent)"
             class="bento-card group cursor-pointer animate-fade-in-up hover:z-10"
@@ -341,6 +378,29 @@ onMounted(() => {
             </div>
           </div>
 
+        </div>
+
+        <!-- 展开/收起按钮 -->
+        <div v-if="themeStore.collapseTiles && (hasHiddenAgents(category) || expandedCategories.has(category.id))" 
+             class="mt-8 flex justify-center">
+          <button 
+            @click="toggleCategory(category.id)"
+            class="px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md flex items-center gap-2"
+            :style="{ 
+              backgroundColor: 'var(--theme-card)',
+              color: 'var(--theme-text-main)',
+              border: 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)'
+            }"
+          >
+            <span>{{ expandedCategories.has(category.id) ? '收起卡片' : '展开全部' }}</span>
+            <svg 
+              class="w-4 h-4 transition-transform duration-300" 
+              :class="{ 'rotate-180': expandedCategories.has(category.id) }"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

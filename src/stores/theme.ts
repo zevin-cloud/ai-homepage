@@ -10,6 +10,7 @@ const CUSTOM_LAYOUT_PRESET_STORAGE_KEY = 'ai-portal-custom-layout-preset';
 const BACKGROUND_IMAGE_STORAGE_KEY = 'ai-portal-background-image';
 const CARD_BACKGROUNDS_STORAGE_KEY = 'ai-portal-card-backgrounds';
 const BACKGROUND_BLUR_STORAGE_KEY = 'ai-portal-background-blur';
+const COLLAPSE_TILES_STORAGE_KEY = 'ai-portal-collapse-tiles';
 
 // 布局模式配置
 export const layoutModes: Record<LayoutMode, { name: string; nameZh: string; description: string; icon: string }> = {
@@ -102,6 +103,9 @@ export const useThemeStore = defineStore('theme', () => {
 
   // 背景模糊程度（0-20px）
   const backgroundBlur = ref<number>(2);
+
+  // 是否折叠超过两行的卡片
+  const collapseTiles = ref<boolean>(false);
 
   // 字体加载状态
   const fontsLoaded = ref(false);
@@ -413,6 +417,33 @@ export const useThemeStore = defineStore('theme', () => {
     html.style.setProperty('--theme-bg-blur', `${backgroundBlur.value}px`);
   }
 
+  // 设置是否折叠卡片
+  function setCollapseTiles(collapse: boolean) {
+    collapseTiles.value = collapse;
+    saveCollapseTilesToStorage();
+  }
+
+  // 从localStorage加载折叠状态
+  function loadCollapseTilesFromStorage() {
+    try {
+      const stored = localStorage.getItem(COLLAPSE_TILES_STORAGE_KEY);
+      if (stored !== null) {
+        collapseTiles.value = stored === 'true';
+      }
+    } catch (e) {
+      console.warn('Failed to load collapse tiles setting from storage:', e);
+    }
+  }
+
+  // 保存折叠状态到localStorage
+  function saveCollapseTilesToStorage() {
+    try {
+      localStorage.setItem(COLLAPSE_TILES_STORAGE_KEY, String(collapseTiles.value));
+    } catch (e) {
+      console.warn('Failed to save collapse tiles setting to storage:', e);
+    }
+  }
+
   // 加载主题字体
   function loadThemeFonts() {
     const theme = currentTheme.value;
@@ -492,6 +523,7 @@ export const useThemeStore = defineStore('theme', () => {
     loadBackgroundImageFromStorage();
     loadCardBackgroundsFromStorage();
     loadBackgroundBlurFromStorage();
+    loadCollapseTilesFromStorage();
     applyBackgroundBlur();
     loadThemeFonts();
     applyThemeToDocument();
@@ -510,6 +542,7 @@ export const useThemeStore = defineStore('theme', () => {
     backgroundImage,
     cardBackgrounds,
     backgroundBlur,
+    collapseTiles,
     cssVariables,
     themeClass,
     fontsLoaded,
@@ -523,6 +556,7 @@ export const useThemeStore = defineStore('theme', () => {
     getCardBackground,
     clearCardBackground,
     setBackgroundBlur,
+    setCollapseTiles,
     nextTheme,
     initTheme,
     loadThemeFromStorage,
@@ -537,6 +571,8 @@ export const useThemeStore = defineStore('theme', () => {
     saveCardBackgroundsToStorage,
     loadBackgroundBlurFromStorage,
     saveBackgroundBlurToStorage,
+    loadCollapseTilesFromStorage,
+    saveCollapseTilesToStorage,
     loadThemeFonts,
     applyThemeToDocument,
     applyBackgroundImage,

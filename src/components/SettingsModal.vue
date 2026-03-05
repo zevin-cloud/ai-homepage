@@ -441,6 +441,34 @@ const getLayoutIcon = (iconName: string) => {
                 </div>
               </div>
             </div>
+
+            <!-- 卡片折叠设置 -->
+            <div class="mt-8 pt-6 border-t" :style="{ borderColor: 'var(--theme-card-border)' }">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold" :style="{ color: 'var(--theme-text-main)' }">卡片折叠展示</h3>
+                  <p class="text-sm mt-1" :style="{ color: 'var(--theme-text-secondary)' }">当分类下的卡片超过两行时，自动折叠其余卡片以节省空间</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    class="sr-only peer" 
+                    :checked="themeStore.collapseTiles"
+                    @change="(e) => themeStore.setCollapseTiles((e.target as HTMLInputElement).checked)"
+                  >
+                  <div 
+                    class="w-11 h-6 rounded-full peer peer-focus:outline-none peer-focus:ring-4 transition-colors duration-300"
+                    :style="{
+                      backgroundColor: themeStore.collapseTiles ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                      borderColor: themeStore.collapseTiles ? 'var(--theme-primary)' : 'var(--theme-card-border)'
+                    }"
+                  ></div>
+                  <div 
+                    class="absolute left-[2px] top-[2px] bg-white border border-gray-300 rounded-full h-5 w-5 transition-all peer-checked:translate-x-full peer-checked:border-white"
+                  ></div>
+                </label>
+              </div>
+            </div>
           </div>
 
           <!-- 背景设置 -->
