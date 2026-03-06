@@ -90,16 +90,16 @@ export type CustomLayoutPresetKey = keyof typeof customLayoutPresets;
 export const useThemeStore = defineStore('theme', () => {
   // 当前主题ID
   const currentThemeId = ref<ThemeId>(defaultThemeId);
-  
+
   // 当前布局模式
   const currentLayoutMode = ref<LayoutMode>(defaultLayoutMode);
-  
+
   // 当前自定义布局预设
   const currentCustomLayoutPreset = ref<CustomLayoutPresetKey>('two-per-row');
-  
+
   // 背景图片
   const backgroundImage = ref<string>('');
-  
+
   // 卡片背景图片（按索引存储）
   const cardBackgrounds = ref<Record<number, string>>({});
 
@@ -128,34 +128,34 @@ export const useThemeStore = defineStore('theme', () => {
       // 背景
       '--theme-bg': theme.colors.background,
       '--theme-bg-gradient': theme.colors.backgroundGradient || 'none',
-      
+
       // 卡片
       '--theme-card': theme.colors.card,
       '--theme-card-hover': theme.colors.cardHover || theme.colors.card,
       '--theme-card-border': theme.colors.cardBorder,
-      
+
       // 主色调
       '--theme-primary': theme.colors.primary,
       '--theme-primary-light': theme.colors.primaryLight || theme.colors.primary,
       '--theme-primary-dark': theme.colors.primaryDark || theme.colors.primary,
-      
+
       // 强调色
       '--theme-accent-1': theme.colors.accent1,
       '--theme-accent-2': theme.colors.accent2,
       '--theme-accent-3': theme.colors.accent3,
       '--theme-accent-4': theme.colors.accent4 || theme.colors.accent1,
-      
+
       // 文字
       '--theme-text-main': theme.colors.textMain,
       '--theme-text-secondary': theme.colors.textSecondary,
       '--theme-text-muted': theme.colors.textMuted,
-      
+
       // 状态色
       '--theme-success': theme.colors.success,
       '--theme-warning': theme.colors.warning,
       '--theme-error': theme.colors.error,
       '--theme-info': theme.colors.info,
-      
+
       // 圆角
       '--theme-radius-sm': theme.borderRadius.small,
       '--theme-radius-md': theme.borderRadius.medium,
@@ -164,7 +164,7 @@ export const useThemeStore = defineStore('theme', () => {
       '--theme-radius-card': theme.borderRadius.card,
       '--theme-radius-button': theme.borderRadius.button,
       '--theme-radius-avatar': theme.borderRadius.avatar,
-      
+
       // 阴影
       '--theme-shadow-sm': theme.shadows.small,
       '--theme-shadow-md': theme.shadows.medium,
@@ -172,25 +172,25 @@ export const useThemeStore = defineStore('theme', () => {
       '--theme-shadow-card': theme.shadows.card,
       '--theme-shadow-card-hover': theme.shadows.cardHover,
       '--theme-shadow-glow': theme.shadows.glow || 'none',
-      
+
       // 边框
       '--theme-border-width': theme.border.width,
       '--theme-border-style': theme.border.style,
       '--theme-border-color': theme.border.color,
-      
+
       // 布局
       '--theme-header-height': theme.layout.headerHeight,
       '--theme-max-width': theme.layout.maxWidth,
       '--theme-grid-gap': theme.layout.gridGap,
       '--theme-card-padding': theme.layout.cardPadding,
       '--theme-section-spacing': theme.layout.sectionSpacing,
-      
+
       // 动画
       '--theme-duration': theme.animation.duration,
       '--theme-easing': theme.animation.easing,
       '--theme-hover-transform': theme.animation.hoverTransform,
       '--theme-hover-transition': theme.animation.hoverTransition,
-      
+
       // 字体
       '--theme-font-primary': theme.fonts.primary,
       '--theme-font-secondary': theme.fonts.secondary || theme.fonts.primary,
@@ -469,7 +469,7 @@ export const useThemeStore = defineStore('theme', () => {
       if (enabledStored !== null) {
         enableNoise.value = enabledStored === 'true';
       }
-      
+
       const colorStored = localStorage.getItem(NOISE_COLOR_STORAGE_KEY);
       if (colorStored !== null) {
         noiseColor.value = colorStored;
@@ -522,17 +522,17 @@ export const useThemeStore = defineStore('theme', () => {
   function applyThemeToDocument() {
     const html = document.documentElement;
     const theme = currentTheme.value;
-    
+
     // 移除旧的主题类
     html.classList.forEach((className) => {
       if (className.startsWith('theme-')) {
         html.classList.remove(className);
       }
     });
-    
+
     // 添加新的主题类
     html.classList.add(theme.classPrefix);
-    
+
     // 应用CSS变量
     const vars = cssVariables.value;
     Object.entries(vars).forEach(([key, value]) => {
