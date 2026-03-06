@@ -92,14 +92,14 @@ const handleOidcLogin = () => {
       </div>
 
       <!-- 右侧：极致精简登录框 (靠右对齐) -->
-      <div class="w-full max-w-[320px] lg:mr-6 animate-fade-in" style="animation-delay: 0.2s">
-        <div class="bg-[#0a0a0a]/30 backdrop-blur-[40px] border border-white/10 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] p-8 relative overflow-hidden">
+      <div class="w-full max-w-[360px] lg:max-w-[320px] lg:mr-6 animate-fade-in mx-auto lg:mx-0" style="animation-delay: 0.2s">
+        <div class="bg-[#0a0a0a]/30 backdrop-blur-[40px] border border-white/10 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] p-6 lg:p-8 relative overflow-hidden">
           <!-- 顶部装饰线 -->
           <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
           
           <div class="mb-10">
             <h2 class="text-xl font-bold text-white tracking-tight">欢迎回来</h2>
-            <p class="text-gray-500 text-[11px] mt-2 font-medium">请登录以管理您的 AI 基础设施</p>
+            <p class="text-gray-300 text-[11px] mt-2 font-medium">请登录以管理您的 AI 基础设施</p>
           </div>
           
           <form @submit.prevent="handleLocalLogin" class="space-y-4">
@@ -108,7 +108,7 @@ const handleOidcLogin = () => {
                 v-model="username"
                 type="text" 
                 placeholder="用户名"
-                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-600 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
+                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-500 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
               />
             </div>
             
@@ -117,7 +117,7 @@ const handleOidcLogin = () => {
                 v-model="password"
                 type="password" 
                 placeholder="密码"
-                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-600 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
+                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-500 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
               />
             </div>
             
@@ -138,7 +138,7 @@ const handleOidcLogin = () => {
           <div class="mt-10">
             <div class="flex items-center gap-3 mb-6">
               <div class="h-px flex-1 bg-white/5"></div>
-              <span class="text-[9px] text-gray-700 font-bold uppercase tracking-[0.2em]">SSO Auth</span>
+              <span class="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">SSO Auth</span>
               <div class="h-px flex-1 bg-white/5"></div>
             </div>
             
@@ -194,7 +194,7 @@ const handleOidcLogin = () => {
 }
 
 .sso-btn {
-  @apply flex items-center justify-center bg-white/[0.02] border border-white/5 hover:bg-white/[0.08] hover:border-white/10 text-gray-500 text-[10px] font-bold py-2.5 px-3 rounded-xl transition-all active:scale-95;
+  @apply flex items-center justify-center bg-white/[0.02] border border-white/5 hover:bg-white/[0.08] hover:border-white/10 text-gray-300 text-[10px] font-bold py-2.5 px-3 rounded-xl transition-all active:scale-95;
 }
 
 .animate-fade-in {

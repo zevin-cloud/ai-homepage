@@ -259,10 +259,7 @@ onMounted(() => {
         <div class="h-10 w-48 rounded-lg skeleton"></div>
         <div class="bento-grid"
              :style="{
-               display: 'grid',
-               gridTemplateColumns: 'repeat(12, 1fr)',
-               gap: 'var(--theme-grid-gap)',
-               gridAutoRows: '200px'
+               gap: 'var(--theme-grid-gap)'
              }">
           <div v-for="j in 3" :key="j" class="skeleton rounded-2xl col-span-4 min-h-[200px]"></div>
         </div>
@@ -279,7 +276,7 @@ onMounted(() => {
         <!-- Section Title -->
         <div class="flex items-end gap-4 mb-10">
           <div class="relative group cursor-default">
-            <h2 class="text-4xl font-bold relative z-10 transition-transform duration-300 group-hover:-translate-y-1"
+            <h2 class="text-3xl md:text-4xl font-bold relative z-10 transition-transform duration-300 group-hover:-translate-y-1"
                 :style="{
                   color: 'var(--theme-text-main)',
                   fontFamily: 'var(--theme-font-secondary)'
@@ -302,10 +299,7 @@ onMounted(() => {
                'theme-pastel-grid': themeStore.currentThemeId === 'pastel-dream'
              }"
              :style="{
-               display: 'grid',
-               gridTemplateColumns: 'repeat(12, 1fr)',
-               gap: 'var(--theme-grid-gap)',
-               gridAutoRows: '200px'
+               gap: 'var(--theme-grid-gap)'
              }">
 
           <div
@@ -321,8 +315,7 @@ onMounted(() => {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius: 'var(--theme-radius-card)',
-              border: 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)',
-              minHeight: '200px'
+              border: 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)'
             }"
           >
             <!-- 卡片背景遮罩 -->
@@ -424,6 +417,12 @@ onMounted(() => {
   min-height: 200px;
 }
 
+@media (max-width: 640px) {
+  .bento-card {
+    min-height: 140px;
+  }
+}
+
 .bento-card:hover {
   transform: var(--theme-hover-transform);
   box-shadow: var(--theme-shadow-card-hover);
@@ -517,11 +516,17 @@ onMounted(() => {
 
 @media (max-width: 640px) {
   .bento-grid {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
   }
   
   .bento-card {
-    grid-column: span 1 !important;
+    grid-column: 1 / -1 !important;
+    min-height: 140px !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 </style>

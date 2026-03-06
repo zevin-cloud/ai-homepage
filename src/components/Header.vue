@@ -88,7 +88,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header ref="headerRef" class="sticky top-4 z-50 flex items-center justify-between w-[95%] max-w-[1200px] px-6 py-3 mx-auto mt-4 bg-white/40 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] shrink-0 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-white/50">
+  <header ref="headerRef" class="sticky top-4 z-50 flex items-center justify-between w-[98%] md:w-[95%] max-w-[1200px] px-4 md:px-6 py-2.5 md:py-3 mx-auto mt-2 md:mt-4 bg-white/40 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] shrink-0 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-white/50">
     <div class="flex items-center cursor-pointer gap-3 transition-transform duration-300 hover:scale-105" @click="goHome">
       <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-sm flex items-center justify-center">
         <Sparkles class="w-5 h-5 text-white" />
@@ -96,7 +96,7 @@ onUnmounted(() => {
       <span class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600 tracking-tight">FIT2CLOUD</span>
     </div>
 
-    <nav class="flex items-center space-x-6">
+    <nav class="hidden md:flex items-center space-x-6">
       <div
         v-for="category in visibleCategories"
         :key="category.id"
@@ -197,7 +197,7 @@ onUnmounted(() => {
       </div>
     </nav>
 
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-1 md:space-x-2">
       <!-- 主题设置按钮 -->
       <button
         @click="$emit('open-settings')"
@@ -209,8 +209,8 @@ onUnmounted(() => {
 
       <div class="h-4 w-px bg-gray-300 mx-1"></div>
 
-      <div v-if="authStore.isAuthenticated" class="flex items-center gap-1 ml-1">
-        <span class="text-sm font-medium text-gray-600 px-2 py-1 bg-black/5 rounded-full mr-1">{{ authStore.user?.username }}</span>
+      <div v-if="authStore.isAuthenticated" class="flex items-center gap-1">
+        <span class="hidden sm:inline-block text-sm font-medium text-gray-600 px-2 py-1 bg-black/5 rounded-full mr-1">{{ authStore.user?.username }}</span>
 
         <router-link
           v-if="authStore.isAdmin"

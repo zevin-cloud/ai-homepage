@@ -316,9 +316,9 @@ onMounted(() => {
 <template>
   <div class="min-h-screen bg-gray-50 p-8">
     <div class="max-w-7xl mx-auto">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">用户管理</h1>
-        <div class="flex gap-4">
+      <div class="flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">用户管理</h1>
+        <div class="flex flex-wrap gap-3 sm:gap-4">
           <button 
             @click="syncUsers" 
             :disabled="syncing"
@@ -341,7 +341,7 @@ onMounted(() => {
       <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-4">
         <div class="flex flex-wrap gap-4 items-center justify-between">
           <!-- 搜索框 -->
-          <div class="flex-1 min-w-[300px]">
+          <div class="flex-1 w-full sm:min-w-[300px]">
             <div class="relative">
               <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -379,7 +379,7 @@ onMounted(() => {
       <!-- 用户列表 -->
       <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
+          <table class="min-w-[800px] w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
                 <th 
@@ -498,9 +498,9 @@ onMounted(() => {
         </div>
 
         <!-- 分页 -->
-        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
-          <div class="flex items-center justify-between">
-            <div class="text-sm text-gray-600">
+        <div class="bg-gray-50 px-4 sm:px-6 py-4 border-t border-gray-200">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+            <div class="text-sm text-gray-600 text-center sm:text-left">
               显示第 {{ (currentPage - 1) * pageSize + 1 }} - 
               {{ Math.min(currentPage * pageSize, filteredUsers.length) }} 条，
               共 {{ filteredUsers.length }} 条
