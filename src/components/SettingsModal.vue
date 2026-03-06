@@ -454,65 +454,67 @@ const getLayoutIcon = (iconName: string) => {
           <!-- 背景设置 -->
           <div v-else-if="activeTab === 'background'" class="p-6 overflow-y-auto flex-1 custom-scrollbar">
             <div class="space-y-6">
-              <!-- 当前背景预览 -->
-              <div>
-                <h3 class="text-lg font-semibold mb-4" :style="{ color: 'var(--theme-text-main)' }">
-                  当前背景
-                </h3>
-                <div
-                  class="w-full h-48 rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden"
-                  :style="{
-                    borderColor: themeStore.backgroundImage ? 'var(--theme-primary)' : 'var(--theme-card-border)',
-                    backgroundColor: 'var(--theme-bg)',
-                    backgroundImage: themeStore.backgroundImage ? `url(${themeStore.backgroundImage})` : 'none',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }"
-                >
-                  <div v-if="!themeStore.backgroundImage" class="text-center">
-                    <Image class="w-12 h-12 mx-auto mb-2" :style="{ color: 'var(--theme-text-muted)' }" />
-                    <p :style="{ color: 'var(--theme-text-muted)' }">暂无背景图片</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 当前背景预览 -->
+                <div>
+                  <h3 class="text-base font-semibold mb-3" :style="{ color: 'var(--theme-text-main)' }">
+                    当前背景
+                  </h3>
+                  <div
+                    class="w-full h-32 rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden relative group"
+                    :style="{
+                      borderColor: themeStore.backgroundImage ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                      backgroundColor: 'var(--theme-bg)',
+                      backgroundImage: themeStore.backgroundImage ? `url(${themeStore.backgroundImage})` : 'none',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }"
+                  >
+                    <div v-if="!themeStore.backgroundImage" class="text-center">
+                      <Image class="w-8 h-8 mx-auto mb-2" :style="{ color: 'var(--theme-text-muted)' }" />
+                      <p class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">暂无图片</p>
+                    </div>
                   </div>
+                </div>
+
+                <!-- 上传区域 -->
+                <div>
+                  <h3 class="text-base font-semibold mb-3" :style="{ color: 'var(--theme-text-main)' }">
+                    上传背景
+                  </h3>
+                  <label
+                    class="flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed cursor-pointer transition-colors hover:opacity-80"
+                    :style="{
+                      borderColor: 'var(--theme-card-border)',
+                      backgroundColor: 'var(--theme-primary-light)'
+                    }"
+                  >
+                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                      <Upload class="w-6 h-6 mb-2" :style="{ color: 'var(--theme-primary)' }" />
+                      <p class="text-sm text-center px-2" :style="{ color: 'var(--theme-text-secondary)' }">
+                        <span class="font-semibold">点击上传</span> 或拖拽图片
+                      </p>
+                      <p class="text-xs mt-1 text-center" :style="{ color: 'var(--theme-text-muted)' }">
+                        支持 JPG/PNG/GIF，最大 2MB
+                      </p>
+                    </div>
+                    <input
+                      type="file"
+                      class="hidden"
+                      accept="image/*"
+                      @change="handleImageUpload"
+                    />
+                  </label>
+                  <p v-if="uploadError" class="text-sm mt-2 text-red-500">
+                    {{ uploadError }}
+                  </p>
                 </div>
               </div>
 
-              <!-- 上传区域 -->
-              <div>
-                <h3 class="text-lg font-semibold mb-4" :style="{ color: 'var(--theme-text-main)' }">
-                  上传背景
-                </h3>
-                <label
-                  class="flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed cursor-pointer transition-colors hover:opacity-80"
-                  :style="{
-                    borderColor: 'var(--theme-card-border)',
-                    backgroundColor: 'var(--theme-primary-light)'
-                  }"
-                >
-                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Upload class="w-8 h-8 mb-2" :style="{ color: 'var(--theme-primary)' }" />
-                    <p class="text-sm" :style="{ color: 'var(--theme-text-secondary)' }">
-                      <span class="font-semibold">点击上传</span> 或拖拽图片到此处
-                    </p>
-                    <p class="text-xs mt-1" :style="{ color: 'var(--theme-text-muted)' }">
-                      支持 JPG、PNG、GIF 格式，最大 2MB
-                    </p>
-                  </div>
-                  <input
-                    type="file"
-                    class="hidden"
-                    accept="image/*"
-                    @change="handleImageUpload"
-                  />
-                </label>
-                <p v-if="uploadError" class="text-sm mt-2 text-red-500">
-                  {{ uploadError }}
-                </p>
-              </div>
-
               <!-- 模糊度调节 -->
-              <div v-if="themeStore.backgroundImage">
-                <h3 class="text-lg font-semibold mb-4" :style="{ color: 'var(--theme-text-main)' }">
-                  背景模糊程度
+              <div v-if="themeStore.backgroundImage" class="bg-opacity-50 rounded-xl p-4 border" :style="{ backgroundColor: 'var(--theme-primary-light)', borderColor: 'var(--theme-card-border)' }">
+                <h3 class="text-base font-semibold mb-3 flex items-center justify-between" :style="{ color: 'var(--theme-text-main)' }">
+                  背景模糊程度 <span class="text-sm font-normal" :style="{ color: 'var(--theme-text-secondary)' }">当前: {{ themeStore.backgroundBlur }}px</span>
                 </h3>
                 <div class="flex items-center gap-4">
                   <span class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">清晰</span>
@@ -525,23 +527,20 @@ const getLayoutIcon = (iconName: string) => {
                     @input="(e) => themeStore.setBackgroundBlur(parseInt((e.target as HTMLInputElement).value))"
                     class="flex-1 h-2 rounded-lg appearance-none cursor-pointer"
                     :style="{
-                      backgroundColor: 'var(--theme-primary-light)',
+                      backgroundColor: 'var(--theme-bg)',
                       accentColor: 'var(--theme-primary)'
                     }"
                   />
                   <span class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">模糊</span>
                 </div>
-                <p class="text-sm mt-2" :style="{ color: 'var(--theme-text-secondary)' }">
-                  当前: {{ themeStore.backgroundBlur }}px
-                </p>
               </div>
 
               <!-- 背景特效设置 -->
-              <div class="mt-8 pt-6 border-t" :style="{ borderColor: 'var(--theme-card-border)' }">
-                <div class="flex items-center justify-between mb-6">
+              <div class="mt-6 pt-5 border-t" :style="{ borderColor: 'var(--theme-card-border)' }">
+                <div class="flex items-center justify-between mb-5">
                   <div>
-                    <h3 class="text-lg font-semibold" :style="{ color: 'var(--theme-text-main)' }">动态粒子与流光背景</h3>
-                    <p class="text-sm mt-1" :style="{ color: 'var(--theme-text-secondary)' }">开启充满未来感的全屏流光发光效果与细微颗粒噪点（对标 New API）</p>
+                    <h3 class="text-base font-semibold" :style="{ color: 'var(--theme-text-main)' }">动态粒子与流光背景</h3>
+                    <p class="text-sm mt-1" :style="{ color: 'var(--theme-text-secondary)' }">开启充满未来感的全屏流光发光效果与细微颗粒噪点</p>
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer shrink-0">
                     <input 
