@@ -1,11 +1,32 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import type { Category, Agent } from '@/data/categories';
-import { ChevronDown, Sparkles, LogOut, Settings, Palette } from 'lucide-vue-next';
+import { 
+  ChevronDown, Sparkles, LogOut, Settings, Palette,
+  Bot, Cpu, Zap, Brain, MessageSquare, 
+  Terminal, Globe, Rocket, Lightbulb, Code, Database,
+  Layers, Box, Compass, Fingerprint
+} from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
 const categories = ref<Category[]>([]);
+
+const defaultIcons = [
+  Sparkles, Bot, Cpu, Zap, Brain, MessageSquare, 
+  Terminal, Globe, Rocket, Lightbulb, Code, Database,
+  Layers, Box, Compass, Fingerprint
+];
+
+const getDefaultIcon = (agent: Agent) => {
+  const str = agent.id || agent.title || '';
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % defaultIcons.length;
+  return defaultIcons[index];
+};
 
 const emit = defineEmits<{
   (e: 'select-agent', url: string): void;
@@ -136,9 +157,9 @@ onUnmounted(() => {
                 @click="selectAgent(agent)"
                 class="w-full text-left px-3 py-2.5 rounded-theme-sm hover:bg-theme-card-hover flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
               >
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
-                  <Sparkles v-else class="w-4 h-4 text-theme-primary" />
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300" :style="{ borderRadius: 'var(--theme-radius-avatar)' }">
+                  <img v-if="agent.icon" :src="agent.icon" class="w-full h-full object-cover" />
+                  <component v-else :is="getDefaultIcon(agent)" class="w-4 h-4 text-theme-primary" />
                 </div>
                 <span class="text-sm font-medium text-theme-text-main group-hover:text-theme-primary truncate transition-colors">{{ agent.title }}</span>
               </button>
@@ -183,9 +204,9 @@ onUnmounted(() => {
                     @click="selectAgent(agent)"
                     class="w-full text-left px-3 py-2.5 rounded-theme-sm hover:bg-theme-card-hover flex items-center space-x-3 transition-all duration-200 group hover:shadow-sm"
                   >
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <img v-if="agent.icon" :src="agent.icon" class="w-4 h-4 object-contain" />
-                      <Sparkles v-else class="w-4 h-4 text-theme-primary" />
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-theme-primary/20 to-theme-primary/5 border border-theme-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300" :style="{ borderRadius: 'var(--theme-radius-avatar)' }">
+                      <img v-if="agent.icon" :src="agent.icon" class="w-full h-full object-cover" />
+                      <component v-else :is="getDefaultIcon(agent)" class="w-4 h-4 text-theme-primary" />
                     </div>
                     <span class="text-sm font-medium text-theme-text-main group-hover:text-theme-primary truncate transition-colors">{{ agent.title }}</span>
                   </button>

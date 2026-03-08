@@ -172,16 +172,17 @@
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
 }
 
-.theme-luxury .bento-card {
+.theme-luxury .bento-card-inner {
   background: var(--theme-card);
   border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--theme-radius-card);
-  transition: var(--theme-hover-transition);
+  transition: all 0.4s ease;
 }
 
-.theme-luxury .bento-card:hover {
-  transform: var(--theme-hover-transform);
-  border-color: rgba(212, 175, 55, 0.5);
+.theme-luxury .bento-card-inner:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
 }
 
 /* Cyber Tech Theme */
@@ -217,17 +218,16 @@
   filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
 }
 
-.theme-cybertech .bento-card {
+.theme-cybertech .bento-card-inner {
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 240, 255, 0.3);
   border-radius: var(--theme-radius-card);
-  transition: var(--theme-hover-transition);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.theme-cybertech .bento-card:hover {
-  transform: var(--theme-hover-transform);
-  border-color: #00F0FF;
+.theme-cybertech .bento-card-inner:hover {
+  transform: translateY(-2px);
   box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
 }
 
@@ -273,17 +273,34 @@
   background-image: linear-gradient(to right, #9333EA, #DB2777);
 }
 
-.theme-pastel .bento-card {
+.theme-pastel .bento-card-inner {
   background: var(--theme-card);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--theme-radius-card);
   box-shadow: 0 20px 40px -10px rgba(216, 180, 254, 0.3);
-  transition: var(--theme-hover-transition);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.theme-pastel .bento-card:hover {
+.theme-pastel .bento-card-inner:hover {
   transform: translateY(-8px) scale(1.01);
   box-shadow: 0 25px 50px -10px rgba(216, 180, 254, 0.4);
+}
+
+/* Pastel Theme Specific Shadow Variants */
+.theme-pastel .shadow-soft-purple {
+  box-shadow: 0 20px 40px -10px rgba(216, 180, 254, 0.5);
+}
+
+.theme-pastel .shadow-soft-blue {
+  box-shadow: 0 20px 40px -10px rgba(186, 230, 253, 0.5);
+}
+
+.theme-pastel .shadow-soft-mint {
+  box-shadow: 0 20px 40px -10px rgba(167, 243, 208, 0.5);
+}
+
+.theme-pastel .shadow-soft-peach {
+  box-shadow: 0 20px 40px -10px rgba(253, 186, 116, 0.5);
 }
 
 /* ============================================

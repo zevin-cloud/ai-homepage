@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import type { Category, Agent } from '@/data/categories';
-import { Sparkles } from 'lucide-vue-next';
+import { 
+  Sparkles, Bot, Cpu, Zap, Brain, MessageSquare, 
+  Terminal, Globe, Rocket, Lightbulb, Code, Database,
+  Layers, Box, Compass, Fingerprint
+} from 'lucide-vue-next';
 import { useThemeStore } from '@/stores/theme';
 import { useAuthStore } from '@/stores/auth';
 
@@ -9,6 +13,22 @@ const categories = ref<Category[]>([]);
 const loading = ref(true);
 const themeStore = useThemeStore();
 const authStore = useAuthStore();
+
+const defaultIcons = [
+  Sparkles, Bot, Cpu, Zap, Brain, MessageSquare, 
+  Terminal, Globe, Rocket, Lightbulb, Code, Database,
+  Layers, Box, Compass, Fingerprint
+];
+
+const getDefaultIcon = (agent: Agent) => {
+  const str = agent.id || agent.title || '';
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % defaultIcons.length;
+  return defaultIcons[index];
+};
 
 const emit = defineEmits<{
   (e: 'select-agent', url: string): void
@@ -196,6 +216,12 @@ const getCardStyle = (agentIndex: number, totalAgents: number) => {
 
 // 获取背景颜色（根据索引轮换）
 const getCardBgColor = (agentIndex: number): string => {
+  // 赛博科技、奢华暗黑、霓虹赛博、梦幻粉彩 保持特定背景色，不轮换实色
+  const fixedBgThemes = ['cyberpunk-neon', 'luxury-dark', 'cyber-tech', 'pastel-dream'];
+  if (fixedBgThemes.includes(themeStore.currentThemeId)) {
+    return 'var(--theme-card)';
+  }
+
   const colors = [
     'var(--theme-primary-light)',
     'var(--theme-card)',
@@ -205,6 +231,55 @@ const getCardBgColor = (agentIndex: number): string => {
     'var(--theme-accent-4-light, var(--theme-accent-4))',
   ];
   return colors[agentIndex % colors.length];
+};
+
+// 获取阴影类名（针对梦幻粉彩主题的轮换效果）
+const getCardShadowClass = (agentIndex: number): string => {
+  if (themeStore.currentThemeId !== 'pastel-dream') return '';
+  
+  const classes = [
+    'shadow-soft-purple',
+    'shadow-soft-blue',
+    'shadow-soft-mint',
+    'shadow-soft-peach',
+  ];
+  return classes[agentIndex % classes.length];
+};
+
+// 获取边框颜色（针对深色主题的霓虹/金色点缀）
+const getCardBorderColor = (agentIndex: number): string => {
+  const darkThemes = ['cyberpunk-neon', 'luxury-dark', 'cyber-tech'];
+  if (!darkThemes.includes(themeStore.currentThemeId)) {
+    return 'var(--theme-card-border)';
+  }
+
+  // 这里的颜色对应主题中的 accent1 - accent4
+  const colors = [
+    'var(--theme-primary)',
+    'var(--theme-accent-1)',
+    'var(--theme-accent-2)',
+    'var(--theme-accent-3)',
+    'var(--theme-accent-4)',
+  ];
+  return colors[agentIndex % colors.length];
+};
+
+// 判断卡片背景是否为深色，针对浅色主题中穿插的黑色卡片
+const isDarkBackground = (agentIndex: number): boolean => {
+  // 如果当前已经是深色主题，则不需要进行硬编码的颜色反转，因为主题本身已经使用了浅色文字
+  const isDarkTheme = ['cyberpunk-neon', 'luxury-dark', 'cyber-tech'].includes(themeStore.currentThemeId);
+  if (isDarkTheme) return false;
+  
+  // 在非深色主题下，检查背景颜色变量名
+  // accent-3 在默认主题下是黄/黑色，或者其他会被认为较深的颜色
+  const bg = getCardBgColor(agentIndex);
+  
+  // 对于黑白极简主题，如果背景是黑色则需要白字
+  if (themeStore.currentThemeId === 'swiss-minimalist' && bg.includes('accent-3')) {
+    return true; // 极简主题中的 accentuate 往往是黑色
+  }
+
+  return false;
 };
 
 const expandedCategories = ref<Set<string>>(new Set());
@@ -310,63 +385,72 @@ onMounted(() => {
             :style="{
               ...getCardStyle(agentIndex, category.agents.length),
               animationDelay: `${(categoryIndex * 0.1) + (agentIndex * 0.05)}s`,
-              backgroundColor: themeStore.getCardBackground(agentIndex) ? 'transparent' : getCardBgColor(agentIndex),
-              backgroundImage: themeStore.getCardBackground(agentIndex) ? `url(${themeStore.getCardBackground(agentIndex)})` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: 'var(--theme-radius-card)',
-              border: 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)'
-            }"
-          >
-            <!-- 卡片背景遮罩 -->
-            <div v-if="themeStore.getCardBackground(agentIndex)" 
-                 class="absolute inset-0 rounded-inherit"
-                 :style="{
-                   backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                   borderRadius: 'var(--theme-radius-card)'
-                 }"></div>
-            
-            <!-- 卡片内容 - 根据宽度自适应 -->
-            <div class="relative z-10 flex flex-col h-full justify-between p-6">
-              <!-- 头部：图标和标签 -->
-              <div class="flex justify-between items-start">
-                <div class="w-12 h-12 flex items-center justify-center"
-                     :style="{
-                       backgroundColor: 'var(--theme-card)',
-                       border: 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)',
-                       borderRadius: 'var(--theme-radius-md)'
-                     }">
-                  <img v-if="agent.icon" :src="agent.icon" alt="" class="w-6 h-6 object-contain" />
-                  <Sparkles v-else class="w-6 h-6" :style="{ color: 'var(--theme-primary)' }" />
+            }">
+            <div
+              class="bento-card-inner relative h-full w-full overflow-hidden transition-all duration-500"
+              :class="getCardShadowClass(agentIndex)"
+              :style="{
+                backgroundColor: getCardBgColor(agentIndex),
+                border: ['organic-bento', 'pastel-dream'].includes(themeStore.currentThemeId)
+                  ? 'var(--theme-border-width) var(--theme-border-style) var(--theme-card-border)'
+                  : `var(--theme-border-width) var(--theme-border-style) ${getCardBorderColor(agentIndex)}`,
+                borderRadius: 'var(--theme-radius-card)',
+                boxShadow: themeStore.currentThemeId === 'organic-bento' ? '' : undefined,
+                opacity: 0.95
+              }">
+              
+              <!-- 只有在有机主题下才显示背景图逻辑（如果用户设置了） -->
+              <div v-if="themeStore.currentThemeId === 'organic-bento' && themeStore.getCardBackground(agentIndex)" 
+                   class="absolute inset-0 rounded-inherit"
+                   :style="{
+                     backgroundImage: `url(${themeStore.getCardBackground(agentIndex)})`,
+                     backgroundSize: 'cover',
+                     backgroundPosition: 'center',
+                     opacity: 0.4
+                   }"></div>
+
+              <!-- 卡片内容 - 根据宽度自适应 -->
+              <div class="relative z-10 flex flex-col h-full justify-between p-5" :class="{ 'text-white': isDarkBackground(agentIndex) }">
+                <!-- 头部：图标和标签 -->
+                <div class="flex justify-between items-start">
+                  <div class="w-12 h-12 flex flex-shrink-0 items-center justify-center shadow-sm overflow-hidden transition-transform duration-300 group-hover:scale-105"
+                       :style="{
+                         backgroundColor: isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.1)' : 'var(--theme-card)',
+                         border: 'var(--theme-border-width) var(--theme-border-style) ' + (isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.2)' : 'var(--theme-card-border)'),
+                         borderRadius: 'var(--theme-radius-avatar)'
+                       }">
+                    <img v-if="agent.icon" :src="agent.icon" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                    <component v-else :is="getDefaultIcon(agent)" class="w-6 h-6 transition-all duration-300 group-hover:scale-110" :style="{ color: isDarkBackground(agentIndex) ? '#ffffff' : 'var(--theme-primary)' }" />
+                  </div>
+                  <span v-if="agentIndex === 0" class="text-xs font-bold px-2 py-1 rounded-full"
+                        :style="{
+                          backgroundColor: isDarkBackground(agentIndex) ? '#ffffff' : 'var(--theme-text-main)',
+                          color: isDarkBackground(agentIndex) ? '#000000' : 'var(--theme-card)'
+                        }">
+                    Featured
+                  </span>
                 </div>
-                <span v-if="agentIndex === 0" class="text-xs font-bold px-2 py-1 rounded-full"
-                      :style="{
-                        backgroundColor: 'var(--theme-text-main)',
-                        color: 'var(--theme-card)'
-                      }">
-                  Featured
-                </span>
-              </div>
 
-              <!-- 内容区 -->
-              <div class="mt-4 flex-1 flex flex-col">
-                <h3 class="text-lg font-bold mb-2 line-clamp-1"
-                    :style="{ color: 'var(--theme-text-main)', fontFamily: 'var(--theme-font-secondary)' }">
-                  {{ agent.title }}
-                </h3>
-                <p class="text-sm leading-relaxed line-clamp-2 flex-1"
-                   :style="{ color: 'var(--theme-text-secondary)' }">
-                  {{ agent.description || '暂无描述' }}
-                </p>
-              </div>
+                <!-- 内容区 -->
+                <div class="mt-4 flex-1 flex flex-col">
+                  <h3 class="text-lg font-bold mb-2 line-clamp-1"
+                      :style="{ color: isDarkBackground(agentIndex) ? '#ffffff' : 'var(--theme-text-main)', fontFamily: 'var(--theme-font-secondary)' }">
+                    {{ agent.title }}
+                  </h3>
+                  <p class="text-sm leading-relaxed line-clamp-2 flex-1"
+                     :style="{ color: isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.7)' : 'var(--theme-text-secondary)' }">
+                    {{ agent.description || '暂无描述' }}
+                  </p>
+                </div>
 
-              <!-- 底部：点击提示 -->
-              <div class="mt-4 pt-3 flex justify-between items-center"
-                   :style="{ borderTop: '1px dashed var(--theme-card-border)' }">
-                <span class="text-xs font-bold uppercase tracking-wide" :style="{ color: 'var(--theme-text-muted)' }">
-                  Click to chat
-                </span>
-                <span class="text-sm" :style="{ color: 'var(--theme-text-muted)' }">→</span>
+                <!-- 底部：点击提示 -->
+                <div class="mt-4 pt-3 flex justify-between items-center"
+                     :style="{ borderTop: '1px dashed ' + (isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.2)' : 'var(--theme-card-border)') }">
+                  <span class="text-xs font-bold uppercase tracking-wide" :style="{ color: isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.5)' : 'var(--theme-text-muted)' }">
+                    Click to chat
+                  </span>
+                  <span class="text-sm" :style="{ color: isDarkBackground(agentIndex) ? 'rgba(255,255,255,0.5)' : 'var(--theme-text-muted)' }">→</span>
+                </div>
               </div>
             </div>
           </div>
@@ -417,6 +501,30 @@ onMounted(() => {
   min-height: 200px;
 }
 
+/* Uiverse Card Circle Animation */
+.bento-card::before {
+  content: "";
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  border-radius: 50%;
+  border: 35px solid rgba(255, 255, 255, 0.102);
+  transition: all .8s ease;
+  filter: blur(.5rem);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bento-card:hover::before {
+  width: 140px;
+  height: 140px;
+  top: -30%;
+  left: 50%;
+  filter: blur(0rem);
+}
+
 @media (max-width: 640px) {
   .bento-card {
     min-height: 140px;
@@ -432,6 +540,7 @@ onMounted(() => {
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -439,6 +548,7 @@ onMounted(() => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

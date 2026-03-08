@@ -17,6 +17,7 @@ import { fileURLToPath } from 'url'
 import authRoutes from './routes/auth.js'
 import maxkbRoutes from './routes/maxkb.js'
 import userRoutes from './routes/user.js'
+import analyticsRoutes from './routes/analytics.js'
 
 // ESM 模式下获取 __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -35,6 +36,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 app.use('/api/auth', authRoutes)
 app.use('/api/maxkb', maxkbRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/analytics', analyticsRoutes)
 
 /**
  * 健康检查接口

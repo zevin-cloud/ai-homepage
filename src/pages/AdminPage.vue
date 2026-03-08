@@ -314,24 +314,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-8">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">用户管理</h1>
-        <div class="flex flex-wrap gap-3 sm:gap-4">
-          <button 
-            @click="syncUsers" 
-            :disabled="syncing"
-            class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-          >
-            <RefreshCw class="w-4 h-4" :class="{ 'animate-spin': syncing }" />
-            {{ syncing ? '同步中...' : '从 MaxKB 同步用户' }}
-          </button>
-          <router-link to="/" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-            返回首页
-          </router-link>
-        </div>
+  <div class="space-y-8 animate-fade-in">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">用户管理</h1>
+        <p class="text-gray-500 mt-1">管理门户访问权限及同步 MaxKB 用户数据。</p>
       </div>
+      <div class="flex flex-wrap gap-3">
+        <button 
+          @click="syncUsers" 
+          :disabled="syncing"
+          class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl shadow-sm hover:shadow-lg hover:shadow-blue-200 transition-all disabled:opacity-50"
+        >
+          <RefreshCw class="w-4 h-4" :class="{ 'animate-spin': syncing }" />
+          {{ syncing ? '正在同步...' : '从 MaxKB 同步用户' }}
+        </button>
+      </div>
+    </div>
 
       <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
         {{ error }}
@@ -645,6 +644,5 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>

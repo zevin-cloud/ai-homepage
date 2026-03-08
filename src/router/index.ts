@@ -1,11 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import LoginCallback from '@/pages/LoginCallback.vue'
 import AdminPage from '@/pages/AdminPage.vue'
+import AnalyticsDashboard from '@/pages/AnalyticsDashboard.vue'
+import AdminLayout from '@/components/AdminLayout.vue'
 import { useAuthStore } from '@/stores/auth'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
@@ -14,9 +16,20 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'admin',
-    component: AdminPage,
-    meta: { requiresAuth: true, requiresAdmin: true }
+    component: AdminLayout,
+    meta: { requiresAuth: true, requiresAdmin: true },
+    children: [
+      {
+        path: '',
+        name: 'admin',
+        component: AdminPage,
+      },
+      {
+        path: 'analytics',
+        name: 'analytics',
+        component: AnalyticsDashboard,
+      }
+    ]
   },
   {
     path: '/login',
@@ -31,9 +44,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: {
-      template: '<div class="text-center text-xl p-8">About Page - Coming Soon</div>',
-    },
+    component: HomePage, // Fallback for POC
   },
 ]
 
@@ -46,12 +57,12 @@ let publicAccessFetched = false;
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  
+
   if (!publicAccessFetched) {
     await authStore.fetchPublicAccess();
     publicAccessFetched = true;
   }
-  
+
   if (authStore.token && !authStore.user) {
     await authStore.fetchUser();
   }
@@ -60,18 +71,18 @@ router.beforeEach(async (to, from, next) => {
     if (!authStore.user && !authStore.token) {
       authStore.setGuestUser();
     }
-    
+
     if (to.meta.requiresAdmin && !authStore.isAdmin) {
       next('/login?redirect=' + encodeURIComponent(to.fullPath));
       return;
     }
-    
+
     if (to.path === '/login' && authStore.isAuthenticated && !authStore.isGuest) {
       const redirect = to.query.redirect as string;
       next(redirect || '/');
       return;
     }
-    
+
     next();
     return;
   }

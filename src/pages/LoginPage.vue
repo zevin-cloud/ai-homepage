@@ -103,21 +103,27 @@ const handleOidcLogin = () => {
           </div>
           
           <form @submit.prevent="handleLocalLogin" class="space-y-4">
-            <div class="group relative">
+            <div class="ui-group">
+              <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
               <input 
                 v-model="username"
                 type="text" 
                 placeholder="用户名"
-                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-500 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
+                class="ui-input"
               />
             </div>
             
-            <div class="group relative">
+            <div class="ui-group">
+              <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
+                <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
+              </svg>
               <input 
                 v-model="password"
                 type="password" 
                 placeholder="密码"
-                class="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white placeholder:text-gray-500 text-sm focus:ring-1 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all group-hover:bg-white/[0.06]"
+                class="ui-input"
               />
             </div>
             
@@ -232,6 +238,61 @@ const handleOidcLogin = () => {
 
 .animate-shake {
   animation: shake 0.3s ease-in-out;
+}
+
+/* Uiverse Input Style */
+.ui-group {
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.ui-input {
+  width: 100%;
+  height: 45px;
+  line-height: 30px;
+  padding: 0 1.5rem;
+  padding-left: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.ui-input::placeholder {
+  color: #6b7280;
+}
+
+.ui-input:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.ui-input:focus {
+  outline: none;
+  border-color: rgba(129, 140, 248, 0.5);
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.5); /* or var(--color-primary-500) if applicable */
+}
+
+.ui-icon {
+  position: absolute;
+  left: 1rem;
+  fill: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
+
+/* 焦点时图标也高亮 */
+.ui-input:focus ~ .ui-icon,
+.ui-group:focus-within .ui-icon {
+  color: rgba(129, 140, 248, 0.8);
 }
 
 /* 强制 Inter 字体或类似系统字体以对标质感 */

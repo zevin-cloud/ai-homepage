@@ -104,7 +104,7 @@
   {
     "id": "019c9f15-e8d8-72c3-91da-eeb9f4b1e4fa",
     "username": "user1",
-    "email": "0d4qo8@example.com",
+    "email": "user1@cas.com",
     "role": "user",
     "allowedApps": [],
     "maxkb_data": {

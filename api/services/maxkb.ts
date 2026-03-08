@@ -1,6 +1,7 @@
 import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
+import https from 'https';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,40 +30,40 @@ const getMaxKBConfig = () => {
   return { apiKey, baseURL, rootFolder, workspaceId };
 };
 
+const getMaxKBClient = async () => {
+  const { apiKey, baseURL } = getMaxKBConfig();
+
+  return axios.create({
+    baseURL,
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false
+    })
+  });
+};
+
 console.log('MAXKB Config loaded from environment variables');
 
 export const syncMaxKBData = async () => {
   try {
     console.log('Starting MaxKB sync...');
-    
-    // 从环境变量读取配置
-    const { apiKey, baseURL, rootFolder: rootFolderName, workspaceId } = getMaxKBConfig();
 
-    if (!baseURL) {
-      throw new Error('MAXKB_BASE_URL is not defined in environment variables');
-    }
+    const { baseURL, rootFolder: rootFolderName, workspaceId } = getMaxKBConfig();
 
-    const client = axios.create({
-      baseURL,
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-      // 忽略 SSL 证书错误
-      httpsAgent: new (await import('https')).Agent({  
-        rejectUnauthorized: false
-      })
-    });
+    const client = await getMaxKBClient();
 
     // 1. 获取所有文件夹
     const foldersRes = await client.get(`/admin/api/workspace/${workspaceId}/APPLICATION/folder`);
     console.log('Folders API response code:', foldersRes.data?.code);
     console.log('Folders API response message:', foldersRes.data?.message);
-    
+
     // 验证 API 响应结构
     if (!foldersRes.data) {
       throw new Error('MaxKB API returned no data');
     }
-    
+
     // 处理不同的响应结构（专业版和企业版）
     let folders: any[] = [];
     if (foldersRes.data.data && Array.isArray(foldersRes.data.data)) {
@@ -72,7 +73,7 @@ export const syncMaxKBData = async () => {
       // 直接数组结构
       folders = foldersRes.data;
     }
-    
+
     if (!Array.isArray(folders) || folders.length === 0) {
       console.error('Unexpected folders structure:', foldersRes.data);
       throw new Error('MaxKB API returned invalid folders data (expected array)');
@@ -82,7 +83,7 @@ export const syncMaxKBData = async () => {
 
     // 2. 查找根文件夹（例如 "根目录" 或 "Portal"）
     let rootFolder = folders.find((f: any) => f.name === rootFolderName);
-    
+
     // 如果在顶层没找到，检查子文件夹
     if (!rootFolder) {
       for (const folder of folders) {
@@ -102,7 +103,7 @@ export const syncMaxKBData = async () => {
 
     // 3. 获取子文件夹（分类）
     let categories: any[] = [];
-    
+
     // 如果 rootFolder 有 children 属性，直接使用
     if (rootFolder.children && Array.isArray(rootFolder.children) && rootFolder.children.length > 0) {
       categories = rootFolder.children;
@@ -132,7 +133,7 @@ export const syncMaxKBData = async () => {
 
       // 4. 获取该分类下的应用
       const appsRes = await client.get(`/admin/api/workspace/${workspaceId}/application/1/30?folder_id=${cat.id}`);
-      
+
       // 处理不同的 API 响应结构
       let apps: any[] = [];
       if (appsRes.data?.data?.records && Array.isArray(appsRes.data.data.records)) {
@@ -186,7 +187,7 @@ export const syncMaxKBData = async () => {
         let chatUrl = '';
         try {
           const accessTokenRes = await client.get(`/admin/api/workspace/${workspaceId}/application/${app.id}/access_token`);
-          
+
           // 处理不同的 API 响应结构
           let accessToken: string | null = null;
           if (accessTokenRes.data?.code === 200 && accessTokenRes.data?.data?.access_token) {
@@ -194,7 +195,7 @@ export const syncMaxKBData = async () => {
           } else if (accessTokenRes.data?.access_token) {
             accessToken = accessTokenRes.data.access_token;
           }
-          
+
           if (accessToken) {
             chatUrl = `${baseURL}/chat/${accessToken}`;
             console.log(`Got access_token for app ${app.name}: ${accessToken}`);
@@ -216,7 +217,7 @@ export const syncMaxKBData = async () => {
           accessToken: chatUrl.split('/chat/')[1] || '',
         });
       }
-      
+
       result.push(categoryData);
     }
 
@@ -238,5 +239,151 @@ export const getCategories = async () => {
   } catch (error) {
     // 如果文件不存在，返回空数组
     return [];
+  }
+};
+
+/**
+ * 获取具体应用的统计数据
+ */
+export const getAppStatistics = async (appId: string) => {
+  try {
+    const { workspaceId } = getMaxKBConfig();
+    const client = await getMaxKBClient();
+
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - 30);
+    const params = {
+      start_time: start.toISOString().split('T')[0],
+      end_time: end.toISOString().split('T')[0]
+    };
+
+    try {
+      // 获取应用基础统计数据
+      const res = await client.get(`/admin/api/workspace/${workspaceId}/application/${appId}/application_stats`, { params });
+
+      const data = res.data?.data || {};
+
+      let token_count = 0;
+      let question_count = 0;
+      let user_count = 0;
+
+      // MaxKB 返回的是以天为索引的对象（"0", "1", "2"...）
+      Object.keys(data).forEach(key => {
+        if (!isNaN(parseInt(key))) {
+          const dayData = data[key];
+          token_count += dayData.tokens_num || 0;
+          question_count += dayData.chat_record_count || 0;
+          user_count += dayData.customer_num || 0;
+        }
+      });
+
+      return {
+        question_count,
+        token_count,
+        user_count,
+        ...data
+      };
+    } catch (err: any) {
+      if (err.response?.status !== 404) throw err;
+    }
+
+    return {};
+  } catch (error) {
+    console.error(`Failed to get statistics for app ${appId}:`, error);
+    return {};
+  }
+};
+
+
+/**
+ * 获取分页对话日志
+ */
+export const getChatLogs = async (appId: string, page: number = 1, size: number = 20) => {
+  try {
+    const { workspaceId } = getMaxKBConfig();
+    const client = await getMaxKBClient();
+
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - 30);
+    const params = {
+      start_time: start.toISOString().split('T')[0],
+      end_time: end.toISOString().split('T')[0]
+    };
+
+    try {
+      // MaxKB 中获取聊天会话列表的接口
+      const res = await client.get(`/admin/api/workspace/${workspaceId}/application/${appId}/chat/${page}/${size}`, { params });
+      if (res.data?.data?.records) {
+        return {
+          records: res.data.data.records,
+          total: res.data.data.total
+        };
+      }
+    } catch (err: any) {
+      if (err.response?.status !== 404) throw err;
+    }
+
+    return { records: [], total: 0 };
+  } catch (error) {
+    console.error(`Failed to get chat logs for app ${appId}:`, error);
+    return { records: [], total: 0 };
+  }
+};
+
+/**
+ * 获取具体会话的聊天消息记录
+ */
+export const getChatSessionRecords = async (appId: string, chatId: string, page: number = 1, size: number = 50) => {
+  try {
+    const { workspaceId } = getMaxKBConfig();
+    const client = await getMaxKBClient();
+    try {
+      const res = await client.get(`/admin/api/workspace/${workspaceId}/application/${appId}/chat/${chatId}/chat_record/${page}/${size}`);
+      if (res.data?.data?.records) {
+        return res.data.data;
+      }
+    } catch (err: any) {
+      if (err.response?.status !== 404) throw err;
+    }
+    return { records: [], total: 0 };
+  } catch (error) {
+    console.error(`Failed to get chat session records for app ${appId}, chat ${chatId}:`, error);
+    return { records: [], total: 0 };
+  }
+};
+
+
+/**
+ * 获取全站/概览统计数据
+ */
+export const getGlobalStatistics = async () => {
+  try {
+    const categories = await getCategories();
+    let totalQuestions = 0;
+    let totalTokens = 0;
+    let totalUsers = 0;
+
+    // 遍历所有应用获取汇总数据
+    // 注意：在大规模部署下，这里应该使用汇总接口，此处为 POC 兼容性写法
+    for (const cat of categories) {
+      for (const agent of cat.agents) {
+        const stats = await getAppStatistics(agent.id);
+        totalQuestions += stats.question_count || 0;
+        totalTokens += stats.token_count || 0;
+        totalUsers += stats.user_count || 0;
+      }
+    }
+
+    return {
+      totalQuestions,
+      totalTokens,
+      totalUsers,
+      appCount: categories.reduce((acc: number, cat: any) => acc + cat.agents.length, 0)
+    };
+  } catch (error) {
+    console.error('Failed to get global statistics:', error);
+    return { totalQuestions: 0, totalTokens: 0, totalUsers: 0, appCount: 0 };
   }
 };

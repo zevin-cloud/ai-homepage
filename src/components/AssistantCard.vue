@@ -68,13 +68,16 @@ const closeChat = () => {
       </div>
 
       <!-- Loading Indicator -->
-      <div v-if="iframeLoading && url" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity duration-300">
-        <div class="relative w-20 h-20 flex items-center justify-center">
-          <div class="absolute inset-0 rounded-full border-4 border-primary/20 animate-pulse-slow"></div>
-          <div class="absolute inset-0 rounded-full border-t-4 border-primary animate-spin"></div>
-          <Loader2 class="w-8 h-8 text-primary animate-pulse" />
+      <div v-if="iframeLoading && url" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-md transition-opacity duration-300">
+        <div class="loader mb-6">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <span class="mt-4 text-sm font-medium text-primary animate-pulse tracking-widest uppercase">Initializing Agent...</span>
+        <span class="text-sm font-bold text-gray-500 tracking-widest uppercase">Initializing Agent...</span>
       </div>
 
       <iframe
@@ -91,7 +94,62 @@ const closeChat = () => {
         Select an application to start chatting
       </div>
     </div>
-
-
   </div>
 </template>
+
+<style scoped>
+/* From Uiverse.io by cosnametv */ 
+.loader {
+  --color: var(--theme-primary, #a5a5b0);
+  --size: 70px;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.loader span {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color);
+  animation: keyframes-blink 0.6s alternate infinite linear;
+  border-radius: 4px; /* Slightly rounded edges for a better look */
+}
+
+.loader span:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.loader span:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.loader span:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+.loader span:nth-child(4) {
+  animation-delay: 400ms;
+}
+
+.loader span:nth-child(5) {
+  animation-delay: 500ms;
+}
+
+.loader span:nth-child(6) {
+  animation-delay: 600ms;
+}
+
+@keyframes keyframes-blink {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5) rotate(5deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>
