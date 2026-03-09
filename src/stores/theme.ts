@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
-import type { ThemeId, ThemeConfig, LayoutMode, CustomLayoutRow } from '@/types/theme';
+import type { ThemeId, ThemeConfig, LayoutMode, CustomLayoutRow, LoginStyle } from '@/types/theme';
 import { getTheme, defaultThemeId, isValidThemeId } from '@/data/themes';
 
 const STORAGE_KEY = 'ai-portal-theme';
@@ -13,6 +13,7 @@ const BACKGROUND_BLUR_STORAGE_KEY = 'ai-portal-background-blur';
 const COLLAPSE_TILES_STORAGE_KEY = 'ai-portal-collapse-tiles';
 const NOISE_ENABLED_STORAGE_KEY = 'ai-portal-noise-enabled';
 const NOISE_COLOR_STORAGE_KEY = 'ai-portal-noise-color';
+const LOGIN_STYLE_STORAGE_KEY = 'ai-portal-login-style';
 
 // 布局模式配置
 export const layoutModes: Record<LayoutMode, { name: string; nameZh: string; description: string; icon: string }> = {
@@ -112,6 +113,9 @@ export const useThemeStore = defineStore('theme', () => {
   // 粒子特效
   const enableNoise = ref<boolean>(false);
   const noiseColor = ref<string>('rgba(255,255,255,0.25)'); // 默认白色粒子
+
+  // 登录页面风格
+  const loginStyle = ref<LoginStyle>('default');
 
   // 字体加载状态
   const fontsLoaded = ref(false);
@@ -489,6 +493,33 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
+  // 设置登录页面风格
+  function setLoginStyle(style: LoginStyle) {
+    loginStyle.value = style;
+    saveLoginStyleToStorage(style);
+  }
+
+  // 从localStorage加载登录页面风格
+  function loadLoginStyleFromStorage() {
+    try {
+      const stored = localStorage.getItem(LOGIN_STYLE_STORAGE_KEY);
+      if (stored === 'default' || stored === 'premium') {
+        loginStyle.value = stored as LoginStyle;
+      }
+    } catch (e) {
+      console.warn('Failed to load login style from storage:', e);
+    }
+  }
+
+  // 保存登录页面风格到localStorage
+  function saveLoginStyleToStorage(style: LoginStyle) {
+    try {
+      localStorage.setItem(LOGIN_STYLE_STORAGE_KEY, style);
+    } catch (e) {
+      console.warn('Failed to save login style to storage:', e);
+    }
+  }
+
   // 加载主题字体
   function loadThemeFonts() {
     const theme = currentTheme.value;
@@ -570,6 +601,7 @@ export const useThemeStore = defineStore('theme', () => {
     loadBackgroundBlurFromStorage();
     loadCollapseTilesFromStorage();
     loadNoiseFromStorage();
+    loadLoginStyleFromStorage();
     applyBackgroundBlur();
     loadThemeFonts();
     applyThemeToDocument();
@@ -591,6 +623,7 @@ export const useThemeStore = defineStore('theme', () => {
     collapseTiles,
     enableNoise,
     noiseColor,
+    loginStyle,
     cssVariables,
     themeClass,
     fontsLoaded,
@@ -607,6 +640,7 @@ export const useThemeStore = defineStore('theme', () => {
     setCollapseTiles,
     setEnableNoise,
     setNoiseColor,
+    setLoginStyle,
     nextTheme,
     initTheme,
     loadThemeFromStorage,

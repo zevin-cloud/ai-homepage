@@ -7,6 +7,9 @@ export type ThemeId =
   | 'swiss-minimalist'
   | 'pastel-dream';
 
+// 登录页面风格ID
+export type LoginStyle = 'default' | 'premium';
+
 // 字体配置
 export interface FontConfig {
   primary: string;

@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import { useThemeStore } from '@/stores/theme';
+import CareerCompassLogin from '@/components/login/CareerCompassLogin.vue';
+import { Sparkles, Layout } from 'lucide-vue-next';
 
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 
 const username = ref('');
 const password = ref('');
 const error = ref('');
 const loading = ref(false);
+
+const toggleLoginStyle = () => {
+  themeStore.setLoginStyle(themeStore.loginStyle === 'default' ? 'premium' : 'default');
+};
 
 const handleLocalLogin = async () => {
   if (!username.value || !password.value) {
@@ -49,114 +57,148 @@ const handleOidcLogin = () => {
 </script>
 
 <template>
-  <div class="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#020202] font-sans selection:bg-primary/40">
-    <!-- 1. 核心流光背景层 -->
-    <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      <!-- 动态变幻的流光 -->
-      <div class="moving-glow absolute inset-0 opacity-70 scale-125"></div>
-      
-      <!-- 模拟截图中的巨大发光 Logo 效果 (左侧圆盘) -->
-      <div class="absolute -left-[10%] top-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-500/20 blur-[120px] animate-pulse-slow"></div>
-      
-      <!-- 超强磨砂模糊层 -->
-      <div class="absolute inset-0 backdrop-blur-[140px]"></div>
-      
-      <!-- 2. 极致颗粒噪点层 (对标截图的粒子效果) -->
-      <div class="absolute inset-0 opacity-[0.25] mix-blend-overlay noise-overlay"></div>
-      
-      <!-- 顶部环境光 -->
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"></div>
+  <div class="relative w-full h-screen overflow-hidden">
+    <!-- Style Switcher Floating Button -->
+    <div class="fixed top-6 right-6 z-[100]">
+      <button 
+        @click="toggleLoginStyle"
+        :class="[
+          'group flex items-center gap-2 px-4 py-2 backdrop-blur-2xl border transition-all shadow-2xl hover:scale-105 active:scale-95 rounded-full',
+          themeStore.loginStyle === 'default' 
+            ? 'bg-white/10 border-white/20 text-white hover:bg-white/20' 
+            : 'bg-black/80 border-white/10 text-white hover:bg-black/90'
+        ]"
+      >
+        <Sparkles v-if="themeStore.loginStyle === 'default'" class="size-4 text-cyan-400 group-hover:rotate-12 transition-transform" />
+        <Layout v-else class="size-4 text-purple-400 group-hover:rotate-12 transition-transform" />
+        <span class="text-[10px] font-bold uppercase tracking-widest">
+          {{ themeStore.loginStyle === 'default' ? '切换质感模式' : '切换极简模式' }}
+        </span>
+      </button>
     </div>
 
-    <!-- 3. 主布局内容 -->
-    <div class="relative z-10 w-full max-w-[1400px] mx-auto px-10 md:px-20 flex flex-col lg:flex-row items-center justify-between gap-16">
-      
-      <!-- 左侧：完全复刻截图 Slogan -->
-      <div class="flex-1 text-left hidden lg:block animate-fade-in-up">
-        <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl mb-10">
-          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] px-1">人工智能应用基座</span>
-        </div>
+    <!-- CareerCompass (Premium) Style -->
+    <CareerCompassLogin
+      v-if="themeStore.loginStyle === 'premium'"
+      v-model:username="username"
+      v-model:password="password"
+      :error="error"
+      :loading="loading"
+      @login="handleLocalLogin"
+      @cas-login="handleCasLogin"
+      @oidc-login="handleOidcLogin"
+    />
+
+    <!-- Original (Default) Style -->
+    <div v-else class="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#020202] font-sans selection:bg-primary/40">
+      <!-- 1. 核心流光背景层 -->
+      <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- 动态变幻的流光 -->
+        <div class="moving-glow absolute inset-0 opacity-70 scale-125"></div>
         
-        <h1 class="text-[5.5rem] xl:text-[6.8rem] font-bold text-white leading-[1.05] tracking-tighter mb-12">
-          承载 AI 应用，<br />
-          管理数字资产，<br />
-          连接 <span class="gradient-text">未来.</span>
-        </h1>
+        <!-- 模拟截图中的巨大发光 Logo 效果 (左侧圆盘) -->
+        <div class="absolute -left-[10%] top-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-500/20 blur-[120px] animate-pulse-slow"></div>
         
-        <div class="flex items-center gap-6 mt-16 opacity-80">
-          <div class="h-px w-14 bg-white/20"></div>
-          <p class="text-xl text-gray-400 max-w-lg font-light leading-relaxed">
-            承载所有 AI 应用，管理你的数字资产，连接未来的统一基础设施平台。快速部署，轻松扩展。
-          </p>
-        </div>
+        <!-- 超强磨砂模糊层 -->
+        <div class="absolute inset-0 backdrop-blur-[140px]"></div>
+        
+        <!-- 2. 极致颗粒噪点层 (对标截图的粒子效果) -->
+        <div class="absolute inset-0 opacity-[0.25] mix-blend-overlay noise-overlay"></div>
+        
+        <!-- 顶部环境光 -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"></div>
       </div>
 
-      <!-- 右侧：极致精简登录框 (靠右对齐) -->
-      <div class="w-full max-w-[360px] lg:max-w-[320px] lg:mr-6 animate-fade-in mx-auto lg:mx-0" style="animation-delay: 0.2s">
-        <div class="bg-[#0a0a0a]/30 backdrop-blur-[40px] border border-white/10 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] p-6 lg:p-8 relative overflow-hidden">
-          <!-- 顶部装饰线 -->
-          <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-          
-          <div class="mb-10">
-            <h2 class="text-xl font-bold text-white tracking-tight">欢迎回来</h2>
-            <p class="text-gray-300 text-[11px] mt-2 font-medium">请登录以管理您的 AI 基础设施</p>
+      <!-- 3. 主布局内容 -->
+      <div class="relative z-10 w-full max-w-[1400px] mx-auto px-10 md:px-20 flex flex-col lg:flex-row items-center justify-between gap-16">
+        
+        <!-- 左侧：完全复刻截图 Slogan -->
+        <div class="flex-1 text-left hidden lg:block animate-fade-in-up">
+          <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl mb-10">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] px-1">人工智能应用基座</span>
           </div>
           
-          <form @submit.prevent="handleLocalLogin" class="space-y-4">
-            <div class="ui-group">
-              <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-              </svg>
-              <input 
-                v-model="username"
-                type="text" 
-                placeholder="用户名"
-                class="ui-input"
-              />
-            </div>
-            
-            <div class="ui-group">
-              <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
-                <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
-              </svg>
-              <input 
-                v-model="password"
-                type="password" 
-                placeholder="密码"
-                class="ui-input"
-              />
-            </div>
-            
-            <div v-if="error" class="text-red-400 text-[10px] text-center py-2 bg-red-400/5 border border-red-400/10 rounded-xl animate-shake">
-              {{ error }}
-            </div>
-            
-            <button 
-              type="submit"
-              :disabled="loading"
-              class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2"
-            >
-              {{ loading ? '验证中...' : '登录系统' }}
-            </button>
-          </form>
+          <h1 class="text-[5.5rem] xl:text-[6.8rem] font-bold text-white leading-[1.05] tracking-tighter mb-12">
+            承载 AI 应用，<br />
+            管理数字资产，<br />
+            连接 <span class="gradient-text">未来.</span>
+          </h1>
           
-          <!-- 第三方登录 -->
-          <div class="mt-10">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="h-px flex-1 bg-white/5"></div>
-              <span class="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">SSO Auth</span>
-              <div class="h-px flex-1 bg-white/5"></div>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3">
-              <button @click="handleCasLogin" class="sso-btn">CAS登录</button>
-              <button @click="handleOidcLogin" class="sso-btn">OIDC登录</button>
-            </div>
+          <div class="flex items-center gap-6 mt-16 opacity-80">
+            <div class="h-px w-14 bg-white/20"></div>
+            <p class="text-xl text-gray-400 max-w-lg font-light leading-relaxed">
+              承载所有 AI 应用，管理你的数字资产，连接未来的统一基础设施平台。快速部署，轻松扩展。
+            </p>
           </div>
         </div>
-        
-        <div class="mt-8 flex flex-col items-center gap-4 opacity-40">
-          <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">New API AI Gateway Project</p>
+
+        <!-- 右侧：极致精简登录框 (靠右对齐) -->
+        <div class="w-full max-w-[360px] lg:max-w-[320px] lg:mr-6 animate-fade-in mx-auto lg:mx-0" style="animation-delay: 0.2s">
+          <div class="bg-[#0a0a0a]/30 backdrop-blur-[40px] border border-white/10 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] p-6 lg:p-8 relative overflow-hidden">
+            <!-- 顶部装饰线 -->
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+            
+            <div class="mb-10">
+              <h2 class="text-xl font-bold text-white tracking-tight">欢迎回来</h2>
+              <p class="text-gray-300 text-[11px] mt-2 font-medium">请登录以管理您的 AI 基础设施</p>
+            </div>
+            
+            <form @submit.prevent="handleLocalLogin" class="space-y-4">
+              <div class="ui-group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+                <input 
+                  v-model="username"
+                  type="text" 
+                  placeholder="用户名"
+                  class="ui-input"
+                />
+              </div>
+              
+              <div class="ui-group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ui-icon">
+                  <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+                <input 
+                  v-model="password"
+                  type="password" 
+                  placeholder="密码"
+                  class="ui-input"
+                />
+              </div>
+              
+              <div v-if="error" class="text-red-400 text-[10px] text-center py-2 bg-red-400/5 border border-red-400/10 rounded-xl animate-shake">
+                {{ error }}
+              </div>
+              
+              <button 
+                type="submit"
+                :disabled="loading"
+                class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2"
+              >
+                {{ loading ? '验证中...' : '登录系统' }}
+              </button>
+            </form>
+            
+            <!-- 第三方登录 -->
+            <div class="mt-10">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-white/5"></div>
+                <span class="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">SSO Auth</span>
+                <div class="h-px flex-1 bg-white/5"></div>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-3">
+                <button @click="handleCasLogin" class="sso-btn">CAS登录</button>
+                <button @click="handleOidcLogin" class="sso-btn">OIDC登录</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 flex flex-col items-center gap-4 opacity-40">
+            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">New API AI Gateway Project</p>
+          </div>
         </div>
       </div>
     </div>
